@@ -1,8 +1,7 @@
 import React, { Component, Fragment } from 'react'
-import Post from '../components/Post'
+import Story from './Story'
 import { Query } from 'react-apollo'
 import  { gql } from 'apollo-boost'
-import Typography from '@material-ui/core/Typography'
 
 export default class DraftsPage extends Component {
   render() {
@@ -28,24 +27,12 @@ export default class DraftsPage extends Component {
             <Fragment>
               {data.me &&
                 data.me.stories.map(story =>
-                  <div>
-                    <h1>{story.title}</h1>
-                    {story.scenes.map(scene=>
-                      <div>
-                        <Typography gutterBottom variant="h4" component="h2">
-                        {scene.title}
-                        </Typography>
-                        {scene.frames.map(frame=>
-                              <Post
-                                key={frame.id}
-                                post={frame}
-                                refresh={() => refetch()}
-                                isDraft={!frame.published}
-                              />
-                          )}
-                      </div>
-                      )}
-                  </div>
+                    <Story
+                      key={story.id}
+                      story={story}
+                      refresh={() => refetch()}
+                      isDraft={!story.published}
+                    />
                 )
               }
               {this.props.children}

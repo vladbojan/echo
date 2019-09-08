@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from 'react'
-import Post from '../components/Post'
 import { Query } from 'react-apollo'
 import  { gql } from 'apollo-boost'
 import TextCard from './TextCard'

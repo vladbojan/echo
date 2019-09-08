@@ -21,7 +21,7 @@ const styles = {
   },
 };
 
-function  Post(props)  {
+function  Frame(props)  {
   const { classes } = props;
   return (
       <Card className={classes.card}>
@@ -33,9 +33,9 @@ function  Post(props)  {
         />
         <CardContent>
         <Typography gutterBottom variant="h5" component="h2">
-          {props.post.title}
+          {props.frame.title}
         </Typography>
-        {props.post.paragraphs.map(paragraph=>
+        {props.frame.paragraphs.map(paragraph=>
           <Typography paragraph> 
           {paragraph.content}  
           </Typography>
@@ -55,8 +55,8 @@ function  Post(props)  {
   }
 
 
-Post.propTypes = {
+Frame.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Post);
+export default withStyles(styles)(Frame);
