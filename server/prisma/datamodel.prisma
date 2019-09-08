@@ -1,0 +1,46 @@
+type User {
+  id: ID! @id
+  email: String! @unique
+  password: String!
+  name: String!
+  stories: [Story!]!
+}
+
+type Paragraph {
+  id: ID! @id
+  published: Boolean! @default(value: false)
+  content: String!
+  styling: String
+  media: String
+  parent: Frame!
+}
+
+type Frame {
+  id: ID! @id
+  published: Boolean! @default(value: false)
+  title: String!
+  styling: String
+  media: String
+  paragraphs: [Paragraph!]!
+  parent: Scene!
+}
+
+type Scene {
+  id: ID! @id
+  published: Boolean! @default(value: false)
+  title: String
+  styling: String! @default(value: "false")
+  media: String! @default(value: "false")
+  frames: [Frame!]!
+  parent: Story! 
+}
+
+type Story {
+  id: ID! @id
+  published: Boolean! @default(value: false)
+  title: String
+  styling: String! @default(value: "false")
+  media: String! @default(value: "false")
+  scenes: [Scene!]!
+  author: User!
+}

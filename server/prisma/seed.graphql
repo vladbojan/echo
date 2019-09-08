@@ -1,0 +1,42 @@
+mutation {
+  user1: createUser(data: {
+    email: "alice@prisma.io"
+    name: "Alice"
+    password: "$2b$10$dqyYw5XovLjpmkYNiRDEWuwKaRAvLaG45fnXE5b3KTccKZcRPka2m" # "secret42"
+    stories: {
+      create: {
+        published: false
+        title: "testTitle"
+        styling: "testStyling"
+        media: "testMedia"
+        scenes: {
+          create: {
+            published: false
+            title: "scene"
+            styling: "testStyling"
+            media: "testMedia"
+            frames: {
+              create: {
+                published: false
+                title: "scene"
+                styling: "testStyling"
+                media: "testMedia"
+                paragraphs:{
+                  create: {
+                    published: false
+                    content: "paragraph"
+                    styling: "testStyling"
+                    media: "testMedia"
+                  }
+                }
+              }
+            }
+
+          }
+        }
+      }
+    }
+  }) {
+    id
+  }
+}
