@@ -4,7 +4,7 @@ import { Mutation } from 'react-apollo'
 import  { gql } from 'apollo-boost'
 import { DRAFTS_QUERY } from './DraftsPage'
 
-class CreateFrame extends Component {
+class CreateStory extends Component {
   state = {
     title: '',
     content: '',
@@ -16,22 +16,22 @@ class CreateFrame extends Component {
   render() {
     return (
       <Mutation
-        mutation={CREATE_FRAME_MUTATION}
+        mutation={CREATE_STORY_MUTATION}
       >
-        {(createFrame, { title, data, loading, error }) => {
+        {(createStory, { title, data, loading, error }) => {
           return (
             <div className="pa4 flex justify-center bg-white">
               <form
                 onSubmit={async e => {
                   e.preventDefault()
                   const { title, styling, media } = this.state
-                  await createFrame({
+                  await createStory({
                     variables: { title, styling, media },
                   })
                   this.props.history.replace('/drafts')
                 }}
               >
-                <h1>Adauga Cadru</h1>
+                <h1>Adauga Poveste</h1>
                 <input
                   autoFocus
                   className="w-100 pa2 mv2 br2 b--black-20 bw1"
@@ -85,9 +85,9 @@ class CreateFrame extends Component {
 
 }
 
-const CREATE_FRAME_MUTATION = gql`
-  mutation CreateFrameMutation($title: String!, $styling: String!, $media: String!) {
-    createFrame(title: $title, styling: $styling, media: $media) {
+const CREATE_STORY_MUTATION = gql`
+  mutation CreateStoryMutation($title: String!, $styling: String!, $media: String!) {
+    createStory(title: $title, styling: $styling, media: $media) {
       id
       title
       styling
@@ -96,4 +96,4 @@ const CREATE_FRAME_MUTATION = gql`
   }
 `
 
-export default withRouter(CreateFrame)
+export default withRouter(CreateStory)

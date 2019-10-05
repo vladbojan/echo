@@ -10,7 +10,7 @@ class CreatePage extends Component {
     content: '',
     styling: '',
     media: '',
-    frame: '',
+    frameId: 'cjzgtfhdabq9d0b53xb33079g',
   }
 
   render() {
@@ -31,9 +31,9 @@ class CreatePage extends Component {
               <form
                 onSubmit={async e => {
                   e.preventDefault()
-                  const { content, styling, media } = this.state
+                  const { content, styling, media, frameId } = this.state
                   await createDraft({
-                    variables: { content, styling, media },
+                    variables: { content, styling, media, frameId },
                   })
                   this.props.history.replace('/drafts')
                 }}
@@ -94,7 +94,7 @@ class CreatePage extends Component {
 
 const CREATE_DRAFT_MUTATION = gql`
   mutation CreateDraftMutation($content: String!, $styling: String!, $media: String!) {
-    createPost(content: $content, styling: $styling, media: $media) {
+    createParagraph(content: $content, styling: $styling, media: $media) {
       id
       content
       styling
