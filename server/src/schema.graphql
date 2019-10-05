@@ -20,7 +20,7 @@ input ParagraphInput {
 }
 
 type Mutation {
-  createParagraph(content: String!, styling: String, media: String): Paragraph
+  createParagraph(content: String!, styling: String, media: String, parentId: String): Paragraph
   updateParagraph(id: ID!, content: String!, styling: String, media: String): Paragraph
   deleteParagraph(id: ID!): Paragraph
   publishParagraph(id: ID!): Paragraph

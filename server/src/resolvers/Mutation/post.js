@@ -1,14 +1,14 @@
 const { getUserId } = require('../../utils')
 
 const post = {
-  async createParagraph(parent, { content, styling, media }, context) {
+  async createParagraph(parent, { content, styling, media, parentId }, context) {
     const frameId = "cjzgtfhdabq9d0b53xb33079g"
     return context.prisma.createParagraph({
       published: false,
       content: content,
       styling: styling,
       media: media,
-      parent: { connect: { id: frameId } },
+      parent: { connect: { id: parentId } },
     })
   },
 
