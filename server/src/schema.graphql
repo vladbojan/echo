@@ -10,6 +10,7 @@ type Query {
   me: User
   users: [User!]
   stories: [Story!]
+  story(id: ID!): Story
 }
 
 input ParagraphInput {

@@ -53,12 +53,6 @@ ReactDOM.render(
             Drafts
           </NavLink>
           <Link
-            to="/create"
-            className="f6 link dim br1 ba ph3 pv2 fr mb2 dib black"
-          >
-            + Adauga Paragraf
-          </Link>
-          <Link
             to="/createStory"
             className="f6 link dim br1 ba ph3 pv2 fr mb2 dib black"
           >
@@ -69,7 +63,7 @@ ReactDOM.render(
           <Switch>
             <Route exact path="/" component={FeedPage} />
             <Route path="/drafts" component={DraftsPage} />
-            <Route path="/create" component={CreatePage} />
+            <Route path="/create/:id" component={CreatePage} />
             <Route path="/createStory" component={CreateStory} />
             <Route path="/post/:id" component={DetailPage} />
           </Switch>

@@ -1,22 +1,15 @@
 import React, { Component, Fragment } from 'react'
 import { withRouter } from 'react-router-dom'
+import Grid from '@material-ui/core/Grid'
 import { Query } from 'react-apollo'
-
 import  { gql } from 'apollo-boost'
 import FrameEdit from './FrameEdit'
+import Story from './Story'
 
 class CreatePage extends Component {
-  state = {
-    content: '',
-    styling: '',
-    media: '',
-    parentId: 'cjzgtfhdabq9d0b53xb33079g',
-  }
-
   render() {
     return (
-      <div>
-      <Query query={FRAME_QUERY}>
+      <Query query={FRAME_QUERY} variables={{ id: this.props.match.params.id }}>
       {({ data, loading, error, refetch }) => {
         if (loading) {
           return (
@@ -33,35 +26,64 @@ class CreatePage extends Component {
             </div>
           )
         }
+
+        const { frame } = data
         return (
-          <Fragment>
-            {data.frames &&
-              data.frames.map(frame =>
-                <FrameEdit
+          <Grid container spacing={3}>
+            <Grid item xs={12} sm={6}>
+              <FrameEdit
                 key={frame.id}
                 frame={frame}
                 refresh={() => refetch()}
                 isDraft={!frame.published}
               />
-              )
-            }
-            {this.props.children}
-          </Fragment>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <Story
+                key={frame.parent.parent.id}
+                story={frame.parent.parent}
+                refresh={() => refetch()}
+                isDraft={!frame.parent.parent.published}
+              />
+            </Grid>
+          </Grid>   
         )
       }}
     </Query>
-      </div>
     )
   }
 
 }
 
 export const FRAME_QUERY = gql`
-  query FrameQuery {
-    frames{
+  query FrameQuery($id: ID!) {
+    frame(id: $id) {
       title
       paragraphs{
         content
+      }
+      parent{
+        id
+        frames{
+          title
+          paragraphs{
+            content
+          }
+        }
+        parent{
+          id
+          title
+          scenes{
+            id
+            title
+            frames{
+              title
+              paragraphs{
+                content
+              }
+            }
+          }
+        }
       }
     }
   }

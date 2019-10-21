@@ -49,15 +49,12 @@ class  FrameEditParagraph extends Component  {
                   <Button size="small" color="primary" disabled={!this.state.content} type="submit">
                     Creeaza
                   </Button>
-                  <Button size="small" color="primary" onClick={e => this.state.format=='none'? this.setState({ format: 'block'}) : this.setState({ format: 'none'})}>
+                  <Button size="small" color="primary" onClick={e => this.state.format=='none'? this.setState({ format: 'block'}) : 
+                                                                                                this.setState({ format: 'none'})}>
                     Formatare
                   </Button>
-                  <Button size="small" color="primary" onClick={e => 
-                                                                  this.setState({ content: '',
-                                                                                  styling: '',
-                                                                                  media: '',
-                                                                                  parentId: 'cjzgtfhdabq9d0b53xb33079g',
-                                                                                  })}>
+                  <Button size="small" color="primary" onClick={e => this.setState({ content: '', styling: '',
+                                                                                  media: '', parentId: 'cjzgtfhdabq9d0b53xb33079g',})}>
                     Anuleaza
                   </Button>
                 </CardActions>  

@@ -22,6 +22,9 @@ const Query = {
     }
     return context.prisma.stories({ where })
   },
+  story(parent, { id }, context) {
+    return context.prisma.story({ id })
+  },
   frame(parent, { id }, context) {
     return context.prisma.frame({ id })
   },

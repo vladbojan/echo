@@ -56,10 +56,13 @@ export const DRAFTS_QUERY = gql`
         styling
         media
         scenes{
+          id
           title
           frames{
+            id
             title
             paragraphs{
+              id
               content
             }
           }

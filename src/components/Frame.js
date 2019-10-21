@@ -46,7 +46,7 @@ function  Frame(props)  {
         <Button size="small" color="primary">
           Share
         </Button>
-        <Button size="small" color="primary">
+        <Button size="small" color="primary" href={"/create/"+props.frame.id}>
           Editeaza
         </Button>
       </CardActions>
