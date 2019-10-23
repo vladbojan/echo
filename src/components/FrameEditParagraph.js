@@ -15,7 +15,6 @@ class  FrameEditParagraph extends Component  {
     content: '',
     styling: '',
     media: '',
-    parentId: 'cjzgtfhdabq9d0b53xb33079g',
     format: 'none',
   }
   render() {
@@ -37,10 +36,12 @@ class  FrameEditParagraph extends Component  {
                 className="w-100"
                 onSubmit={async e => {
                   e.preventDefault()
-                  const { content, styling, media, parentId } = this.state
+                  const parentId = this.props.frame.id
+                  const { content, styling, media } = this.state
                   await createDraft({
                     variables: { content, styling, media, parentId },
                   })
+                  this.setState({ content: '', styling: '', media: '',})
                   this.props.refresh()
                 }}
               >
@@ -53,8 +54,7 @@ class  FrameEditParagraph extends Component  {
                                                                                                 this.setState({ format: 'none'})}>
                     Formatare
                   </Button>
-                  <Button size="small" color="primary" onClick={e => this.setState({ content: '', styling: '',
-                                                                                  media: '', parentId: 'cjzgtfhdabq9d0b53xb33079g',})}>
+                  <Button size="small" color="primary" onClick={e => this.setState({ content: '', styling: '', media: '',})}>
                     Anuleaza
                   </Button>
                 </CardActions>  

@@ -64,3 +64,8 @@ html {
   width: 20px;
   height: 20px;
 }
+
+.MuiTab-wrapper {
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+}

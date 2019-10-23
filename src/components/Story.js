@@ -1,17 +1,6 @@
-import React, { Component, Fragment } from 'react'
+import React from 'react'
 import Frame from './Frame'
 import Typography from '@material-ui/core/Typography'
-import { withStyles } from '@material-ui/core/styles';
-
-const styles = {
-  card: {
-    maxWidth: 1545,
-    marginBottom: 50,
-  },
-  media: {
-    height: 140,
-  },
-};
 
 function  Story(props)  {
     return (
@@ -36,4 +25,4 @@ function  Story(props)  {
       )
 }
 
-export default withStyles(styles)(Story);
+export default Story;

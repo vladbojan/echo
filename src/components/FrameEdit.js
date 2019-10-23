@@ -1,14 +1,19 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import Typography from '@material-ui/core/Typography';
+import React from 'react'
+import PropTypes from 'prop-types'
+import Card from '@material-ui/core/Card'
+import CardContent from '@material-ui/core/CardContent'
+import CardMedia from '@material-ui/core/CardMedia'
+import Typography from '@material-ui/core/Typography'
 import headerImage from '../assets/1.jpg'
 import FrameEditParagraph from './FrameEditParagraph'
+import EditIcon from '@material-ui/icons/Edit'
+import { makeStyles } from '@material-ui/core/styles'
+import IconButton from '@material-ui/core/IconButton'
 
-const styles = {
+const useStyles = makeStyles(theme => ({
+  margin: {
+    marginLeft: theme.spacing(1),
+  },
   card: {
     maxWidth: 850,
     marginBottom: 50,
@@ -16,10 +21,10 @@ const styles = {
   media: {
     height: 140,
   },
-};
+}));
 
 function  FrameEdit(props)  {
-  const { classes } = props;
+  const classes  = useStyles();
   return (
       <Card className={classes.card}>
       
@@ -35,6 +40,9 @@ function  FrameEdit(props)  {
         {props.frame.paragraphs.map(paragraph=>
           <Typography paragraph> 
           {paragraph.content}  
+          <IconButton className={classes.margin} size="small" aria-label="edit">
+            <EditIcon />
+          </IconButton>
           </Typography>
         )}
         <FrameEditParagraph
@@ -54,4 +62,4 @@ FrameEdit.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(FrameEdit);
+export default FrameEdit;
