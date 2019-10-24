@@ -27,6 +27,16 @@ const post = {
     )
   },
 
+  async createFrame(parent, { title, styling, media, parentId }, context) {
+    return context.prisma.createFrame({
+      published: false,
+      title: title,
+      styling: styling,
+      media: media,
+      parent: { connect: { id: parentId } },
+    })
+  },
+
   async publishFrame(parent, { id }, context) {
     const userId = getUserId(context)
     const postExists = await context.prisma.$exists.frame({
@@ -56,6 +66,16 @@ const post = {
     }
 
     return context.prisma.deleteFrame({ id })
+  },
+
+  async createScene(parent, { title, styling, media, parentId }, context) {
+    return context.prisma.createScene({
+      published: false,
+      title: title,
+      styling: styling,
+      media: media,
+      parent: { connect: { id: parentId } },
+    })
   },
 
   async createStory(parent, { title, styling, media }, context) {

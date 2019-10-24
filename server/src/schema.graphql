@@ -26,23 +26,18 @@ type Mutation {
   deleteParagraph(id: ID!): Paragraph
   publishParagraph(id: ID!): Paragraph
 
-  createFrame(title: String!, styling: String, media: String, paragraphs:[ParagraphInput]): Frame
+  createFrame(title: String!, styling: String, media: String, parentId: String): Frame
   updateFrame(id: ID!, title: String!, styling: String, media: String): Frame
-  addParagraphsToFrame(paragraphs: [ID!]!): Frame
   deleteFrame(id: ID!): Frame
   publishFrame(id: ID!): Frame
 
-  createScene(title: String!, styling: String, media: String): Scene
+  createScene(title: String!, styling: String, media: String, parentId: String): Scene
   updateScene(id: ID!, title: String!, styling: String, media: String): Scene
-  addFramesToScene(frames: [ID!]!): Scene
-  deleteFramesFromScene(frames: [ID!]!): Scene
   deleteScene(id: ID!): Scene
   publishScene(id: ID!): Scene
 
   createStory(title: String!, styling: String, media: String): Story
   updateStory(id: ID!, title: String!, styling: String, media: String): Story
-  addScenesToStory(posts: [ID!]!): Story
-  deleteScenesFromStory(posts: [ID!]!): Story
   deleteStory(id: ID!): Story
   publishStory(id: ID!): Story
 }

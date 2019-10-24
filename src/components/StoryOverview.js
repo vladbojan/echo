@@ -44,7 +44,6 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
     display: 'flex',
-    height: '100%',
     maxHeight: 900, 
     overflow: 'auto',
   },
