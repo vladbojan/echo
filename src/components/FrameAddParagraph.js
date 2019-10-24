@@ -8,18 +8,17 @@ import { Mutation } from 'react-apollo'
 import {FRAME_QUERY} from './CreatePage'
 import  { gql } from 'apollo-boost'
 
-class  FrameEditParagraph extends Component  {
+class  FrameAddParagraph extends Component  {
   state = {
-    id: this.props.id,
-    content: this.props.content,
-    styling: this.props.styling,
-    media: this.props.media,
+    content: '',
+    styling: '',
+    media: '',
     format: 'none',
   }
   render() {
   return (
         <Mutation
-        mutation={EDIT_DRAFT_MUTATION}
+        mutation={CREATE_DRAFT_MUTATION}
         update={(cache, { data }) => {
           const { drafts } = cache.readQuery({ query: FRAME_QUERY })
           cache.writeQuery({
@@ -30,26 +29,31 @@ class  FrameEditParagraph extends Component  {
       >
         {(createDraft, { data, loading, error }) => {
           return (
-            <div className="flex justify-center bg-white" style={this.props.show===this.state.id?{ display: 'block' }:{ display: 'none' }}>
+            <div className="flex justify-center bg-white">
               <form
                 className="w-100"
                 onSubmit={async e => {
                   e.preventDefault()
-                  const { id, content, styling, media } = this.state
+                  const parentId = this.props.frame.id
+                  const { content, styling, media } = this.state
                   await createDraft({
-                    variables: { id, content, styling, media },
+                    variables: { content, styling, media, parentId },
                   })
+                  this.setState({ content: '', styling: '', media: '',})
                   this.props.refresh()
                 }}
               >
                 <Divider />
                 <CardActions>
                   <Button size="small" color="primary" disabled={!this.state.content} type="submit">
-                    Salveaza
+                    Creeaza
                   </Button>
                   <Button size="small" color="primary" onClick={e => this.state.format==='none'? this.setState({ format: 'block'}) : 
                                                                                                 this.setState({ format: 'none'})}>
                     Formatare
+                  </Button>
+                  <Button size="small" color="primary" onClick={e => this.setState({ content: '', styling: '', media: '',})}>
+                    Anuleaza
                   </Button>
                 </CardActions>  
                 <TextField
@@ -94,9 +98,9 @@ class  FrameEditParagraph extends Component  {
   }
 }
 
-const EDIT_DRAFT_MUTATION = gql`
-  mutation EditDraftMutation($id: ID!, $content: String!, $styling: String!, $media: String!) {
-    updateParagraph(id: $id, content: $content, styling: $styling, media: $media) {
+const CREATE_DRAFT_MUTATION = gql`
+  mutation CreateDraftMutation($content: String!, $styling: String!, $media: String!, $parentId: String!) {
+    createParagraph(content: $content, styling: $styling, media: $media, parentId: $parentId) {
       id
       content
       styling
@@ -105,4 +109,4 @@ const EDIT_DRAFT_MUTATION = gql`
   }
 `
 
-export default FrameEditParagraph;
+export default FrameAddParagraph;

@@ -2,7 +2,6 @@ const { getUserId } = require('../../utils')
 
 const post = {
   async createParagraph(parent, { content, styling, media, parentId }, context) {
-    const frameId = "cjzgtfhdabq9d0b53xb33079g"
     return context.prisma.createParagraph({
       published: false,
       content: content,
@@ -10,6 +9,22 @@ const post = {
       media: media,
       parent: { connect: { id: parentId } },
     })
+  },
+
+  async updateParagraph(parent, { id, content, styling, media }, context) {
+    const postExists = await context.prisma.$exists.paragraph({
+      id,
+    })
+    if (!postExists) {
+      throw new Error(`Post not found`)
+    }
+
+    return context.prisma.updateParagraph(
+      {
+        where: { id },
+        data: { content: content, styling: styling, media: media },
+      },
+    )
   },
 
   async publishFrame(parent, { id }, context) {

@@ -6,6 +6,7 @@ import CardMedia from '@material-ui/core/CardMedia'
 import Typography from '@material-ui/core/Typography'
 import headerImage from '../assets/1.jpg'
 import FrameEditParagraph from './FrameEditParagraph'
+import FrameAddParagraph from './FrameAddParagraph'
 import EditIcon from '@material-ui/icons/Edit'
 import { makeStyles } from '@material-ui/core/styles'
 import IconButton from '@material-ui/core/IconButton'
@@ -25,6 +26,17 @@ const useStyles = makeStyles(theme => ({
 
 function  FrameEdit(props)  {
   const classes  = useStyles();
+  const [value, setValue] = React.useState(0);
+
+  const handleClick  = param => e => {
+    (param === value) ? setValue(0) : setValue(param);
+  };
+
+  const refreshPage  =  e => {
+    setValue(0);
+    props.refresh();
+  };
+
   return (
       <Card className={classes.card}>
       
@@ -38,14 +50,25 @@ function  FrameEdit(props)  {
           {props.frame.title}
         </Typography>
         {props.frame.paragraphs.map(paragraph=>
-          <Typography paragraph> 
-          {paragraph.content}  
-          <IconButton className={classes.margin} size="small" aria-label="edit">
-            <EditIcon />
-          </IconButton>
-          </Typography>
+          <div>
+            <Typography paragraph>  
+            {paragraph.content}  
+            <IconButton className={classes.margin} size="small" aria-label="edit" onClick={handleClick(paragraph.id)}>
+              <EditIcon />
+            </IconButton>
+            </Typography>
+            <FrameEditParagraph
+              key={paragraph.id}
+              id= {paragraph.id}
+              content= {paragraph.content}
+              styling= {paragraph.styling}
+              media= {paragraph.media}
+              show= {value}
+              refresh={refreshPage}
+            />
+          </div>
         )}
-        <FrameEditParagraph
+        <FrameAddParagraph
           key={props.frame.id}
           frame={props.frame}
           refresh={props.refresh}

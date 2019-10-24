@@ -1,10 +1,9 @@
-import React, { Component, Fragment } from 'react'
+import React from 'react'
 import { withRouter } from 'react-router-dom'
 import Grid from '@material-ui/core/Grid'
 import { Query } from 'react-apollo'
 import  { gql } from 'apollo-boost'
 import FrameEdit from './FrameEdit'
-import Story from './Story'
 import StoryOverview from './StoryOverview'
 
 function CreatePage(props) {
@@ -62,6 +61,8 @@ export const FRAME_QUERY = gql`
       paragraphs{
         id
         content
+        styling
+        media
       }
       parent{
         id
@@ -72,6 +73,8 @@ export const FRAME_QUERY = gql`
           paragraphs{
             id
             content
+            styling
+            media
           }
         }
         parent{
@@ -86,6 +89,8 @@ export const FRAME_QUERY = gql`
               paragraphs{
                 id
                 content
+                styling
+                media
               }
             }
           }

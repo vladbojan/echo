@@ -1,17 +1,16 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom'
-import { withStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
+import React from 'react'
+import PropTypes from 'prop-types'
+import Card from '@material-ui/core/Card'
+import CardActionArea from '@material-ui/core/CardActionArea'
+import CardActions from '@material-ui/core/CardActions'
+import CardContent from '@material-ui/core/CardContent'
+import CardMedia from '@material-ui/core/CardMedia'
+import Button from '@material-ui/core/Button'
+import Typography from '@material-ui/core/Typography'
 import headerImage from '../assets/1.jpg'
+import { makeStyles } from '@material-ui/core/styles'
 
-const styles = {
+const useStyles = makeStyles(theme => ({
   card: {
     maxWidth: 1545,
     marginBottom: 50,
@@ -19,12 +18,16 @@ const styles = {
   media: {
     height: 140,
   },
-};
+  cardEdit: {
+    maxWidth: 800,
+    marginBottom: 10,
+  },
+}));
 
 function  Frame(props)  {
-  const { classes } = props;
+  const classes  = useStyles();
   return (
-      <Card className={classes.card}>
+      <Card className={props.edit?classes.cardEdit:classes.card}>
       <CardActionArea>
         <CardMedia
           className={classes.media}
@@ -43,12 +46,12 @@ function  Frame(props)  {
       </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button size="small" color="primary">
+        <Button size="small" color="primary"  visibility="hidden" className={classes.button}>
           Share
         </Button>
         <Button size="small" color="primary" href={"/create/"+props.frame.id}>
           Editeaza
-        </Button>
+        </Button>      
       </CardActions>
     </Card>
     )
@@ -59,4 +62,4 @@ Frame.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Frame);
+export default Frame;

@@ -1,12 +1,13 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { makeStyles } from '@material-ui/core/styles'
+import Tabs from '@material-ui/core/Tabs'
+import Tab from '@material-ui/core/Tab'
+import Typography from '@material-ui/core/Typography'
 import Story from './Story'
 import Frame from './Frame'
+import AddIcon from '@material-ui/icons/Add'
+import IconButton from '@material-ui/core/IconButton'
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -58,6 +59,9 @@ const useStyles = makeStyles(theme => ({
   panelRoot: {
     width: 51,
   },
+  margin: {
+    margin: theme.spacing(1),
+  },
 }));
 
 
@@ -67,7 +71,7 @@ export default function StoryOverview(props) {
   const [hidePanel, setHidePanel] = React.useState(false);
 
   const handleChange = (event, newValue) => {
-    if (newValue==2){
+    if (newValue===2){
       setHidePanel(true)
     } else {
       setHidePanel(false)
@@ -95,12 +99,18 @@ export default function StoryOverview(props) {
           {props.scene.title}
           </h2>
           {props.scene.frames.map(frame=>
-            <Frame
-              key={frame.id}
-              frame={frame}
-              refresh={() => props.refresh}
-              isDraft={!frame.published}
-            />
+            <div>
+              <Frame
+                key={frame.id}
+                frame={frame}
+                refresh={() => props.refresh}
+                isDraft={!frame.published}
+                edit={true}
+              />
+              <IconButton color="secondary" aria-label="adauga cadru" size="large" className={classes.margin}>
+                <AddIcon />
+              </IconButton>
+            </div>
           )}
         </div>
       </TabPanel>
@@ -110,6 +120,7 @@ export default function StoryOverview(props) {
           story={props.story}
           refresh={props.refresh}
           isDraft={!props.story.published}
+          edit={true}
         />
       </TabPanel>
       <TabPanel value={value} index={2}>
