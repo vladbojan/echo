@@ -1,0 +1,140 @@
+import React from 'react'
+import { makeStyles } from '@material-ui/core/styles'
+import AddIcon from '@material-ui/icons/Add'
+import IconButton from '@material-ui/core/IconButton'
+import {FRAME_QUERY} from './CreatePage'
+import CardActions from '@material-ui/core/CardActions'
+import Button from '@material-ui/core/Button'
+import TextareaAutosize from '@material-ui/core/TextareaAutosize'
+import TextField from '@material-ui/core/TextField'
+import Divider from '@material-ui/core/Divider'
+import { Mutation } from 'react-apollo'
+import  { gql } from 'apollo-boost'
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    flexGrow: 1,
+    backgroundColor: theme.palette.background.paper,
+    display: 'flex',
+    maxHeight: 900, 
+    overflow: 'auto',
+  },
+  tabs: {
+    borderRight: `1px solid ${theme.palette.divider}`,
+    minWidth: '50px!important',
+  },
+  tab: {
+    minWidth: 50,
+    margin: '12px 0px!important',
+  },
+  panelRoot: {
+    width: 51,
+  },
+  margin: {
+    margin: theme.spacing(1),
+  },
+}));
+
+const ADD_SCENE_MUTATION = gql`
+  mutation CreateSceneMutation($title: String!, $styling: String!, $media: String!, $parentId: String!) {
+    createScene(title: $title, styling: $styling, media: $media, parentId: $parentId) {
+      id
+      title
+      styling
+      media
+    }
+  }
+`
+
+export default function AddScene(props) {
+  const classes = useStyles();
+  const [title, setTitle] = React.useState('');
+  const [styling, setStyling] = React.useState('');
+  const [media, setMedia] = React.useState('');
+  const [showPanel, setShowPanel] = React.useState(false);
+  const [format, setFormat] = React.useState(false);
+
+  const handleClick  = param => e => {
+    (param === true) ? setShowPanel(false) : setShowPanel(true);
+  };
+
+  return (
+    <div>
+    <IconButton color="secondary" aria-label="adauga cadru" size="large" className={classes.margin} onClick={handleClick(showPanel)}>
+        <AddIcon />
+    </IconButton>
+    <Mutation
+      mutation={ADD_SCENE_MUTATION}
+      update={(cache, { data }) => {
+        const { drafts } = cache.readQuery({ query: FRAME_QUERY })
+        cache.writeQuery({
+          query: FRAME_QUERY,
+          data: { drafts: drafts.concat([data.createDraft]) },
+        })
+      }}
+    >
+    {(createDraft, { data, loading, error }) => {
+      return (
+        <div className="flex justify-center bg-white" style={showPanel?{ display: 'block' }:{ display: 'none' }}>
+          <form
+            className="w-100"
+            onSubmit={async e => {
+              e.preventDefault()
+              const parentId = props.story.id
+              await createDraft({
+                variables: { title, styling, media, parentId },
+              })
+              setShowPanel(false)
+              props.refresh()
+            }}
+          >
+            <Divider />
+            <CardActions>
+              <Button size="small" color="primary" disabled={!title} type="submit">
+                Salveaza
+              </Button>
+              <Button size="small" color="primary" onClick={e => format? setFormat(false):setFormat(true)}>
+                Formatare
+              </Button>
+            </CardActions>  
+            <TextField
+              label="Styling"
+              value={styling}
+              onChange={e => setStyling(e.target.value)}
+              margin="normal"
+              placeholder="Defineste tipul si culoarea fontului folosit"
+              fullWidth
+              InputLabelProps={{
+                shrink: true,
+              }}
+              style={format?{ display: 'block' }:{ display: 'none' }}
+            />
+            <TextField
+              label="Media"
+              value={media}
+              onChange={e => setMedia(e.target.value )}
+              margin="normal"
+              placeholder="Defineste un element media asociat paragrafului"
+              fullWidth
+              InputLabelProps={{
+                shrink: true,
+              }}
+              style={format?{ display: 'block' }:{ display: 'none' }}
+            />                  
+            <TextareaAutosize
+              className="db w-100 ba bw1 b--black-20 pa2 br2 mb2"
+              onChange={e => setTitle(e.target.value)}
+              placeholder="Titlul scenei"
+              rows={1}
+              value={title}
+            />
+
+    
+          </form>
+        </div>
+      )
+    }}
+  </Mutation>
+  </div>
+  );
+}

@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import AddIcon from '@material-ui/icons/Add'
 import IconButton from '@material-ui/core/IconButton'
+import AddScene from './AddScene'
 
 const useStyles = makeStyles(theme => ({
   margin: {
@@ -28,13 +29,14 @@ function  Story(props)  {
                   <Frame
                     key={frame.id}
                     frame={frame}
-                    refresh={() => props.refresh}
+                    refresh={props.refresh}
                     isDraft={!frame.published}
                   />
               )}
-              <IconButton color="secondary" aria-label="adauga scena" size="large" className={props.edit?classes.margin:classes.hide}>
-                <AddIcon />
-              </IconButton>
+              <AddScene 
+                story={props.story} 
+                refresh={props.refresh}
+              />
           </div>
           )}
       </div>

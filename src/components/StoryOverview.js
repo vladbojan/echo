@@ -102,7 +102,7 @@ export default function StoryOverview(props) {
               <Frame
                 key={frame.id}
                 frame={frame}
-                refresh={() => props.refresh}
+                refresh={props.refresh}
                 isDraft={!frame.published}
                 edit={true}
               />
