@@ -30,7 +30,7 @@ class  FrameEditParagraph extends Component  {
       >
         {(createDraft, { data, loading, error }) => {
           return (
-            <div className="flex justify-center bg-white" style={this.props.show===this.state.id?{ display: 'block' }:{ display: 'none' }}>
+            <div style={this.props.show===this.state.id?{ display: 'block' }:{ display: 'none' }}>
               <form
                 className="w-100"
                 onSubmit={async e => {

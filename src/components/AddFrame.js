@@ -35,9 +35,9 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const ADD_SCENE_MUTATION = gql`
-  mutation CreateSceneMutation($title: String!, $styling: String!, $media: String!, $parentId: String!) {
-    createScene(title: $title, styling: $styling, media: $media, parentId: $parentId) {
+const ADD_FRAME_MUTATION = gql`
+  mutation CreateFrameMutation($title: String!, $styling: String!, $media: String!, $parentId: String!) {
+    createFrame(title: $title, styling: $styling, media: $media, parentId: $parentId) {
       id
       title
       styling
@@ -46,7 +46,7 @@ const ADD_SCENE_MUTATION = gql`
   }
 `
 
-export default function AddScene(props) {
+export default function AddFrame(props) {
   const classes = useStyles();
   const [title, setTitle] = React.useState('');
   const [styling, setStyling] = React.useState('');
@@ -64,7 +64,7 @@ export default function AddScene(props) {
         <AddIcon />
     </IconButton>
     <Mutation
-      mutation={ADD_SCENE_MUTATION}
+      mutation={ADD_FRAME_MUTATION}
       update={(cache, { data }) => {
         const { drafts } = cache.readQuery({ query: FRAME_QUERY })
         cache.writeQuery({
@@ -76,12 +76,12 @@ export default function AddScene(props) {
     {(createDraft, { data, loading, error }) => {
       return (
         <div>
-          {showPanel &&
+        {showPanel &&
           <form
             className="w-100"
             onSubmit={async e => {
               e.preventDefault()
-              const parentId = props.story.id
+              const parentId = props.scene.id
               await createDraft({
                 variables: { title, styling, media, parentId },
               })
@@ -125,14 +125,14 @@ export default function AddScene(props) {
             <TextareaAutosize
               className="db w-100 ba bw1 b--black-20 pa2 br2 mb2"
               onChange={e => setTitle(e.target.value)}
-              placeholder="Titlul scenei"
+              placeholder="Titlul cadrului"
               rows={1}
               value={title}
             />
 
     
           </form>
-          }
+        }
         </div>
       )
     }}

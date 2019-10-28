@@ -2,16 +2,11 @@ import React from 'react'
 import Frame from './Frame'
 import { makeStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
-import AddIcon from '@material-ui/icons/Add'
-import IconButton from '@material-ui/core/IconButton'
 import AddScene from './AddScene'
 
 const useStyles = makeStyles(theme => ({
   margin: {
     margin: theme.spacing(1),
-  },
-  hide: {
-    display: 'none',
   },
 }));
 
@@ -33,10 +28,12 @@ function  Story(props)  {
                     isDraft={!frame.published}
                   />
               )}
+              {props.edit &&
               <AddScene 
                 story={props.story} 
                 refresh={props.refresh}
               />
+              }
           </div>
           )}
       </div>

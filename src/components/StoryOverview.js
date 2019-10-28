@@ -6,8 +6,7 @@ import Tab from '@material-ui/core/Tab'
 import Typography from '@material-ui/core/Typography'
 import Story from './Story'
 import Frame from './Frame'
-import AddIcon from '@material-ui/icons/Add'
-import IconButton from '@material-ui/core/IconButton'
+import AddFrame from './AddFrame'
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -106,9 +105,10 @@ export default function StoryOverview(props) {
                 isDraft={!frame.published}
                 edit={true}
               />
-              <IconButton color="secondary" aria-label="adauga cadru" size="large" className={classes.margin}>
-                <AddIcon />
-              </IconButton>
+              <AddFrame 
+                scene={props.scene} 
+                refresh={props.refresh}
+              />
             </div>
           )}
         </div>

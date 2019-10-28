@@ -5,6 +5,8 @@ import { Query } from 'react-apollo'
 import  { gql } from 'apollo-boost'
 import FrameEdit from './FrameEdit'
 import StoryOverview from './StoryOverview'
+import ErrorPage from './ErrorPage'
+import Loader from './Loader'
 
 function CreatePage(props) {
   return (
@@ -12,17 +14,13 @@ function CreatePage(props) {
     {({ data, loading, error, refetch }) => {
       if (loading) {
         return (
-          <div className="flex w-100 h-100 items-center justify-center pt7">
-            <div>Loading ...</div>
-          </div>
+          <Loader/>
         )
       }
 
       if (error) {
         return (
-          <div className="flex w-100 h-100 items-center justify-center pt7">
-            <div>An unexpected error occured.</div>
-          </div>
+          <ErrorPage/>
         )
       }
 

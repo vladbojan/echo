@@ -29,7 +29,7 @@ class  FrameAddParagraph extends Component  {
       >
         {(createDraft, { data, loading, error }) => {
           return (
-            <div className="flex justify-center bg-white">
+            <div>
               <form
                 className="w-100"
                 onSubmit={async e => {

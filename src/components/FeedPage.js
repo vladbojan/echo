@@ -2,6 +2,8 @@ import React, { Component, Fragment } from 'react'
 import { Query } from 'react-apollo'
 import  { gql } from 'apollo-boost'
 import TextCard from './TextCard'
+import ErrorPage from './ErrorPage'
+import Loader from './Loader'
 import Typography from '@material-ui/core/Typography';
 
 export default class FeedPage extends Component {
@@ -11,17 +13,13 @@ export default class FeedPage extends Component {
         {({ data, loading, error, refetch }) => {
           if (loading) {
             return (
-              <div className="flex w-100 h-100 items-center justify-center pt7">
-                <div>Loading ...</div>
-              </div>
+              <Loader/>
             )
           }
 
           if (error) {
             return (
-              <div className="flex w-100 h-100 items-center justify-center pt7">
-                <div>An unexpected error occured.</div>
-              </div>
+              <ErrorPage/>
             )
           }
 

@@ -4,6 +4,8 @@ import { withRouter } from 'react-router-dom'
 import  { gql } from 'apollo-boost'
 import { DRAFTS_QUERY } from './DraftsPage'
 import { FEED_QUERY } from './FeedPage'
+import ErrorPage from './ErrorPage'
+import Loader from './Loader'
 import Typography from '@material-ui/core/Typography'
 
 class DetailPage extends Component {
@@ -13,17 +15,13 @@ class DetailPage extends Component {
         {({ data, loading, error }) => {
           if (loading) {
             return (
-              <div className="flex w-100 h-100 items-center justify-center pt7">
-                <div>Loading ...</div>
-              </div>
+              <Loader/>
             )
           }
 
           if (error) {
             return (
-              <div className="flex w-100 h-100 items-center justify-center pt7">
-                <div>An unexpected error occured.</div>
-              </div>
+              <ErrorPage/>
             )
           }
 

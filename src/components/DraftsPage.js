@@ -1,5 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import Story from './Story'
+import ErrorPage from './ErrorPage'
+import Loader from './Loader'
 import { Query } from 'react-apollo'
 import  { gql } from 'apollo-boost'
 
@@ -10,17 +12,13 @@ export default class DraftsPage extends Component {
         {({ data, loading, error, refetch }) => {
           if (loading) {
             return (
-              <div className="flex w-100 h-100 items-center justify-center pt7">
-                <div>Loading ...</div>
-              </div>
+              <Loader/>
             )
           }
 
           if (error) {
             return (
-              <div className="flex w-100 h-100 items-center justify-center pt7">
-                <div>An unexpected error occured.</div>
-              </div>
+              <ErrorPage/>
             )
           }
           return (
