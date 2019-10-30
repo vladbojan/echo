@@ -35,9 +35,10 @@ class  FrameAddParagraph extends Component  {
                 onSubmit={async e => {
                   e.preventDefault()
                   const parentId = this.props.frame.id
+                  const position = this.props.position
                   const { content, styling, media } = this.state
                   await createDraft({
-                    variables: { content, styling, media, parentId },
+                    variables: { content, styling, media, parentId, position },
                   })
                   this.setState({ content: '', styling: '', media: '',})
                   this.props.refresh()
@@ -99,12 +100,13 @@ class  FrameAddParagraph extends Component  {
 }
 
 const CREATE_DRAFT_MUTATION = gql`
-  mutation CreateDraftMutation($content: String!, $styling: String!, $media: String!, $parentId: String!) {
-    createParagraph(content: $content, styling: $styling, media: $media, parentId: $parentId) {
+  mutation CreateDraftMutation($content: String!, $styling: String!, $media: String!, $parentId: String!, $position: String) {
+    createParagraph(content: $content, styling: $styling, media: $media, parentId: $parentId, position: $position) {
       id
       content
       styling
       media
+      position
     }
   }
 `

@@ -1,17 +1,16 @@
 enum OrderByField {
   position_ASC
   position_DESC
-  title_ASC
 }
 
 type Query {
   draftParagraphs: [Paragraph!]
-  paragraphs: [Paragraph!]
+  paragraphs(orderBy: OrderByField): [Paragraph!]
   paragraph(id: ID!): Paragraph
   frame(id: ID!): Frame
   frames(orderBy: OrderByField): [Frame!]
   draftFrames: [Frame!]
-  scenes: [Scene!]
+  scenes(orderBy: OrderByField): [Scene!]
   draftScenes: [Scene!]
   me: User
   users: [User!]
@@ -27,7 +26,7 @@ input ParagraphInput {
 }
 
 type Mutation {
-  createParagraph(content: String!, styling: String, media: String, parentId: String): Paragraph
+  createParagraph(content: String!, styling: String, media: String, parentId: String, position: String): Paragraph
   updateParagraph(id: ID!, content: String!, styling: String, media: String): Paragraph
   deleteParagraph(id: ID!): Paragraph
   publishParagraph(id: ID!): Paragraph
@@ -37,12 +36,12 @@ type Mutation {
   deleteFrame(id: ID!): Frame
   publishFrame(id: ID!): Frame
 
-  createScene(title: String!, styling: String, media: String, parentId: String): Scene
+  createScene(title: String!, styling: String, media: String, parentId: String, position: String): Scene
   updateScene(id: ID!, title: String!, styling: String, media: String): Scene
   deleteScene(id: ID!): Scene
   publishScene(id: ID!): Scene
 
-  createStory(title: String!, styling: String, media: String): Story
+  createStory(title: String!, styling: String, media: String, position: String): Story
   updateStory(id: ID!, title: String!, styling: String, media: String): Story
   deleteStory(id: ID!): Story
   publishStory(id: ID!): Story

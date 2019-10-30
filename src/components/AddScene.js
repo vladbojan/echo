@@ -36,12 +36,13 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const ADD_SCENE_MUTATION = gql`
-  mutation CreateSceneMutation($title: String!, $styling: String!, $media: String!, $parentId: String!) {
-    createScene(title: $title, styling: $styling, media: $media, parentId: $parentId) {
+  mutation CreateSceneMutation($title: String!, $styling: String!, $media: String!, $parentId: String!, $position: String) {
+    createScene(title: $title, styling: $styling, media: $media, parentId: $parentId, position: $position) {
       id
       title
       styling
       media
+      position
     }
   }
 `
@@ -82,8 +83,9 @@ export default function AddScene(props) {
             onSubmit={async e => {
               e.preventDefault()
               const parentId = props.story.id
+              const position = props.position
               await createDraft({
-                variables: { title, styling, media, parentId },
+                variables: { title, styling, media, parentId, position },
               })
               setShowPanel(false)
               props.refresh()

@@ -1,12 +1,13 @@
 const { getUserId } = require('../../utils')
 
 const post = {
-  async createParagraph(parent, { content, styling, media, parentId }, context) {
+  async createParagraph(parent, { content, styling, media, parentId, position }, context) {
     return context.prisma.createParagraph({
       published: false,
       content: content,
       styling: styling,
       media: media,
+      position: position,
       parent: { connect: { id: parentId } },
     })
   },
@@ -33,8 +34,8 @@ const post = {
       title: title,
       styling: styling,
       media: media,
-      parent: { connect: { id: parentId } },
       position: position,
+      parent: { connect: { id: parentId } },
     })
   },
 
@@ -69,23 +70,25 @@ const post = {
     return context.prisma.deleteFrame({ id })
   },
 
-  async createScene(parent, { title, styling, media, parentId }, context) {
+  async createScene(parent, { title, styling, media, parentId, position }, context) {
     return context.prisma.createScene({
       published: false,
       title: title,
       styling: styling,
       media: media,
+      position: position,
       parent: { connect: { id: parentId } },
     })
   },
 
-  async createStory(parent, { title, styling, media }, context) {
+  async createStory(parent, { title, styling, media, position }, context) {
     const userId = getUserId(context)
     return context.prisma.createStory({
       published: false,
       title: title,
       styling: styling,
       media: media,
+      position: position,
       author: { connect: { id: userId } },
     })
   },

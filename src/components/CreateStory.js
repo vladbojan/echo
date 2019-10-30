@@ -24,8 +24,9 @@ class CreateStory extends Component {
                 onSubmit={async e => {
                   e.preventDefault()
                   const { title, styling, media } = this.state
+                  const position = this.props.position
                   await createStory({
-                    variables: { title, styling, media },
+                    variables: { title, styling, media, position },
                   })
                   this.props.history.replace('/drafts')
                 }}
@@ -85,12 +86,13 @@ class CreateStory extends Component {
 }
 
 const CREATE_STORY_MUTATION = gql`
-  mutation CreateStoryMutation($title: String!, $styling: String!, $media: String!) {
-    createStory(title: $title, styling: $styling, media: $media) {
+  mutation CreateStoryMutation($title: String!, $styling: String!, $media: String!, $position: String) {
+    createStory(title: $title, styling: $styling, media: $media, position: $position) {
       id
       title
       styling
       media
+      position
     }
   }
 `

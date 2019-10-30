@@ -15,7 +15,7 @@ function  Story(props)  {
     return (
       <div>
         <h1>{props.story.title}</h1>
-        {props.story.scenes.map(scene=>
+        {props.story.scenes.map((scene, index, allScenes)=>
           <div>
             <Typography gutterBottom variant="h4" component="h2">
             {scene.title}
@@ -28,14 +28,22 @@ function  Story(props)  {
                     isDraft={!frame.published}
                   />
               )}
-              {props.edit &&
+              {props.edit && allScenes[index+1] &&
               <AddScene 
                 story={props.story} 
                 refresh={props.refresh}
+                position={scene.position+"-"+allScenes[index+1].position}
               />
               }
           </div>
           )}
+          {props.edit &&
+            <AddScene 
+              story={props.story} 
+              refresh={props.refresh}
+              position={(props.story.scenes.length+1).toString()}
+            />
+          }
       </div>
       )
 }

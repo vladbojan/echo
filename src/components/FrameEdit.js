@@ -75,6 +75,7 @@ function  FrameEdit(props)  {
           frame={props.frame}
           refresh={props.refresh}
           isDraft={props.isDraft}
+          position={(props.frame.paragraphs.length+1).toString()}
         />
       </CardContent>
    

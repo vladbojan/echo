@@ -2,7 +2,7 @@ const { getUserId } = require('../utils')
 
 const Query = {
   paragraphs(parent, args, context) {
-    return context.prisma.paragraphs()
+    return context.prisma.paragraphs({ orderBy: "position_ASC" })
   },
   frames(parent, args, context) {
     return context.prisma.frames({ orderBy: "position_ASC" })
@@ -11,7 +11,7 @@ const Query = {
     return context.prisma.frames({ where: { published: false }  })
   },
   scenes(parent, args, context) {
-    return context.prisma.scenes()
+    return context.prisma.scenes({ orderBy: "position_ASC" })
   },
   stories(parent, args, context) {
     const id = getUserId(context)
