@@ -3,6 +3,7 @@ import Frame from './Frame'
 import { makeStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import AddScene from './AddScene'
+const { getPosition } = require('./utils')
 
 const useStyles = makeStyles(theme => ({
   margin: {
@@ -41,7 +42,7 @@ function  Story(props)  {
             <AddScene 
               story={props.story} 
               refresh={props.refresh}
-              position={(props.story.scenes.length+1).toString()}
+              position={getPosition(props.story.scenes[props.story.scenes.length-1].position)}
             />
           }
       </div>

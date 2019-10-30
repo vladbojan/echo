@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography'
 import Story from './Story'
 import Frame from './Frame'
 import AddFrame from './AddFrame'
+const { getPosition } = require('./utils')
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -117,7 +118,7 @@ export default function StoryOverview(props) {
           <AddFrame 
             scene={props.scene} 
             refresh={props.refresh}
-            position={(props.scene.frames.length+1).toString()}
+            position={getPosition(props.scene.frames[props.scene.frames.length-1].position)}
           />
         </div>
       </TabPanel>

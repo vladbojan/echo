@@ -10,6 +10,7 @@ import FrameAddParagraph from './FrameAddParagraph'
 import EditIcon from '@material-ui/icons/Edit'
 import { makeStyles } from '@material-ui/core/styles'
 import IconButton from '@material-ui/core/IconButton'
+const { getPosition } = require('./utils')
 
 const useStyles = makeStyles(theme => ({
   margin: {
@@ -75,7 +76,8 @@ function  FrameEdit(props)  {
           frame={props.frame}
           refresh={props.refresh}
           isDraft={props.isDraft}
-          position={(props.frame.paragraphs.length+1).toString()}
+          position={getPosition(props.frame.paragraphs[props.frame.paragraphs.length-1].position)}
+          
         />
       </CardContent>
    
