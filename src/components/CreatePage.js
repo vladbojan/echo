@@ -56,11 +56,15 @@ export const FRAME_QUERY = gql`
     frame(id: $id) {
       id
       title
+      styling 
+      media
+      position
       paragraphs{
         id
         content
         styling
         media
+        position
       }
       parent{
         id
@@ -68,27 +72,39 @@ export const FRAME_QUERY = gql`
         frames{
           id
           title
+          styling
+          media
+          position
           paragraphs{
             id
             content
             styling
             media
+            position
           }
         }
         parent{
           id
           title
+          styling
+          media
+          position
           scenes{
             id
             title
+            styling
+            media
+            position
             frames{
               id
               title
+              position
               paragraphs{
                 id
                 content
                 styling
                 media
+                position
               }
             }
           }

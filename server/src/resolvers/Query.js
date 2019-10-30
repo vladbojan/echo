@@ -5,7 +5,7 @@ const Query = {
     return context.prisma.paragraphs()
   },
   frames(parent, args, context) {
-    return context.prisma.frames()
+    return context.prisma.frames({ orderBy: "position_ASC" })
   },
   draftFrames(parent, args, context) {
     return context.prisma.frames({ where: { published: false }  })

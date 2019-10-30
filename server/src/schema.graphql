@@ -1,6 +1,7 @@
 enum OrderByField {
+  position_ASC
+  position_DESC
   title_ASC
-  title_DESC
 }
 
 type Query {
@@ -8,7 +9,7 @@ type Query {
   paragraphs: [Paragraph!]
   paragraph(id: ID!): Paragraph
   frame(id: ID!): Frame
-  frames: [Frame!]
+  frames(orderBy: OrderByField): [Frame!]
   draftFrames: [Frame!]
   scenes: [Scene!]
   draftScenes: [Scene!]
@@ -31,8 +32,8 @@ type Mutation {
   deleteParagraph(id: ID!): Paragraph
   publishParagraph(id: ID!): Paragraph
 
-  createFrame(title: String!, styling: String, media: String, parentId: String): Frame
-  updateFrame(id: ID!, title: String!, styling: String, media: String): Frame
+  createFrame(title: String!, styling: String, media: String, parentId: String, position: String): Frame
+  updateFrame(id: ID!, title: String!, styling: String, media: String, position: String): Frame
   deleteFrame(id: ID!): Frame
   publishFrame(id: ID!): Frame
 
@@ -54,6 +55,7 @@ type Paragraph {
   styling: String
   media: String
   parent: Frame!
+  position: String
 }
 
 type Frame {
@@ -64,6 +66,7 @@ type Frame {
   media: String
   paragraphs: [Paragraph!]!
   parent: Scene!
+  position: String
 }
 
 type Scene {
@@ -74,6 +77,7 @@ type Scene {
   media: String
   frames: [Frame!]!
   parent: Story!
+  position: String
 }
 
 type Story {
@@ -84,6 +88,7 @@ type Story {
   media: String
   scenes: [Scene!]!
   author: User!
+  position: String
 }
 
 type User {

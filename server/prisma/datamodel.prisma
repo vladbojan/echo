@@ -13,6 +13,7 @@ type Paragraph {
   styling: String
   media: String
   parent: Frame!
+  position: String
 }
 
 type Frame {
@@ -23,6 +24,7 @@ type Frame {
   media: String
   paragraphs: [Paragraph!]!
   parent: Scene!
+  position: String
 }
 
 type Scene {
@@ -33,6 +35,7 @@ type Scene {
   media: String! @default(value: "false")
   frames: [Frame!]!
   parent: Story! 
+  position: String
 }
 
 type Story {
@@ -43,4 +46,5 @@ type Story {
   media: String! @default(value: "false")
   scenes: [Scene!]!
   author: User!
+  position: String
 }

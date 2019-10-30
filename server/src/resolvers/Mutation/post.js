@@ -27,13 +27,14 @@ const post = {
     )
   },
 
-  async createFrame(parent, { title, styling, media, parentId }, context) {
+  async createFrame(parent, { title, styling, media, parentId, position }, context) {
     return context.prisma.createFrame({
       published: false,
       title: title,
       styling: styling,
       media: media,
       parent: { connect: { id: parentId } },
+      position: position,
     })
   },
 

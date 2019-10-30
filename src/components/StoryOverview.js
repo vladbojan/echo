@@ -96,7 +96,7 @@ export default function StoryOverview(props) {
           <h2>
           {props.scene.title}
           </h2>
-          {props.scene.frames.map(frame=>
+          {props.scene.frames.map((frame, index, allFrames) =>
             <div>
               <Frame
                 key={frame.id}
@@ -105,12 +105,20 @@ export default function StoryOverview(props) {
                 isDraft={!frame.published}
                 edit={true}
               />
+              {allFrames[index+1] &&
               <AddFrame 
                 scene={props.scene} 
                 refresh={props.refresh}
+                position={frame.position+"-"+allFrames[index+1].position}
               />
+              }
             </div>
-          )}
+           )}
+          <AddFrame 
+            scene={props.scene} 
+            refresh={props.refresh}
+            position={(props.scene.frames.length+1).toString()}
+          />
         </div>
       </TabPanel>
       <TabPanel value={value} index={1}>
