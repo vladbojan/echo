@@ -28,6 +28,17 @@ const post = {
     )
   },
 
+  async deleteParagraph(parent, { id }, context) {
+    const postExists = await context.prisma.$exists.frame({
+      id,
+    })
+    if (!postExists) {
+      throw new Error(`Paragraph not found`)
+    }
+
+    return context.prisma.deleteParagraph({ id })
+  },
+
   async createFrame(parent, { title, styling, media, parentId, position }, context) {
     return context.prisma.createFrame({
       published: false,
@@ -40,13 +51,11 @@ const post = {
   },
 
   async publishFrame(parent, { id }, context) {
-    const userId = getUserId(context)
     const postExists = await context.prisma.$exists.frame({
       id,
-      author: { id: userId },
     })
     if (!postExists) {
-      throw new Error(`Post not found or you're not the author`)
+      throw new Error(`Frame not found`)
     }
 
     return context.prisma.updateFrame(
@@ -58,10 +67,8 @@ const post = {
   },
 
   async deleteFrame(parent, { id }, context) {
-    const userId = getUserId(context)
     const postExists = await context.prisma.$exists.frame({
       id,
-      author: { id: userId },
     })
     if (!postExists) {
       throw new Error(`Post not found or you're not the author`)
@@ -81,6 +88,17 @@ const post = {
     })
   },
 
+  async deleteScene(parent, { id }, context) {
+    const postExists = await context.prisma.$exists.scene({
+      id,
+    })
+    if (!postExists) {
+      throw new Error(`Post not found or you're not the author`)
+    }
+
+    return context.prisma.deleteScene({ id })
+  },
+
   async createStory(parent, { title, styling, media, position }, context) {
     const userId = getUserId(context)
     return context.prisma.createStory({
@@ -91,6 +109,19 @@ const post = {
       position: position,
       author: { connect: { id: userId } },
     })
+  },
+
+  async deleteStory(parent, { id }, context) {
+    const userId = getUserId(context)
+    const postExists = await context.prisma.$exists.story({
+      id,
+      author: { id: userId },
+    })
+    if (!postExists) {
+      throw new Error(`Post not found or you're not the author`)
+    }
+
+    return context.prisma.deleteStory({ id })
   },
 }
 

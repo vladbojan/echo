@@ -9,6 +9,7 @@ import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import headerImage from '../assets/1.jpg'
 import { makeStyles } from '@material-ui/core/styles'
+import DeleteFrame from './DeleteFrame'
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -33,7 +34,14 @@ function  Frame(props)  {
           className={classes.media}
           image={headerImage}
           title="Test Image"
-        />
+        >
+        {props.edit&&
+          <DeleteFrame 
+            id={props.frame.id} 
+            refresh={props.refresh}
+          />
+        }
+        </CardMedia>
         <CardContent>
         <Typography gutterBottom variant="h5" component="h2">
           {props.frame.title}
