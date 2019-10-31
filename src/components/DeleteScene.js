@@ -33,7 +33,7 @@ export default function DeleteScene(props) {
         const { drafts } = cache.readQuery({ query: FRAME_QUERY })
         cache.writeQuery({
           query: FRAME_QUERY,
-          data: { drafts: drafts.concat([data.createDraft]) },
+          data: { drafts: drafts.concat([data.deleteDraft]) },
         })
       }}
     >
@@ -50,7 +50,7 @@ export default function DeleteScene(props) {
               props.refresh()
             }}
           >
-            <IconButton color="secondary" aria-label="adauga cadru" size="large" className={classes.margin} type="submit">
+            <IconButton color="secondary" aria-label="sterge" size="large" className={classes.margin} type="submit">
               <DeleteIcon />
             </IconButton>
           </form>

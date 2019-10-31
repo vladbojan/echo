@@ -105,6 +105,8 @@ export default function StoryOverview(props) {
                 refresh={props.refresh}
                 isDraft={!frame.published}
                 edit={true}
+                show={0}
+                parentId={0}
               />
               {allFrames[index+1] &&
               <AddFrame 

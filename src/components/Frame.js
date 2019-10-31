@@ -20,15 +20,18 @@ const useStyles = makeStyles(theme => ({
     height: 140,
   },
   cardEdit: {
-    maxWidth: 800,
+    maxWidth: 500,
     marginBottom: 10,
+  },
+  cardHide: {
+    display:"none",
   },
 }));
 
 function  Frame(props)  {
   const classes  = useStyles();
   return (
-      <Card className={props.edit?classes.cardEdit:classes.card}>
+      <Card className={props.edit?(props.show===props.parentId)?classes.cardEdit:classes.cardHide:classes.card}>
       <CardActionArea>
         <CardMedia
           className={classes.media}

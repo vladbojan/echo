@@ -27,7 +27,7 @@ function CreatePage(props) {
       const { frame } = data
       return (
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={8}>
             <FrameEdit
               key={frame.id}
               frame={frame}
@@ -35,7 +35,7 @@ function CreatePage(props) {
               isDraft={!frame.published}
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={4}>
             <StoryOverview 
               key={frame.parent.parent.id}
               story={frame.parent.parent}

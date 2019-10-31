@@ -8,24 +8,27 @@ import  { gql } from 'apollo-boost'
 
 const useStyles = makeStyles(theme => ({
   margin: {
-    margin: theme.spacing(1),
+    margin: 0,
+  },
+  deleteForm: {
+    display: "inline",
   },
 }));
 
-const DELETE_FRAME_MUTATION = gql`
-  mutation DeleteFrameMutation($id: ID!) {
-    deleteFrame(id: $id) {
+const DELETE_PARAGRAPH_MUTATION = gql`
+  mutation DeleteParagraphMutation($id: ID!) {
+    deleteParagraph(id: $id) {
       id
     }
   }
 `
 
-export default function DeleteFrame(props) {
+export default function DeleteParagraph(props) {
   const classes = useStyles();
 
   return (
     <Mutation
-      mutation={DELETE_FRAME_MUTATION}
+      mutation={DELETE_PARAGRAPH_MUTATION}
       update={(cache, { data }) => {
         const { drafts } = cache.readQuery({ query: FRAME_QUERY })
         cache.writeQuery({
@@ -37,7 +40,7 @@ export default function DeleteFrame(props) {
     {(deleteDraft, { data, loading, error }) => {
       return (
           <form
-            className="w-100"
+            className={classes.deleteForm}
             onSubmit={async e => {
               e.preventDefault()
               const id = props.id
@@ -47,7 +50,7 @@ export default function DeleteFrame(props) {
               props.refresh()
             }}
           >
-            <IconButton color="secondary" aria-label="sterge" size="large" className={classes.margin} type="submit">
+            <IconButton color="secondary" aria-label="sterge" size="small" className={classes.margin} type="submit">
               <DeleteIcon />
             </IconButton>
           </form>

@@ -10,6 +10,7 @@ import FrameAddParagraph from './FrameAddParagraph'
 import EditIcon from '@material-ui/icons/Edit'
 import { makeStyles } from '@material-ui/core/styles'
 import IconButton from '@material-ui/core/IconButton'
+import DeleteParagraph from './DeleteParagraph'
 const { getPosition } = require('./utils')
 
 const useStyles = makeStyles(theme => ({
@@ -17,7 +18,7 @@ const useStyles = makeStyles(theme => ({
     marginLeft: theme.spacing(1),
   },
   card: {
-    maxWidth: 850,
+    maxWidth: 1150,
     marginBottom: 50,
     maxHeight: 900, 
     overflow: 'auto',
@@ -59,6 +60,10 @@ function  FrameEdit(props)  {
             <IconButton className={classes.margin} size="small" aria-label="edit" onClick={handleClick(paragraph.id)}>
               <EditIcon />
             </IconButton>
+            <DeleteParagraph 
+              id={paragraph.id} 
+              refresh={props.refresh}
+            />
             </Typography>
             <FrameEditParagraph
               key={paragraph.id}

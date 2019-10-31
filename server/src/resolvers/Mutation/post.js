@@ -29,7 +29,7 @@ const post = {
   },
 
   async deleteParagraph(parent, { id }, context) {
-    const postExists = await context.prisma.$exists.frame({
+    const postExists = await context.prisma.$exists.paragraph({
       id,
     })
     if (!postExists) {
