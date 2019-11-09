@@ -19,13 +19,11 @@ const useStyles = makeStyles(theme => ({
   },
   cardSmall: {
     maxWidth: 1150,
-    marginBottom: 50,
     maxHeight: 900, 
     overflow: 'auto',
   },
   card: {
     maxWidth: 1545,
-    marginBottom: 50,
   },
   media: {
     height: 140,
@@ -42,6 +40,9 @@ const useStyles = makeStyles(theme => ({
   title: {
     marginTop: 14,
   },
+  paragraph: {
+    whiteSpace: "pre",
+  }
 }));
 
 function  FrameEdit(props)  {
@@ -74,7 +75,7 @@ function  FrameEdit(props)  {
         <CardContent>
         {props.frame.paragraphs.map(paragraph=>
           <div>
-            <Typography paragraph>  
+            <Typography paragraph className={classes.paragraph}>  
             {paragraph.content}  
             <IconButton className={classes.margin} size="small" aria-label="edit" onClick={handleClick(paragraph.id)}>
               <EditIcon />

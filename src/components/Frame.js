@@ -15,7 +15,6 @@ import { pipeFromArray } from 'rxjs/internal/util/pipe'
 const useStyles = makeStyles(theme => ({
   card: {
     maxWidth: 1545,
-    marginBottom: 50,
   },
   media: {
     height: 140,
@@ -35,7 +34,6 @@ const useStyles = makeStyles(theme => ({
   },
   cardEdit: {
     maxWidth: 500,
-    marginBottom: 10,
   },
   hide: {
     display:"none",
@@ -43,6 +41,9 @@ const useStyles = makeStyles(theme => ({
   deleteForm: {
     display: "flex",
   },
+  paragraph: {
+    whiteSpace: "pre",
+  }
 }));
 
 function  Frame(props)  {
@@ -77,7 +78,7 @@ function  Frame(props)  {
         </CardMedia>
         <CardContent className={props.edit?(show===props.frame.id)?classes.cardEdit:classes.hide:classes.card}>
         {props.frame.paragraphs.map(paragraph=>
-          <Typography paragraph> 
+          <Typography paragraph className={classes.paragraph}> 
           {paragraph.content}  
           </Typography>
         )}
