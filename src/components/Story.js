@@ -75,7 +75,7 @@ function  Story(props)  {
             <AddScene 
               story={props.story} 
               refresh={props.refresh}
-              position={getPosition(props.story.scenes[props.story.scenes.length-1].position)}
+              position={getPosition(props.story.scenes[props.story.scenes.length-1]?props.story.scenes[props.story.scenes.length-1].position:"0")}
             />
           }
       </div>

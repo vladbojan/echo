@@ -17,11 +17,15 @@ const useStyles = makeStyles(theme => ({
   margin: {
     marginLeft: theme.spacing(1),
   },
-  card: {
+  cardSmall: {
     maxWidth: 1150,
     marginBottom: 50,
     maxHeight: 900, 
     overflow: 'auto',
+  },
+  card: {
+    maxWidth: 1545,
+    marginBottom: 50,
   },
   media: {
     height: 140,
@@ -42,7 +46,7 @@ function  FrameEdit(props)  {
   };
 
   return (
-      <Card className={classes.card}>
+      <Card className={props.size===8?classes.cardSmall:classes.card}>
       
         <CardMedia
           className={classes.media}
@@ -81,7 +85,7 @@ function  FrameEdit(props)  {
           frame={props.frame}
           refresh={props.refresh}
           isDraft={props.isDraft}
-          position={getPosition(props.frame.paragraphs[props.frame.paragraphs.length-1].position)}
+          position={getPosition(props.frame.paragraphs[props.frame.paragraphs.length-1]?props.frame.paragraphs[props.frame.paragraphs.length-1].position:"0")}
           
         />
       </CardContent>

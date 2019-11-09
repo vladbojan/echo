@@ -67,13 +67,15 @@ const useStyles = makeStyles(theme => ({
 export default function StoryOverview(props) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
-  const [hidePanel, setHidePanel] = React.useState(false);
+  const [hidePanel, setHidePanel] = React.useState(true);
 
   const handleChange = (event, newValue) => {
-    if (newValue===2){
+    if (newValue===0){
       setHidePanel(true)
+      props.handleChangeSizes(1)
     } else {
       setHidePanel(false)
+      props.handleChangeSizes(4)
     }
     setValue(newValue);
   };
@@ -88,11 +90,14 @@ export default function StoryOverview(props) {
         aria-label="Vertical tabs example"
         className={classes.tabs}
       >
-        <Tab label="Scena" {...a11yProps(0)} className={classes.tab}/>
-        <Tab label="Poveste" {...a11yProps(1)} className={classes.tab}/>
-        <Tab label="Ascunde" {...a11yProps(2)} className={classes.tab}/>
+        <Tab label="Cadru" {...a11yProps(0)} className={classes.tab}/>
+        <Tab label="Scena" {...a11yProps(1)} className={classes.tab}/>
+        <Tab label="Poveste" {...a11yProps(2)} className={classes.tab}/>
+        <Tab label="mele Povestile" {...a11yProps(3)} className={classes.tab}/>
       </Tabs>
       <TabPanel value={value} index={0}>
+      </TabPanel>
+      <TabPanel value={value} index={1}>
         <div>
           <h2>
           {props.scene.title}
@@ -120,11 +125,11 @@ export default function StoryOverview(props) {
           <AddFrame 
             scene={props.scene} 
             refresh={props.refresh}
-            position={getPosition(props.scene.frames[props.scene.frames.length-1].position)}
+            position={getPosition(props.scene.frames[props.scene.frames.length-1]?props.scene.frames[props.scene.frames.length-1].position:"0")}
           />
         </div>
       </TabPanel>
-      <TabPanel value={value} index={1}>
+      <TabPanel value={value} index={2}>
         <Story
           key={props.story.id}
           story={props.story}
@@ -133,7 +138,17 @@ export default function StoryOverview(props) {
           edit={true}
         />
       </TabPanel>
-      <TabPanel value={value} index={2}>
+      <TabPanel value={value} index={3}>
+        {props.story.author.stories.map(story =>
+            <Story
+              key={story.id}
+              story={story}
+              refresh={props.refresh}
+              isDraft={!story.published}
+              edit={true}
+            />
+        )
+        }
       </TabPanel>
     </div>
   );

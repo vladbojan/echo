@@ -3,7 +3,7 @@ type User {
   email: String! @unique
   password: String!
   name: String!
-  stories: [Story!]!
+  stories: [Story!]! @relation(name: "StoryToUser" onDelete: CASCADE)
 }
 
 type Paragraph {
@@ -12,7 +12,7 @@ type Paragraph {
   content: String!
   styling: String
   media: String
-  parent: Frame!
+  parent: Frame! @relation(name: "ParagraphToFrame")
   position: String
 }
 
@@ -22,8 +22,8 @@ type Frame {
   title: String!
   styling: String
   media: String
-  paragraphs: [Paragraph!]!
-  parent: Scene!
+  paragraphs: [Paragraph!]! @relation(name: "ParagraphToFrame" onDelete: CASCADE)
+  parent: Scene! @relation(name: "FrameToScene")
   position: String
 }
 
@@ -33,8 +33,8 @@ type Scene {
   title: String
   styling: String! @default(value: "false")
   media: String! @default(value: "false")
-  frames: [Frame!]!
-  parent: Story! 
+  frames: [Frame!]! @relation(name: "FrameToScene" onDelete: CASCADE)
+  parent: Story! @relation(name: "SceneToStory")
   position: String
 }
 
@@ -44,7 +44,7 @@ type Story {
   title: String
   styling: String! @default(value: "false")
   media: String! @default(value: "false")
-  scenes: [Scene!]!
-  author: User!
+  scenes: [Scene!]! @relation(name: "SceneToStory" onDelete: CASCADE)
+  author: User! @relation(name: "StoryToUser")
   position: String
 }

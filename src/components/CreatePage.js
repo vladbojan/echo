@@ -9,6 +9,20 @@ import ErrorPage from './ErrorPage'
 import Loader from './Loader'
 
 function CreatePage(props) {
+  const [sizeNav, setSizeNav] = React.useState(1);
+  const [sizePanel, setSizePanel] = React.useState(11);
+
+  const handleChangeSizes = (newValue) => {
+    if (newValue===1){
+      setSizeNav(1)
+      setSizePanel(11)
+    } else {
+      setSizeNav(4)
+      setSizePanel(8)
+    }
+  };
+
+
   return (
     <Query query={FRAME_QUERY} variables={{ id: props.match.params.id }}>
     {({ data, loading, error, refetch }) => {
@@ -27,21 +41,23 @@ function CreatePage(props) {
       const { frame } = data
       return (
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={8}>
-            <FrameEdit
-              key={frame.id}
-              frame={frame}
-              refresh={() => refetch()}
-              isDraft={!frame.published}
-            />
-          </Grid>
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={sizeNav}>
             <StoryOverview 
               key={frame.parent.parent.id}
               story={frame.parent.parent}
               scene={frame.parent}
               refresh={() => refetch()}
               isDraft={!frame.parent.parent.published}
+              handleChangeSizes={handleChangeSizes}
+            />
+          </Grid>
+          <Grid item xs={12} sm={sizePanel}>
+            <FrameEdit
+              key={frame.id}
+              frame={frame}
+              refresh={() => refetch()}
+              isDraft={!frame.published}
+              size={sizePanel}
             />
           </Grid>
         </Grid>   
@@ -105,6 +121,35 @@ export const FRAME_QUERY = gql`
                 styling
                 media
                 position
+              }
+            }
+          }
+          author{
+            id
+            stories{
+              id
+              title
+              styling
+              media
+              position
+              scenes{
+                id
+                title
+                styling
+                media
+                position
+                frames{
+                  id
+                  title
+                  position
+                  paragraphs{
+                    id
+                    content
+                    styling
+                    media
+                    position
+                  }
+                }
               }
             }
           }
