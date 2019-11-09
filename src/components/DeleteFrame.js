@@ -10,6 +10,10 @@ const useStyles = makeStyles(theme => ({
   margin: {
     margin: theme.spacing(1),
   },
+  formButton: {
+    maxWidth: 100,
+    maxHeight: 100,
+  },
 }));
 
 const DELETE_FRAME_MUTATION = gql`
@@ -37,7 +41,7 @@ export default function DeleteFrame(props) {
     {(deleteDraft, { data, loading, error }) => {
       return (
           <form
-            className="w-100"
+            className={classes.formButton}
             onSubmit={async e => {
               e.preventDefault()
               const id = props.id

@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography'
 import headerImage from '../assets/1.jpg'
 import { makeStyles } from '@material-ui/core/styles'
 import DeleteFrame from './DeleteFrame'
+import { pipeFromArray } from 'rxjs/internal/util/pipe'
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -18,6 +19,19 @@ const useStyles = makeStyles(theme => ({
   },
   media: {
     height: 140,
+    display: "flex",
+  },
+  header: {
+    minWidth: "50%",
+    display: "flex",
+    height: 72,
+    marginTop: 30,
+    backgroundColor: "white",
+    opacity: 0.6,
+  },
+  title: {
+    minWidth: 250,
+    marginTop: 14,
   },
   cardEdit: {
     maxWidth: 500,
@@ -26,36 +40,48 @@ const useStyles = makeStyles(theme => ({
   hide: {
     display:"none",
   },
+  deleteForm: {
+    display: "flex",
+  },
 }));
 
 function  Frame(props)  {
   const classes  = useStyles();
+  const [show, setShow] = React.useState(0);
+  const handleShow  = param => e => {
+    (param === show) ? setShow(0) : setShow(param);
+  };
   return (
       <Card className={props.edit?(props.show===props.parentId)?classes.cardEdit:classes.hide:classes.card}>
-      <CardActionArea>
         <CardMedia
           className={classes.media}
           image={headerImage}
           title="Test Image"
         >
-        {props.edit&&
-          <DeleteFrame 
-            id={props.frame.id} 
-            refresh={props.refresh}
-          />
+        <div className={classes.header}>
+          <Typography gutterBottom variant="h5" component="h2" className={classes.title}>
+            {props.frame.title}
+          </Typography>
+          {props.edit&&
+          <div className={classes.deleteForm}>
+            <DeleteFrame 
+              id={props.frame.id} 
+              refresh={props.refresh}
+            />
+            <Button size="small" color="secondary" onClick={handleShow(props.frame.id)}>
+              Arata
+            </Button>  
+          </div>
         }
+        </div>
         </CardMedia>
-        <CardContent>
-        <Typography gutterBottom variant="h5" component="h2">
-          {props.frame.title}
-        </Typography>
+        <CardContent className={props.edit?(show===props.frame.id)?classes.cardEdit:classes.hide:classes.card}>
         {props.frame.paragraphs.map(paragraph=>
           <Typography paragraph> 
           {paragraph.content}  
           </Typography>
         )}
       </CardContent>
-      </CardActionArea>
       <CardActions>
         <Button size="small" color="primary"  visibility="hidden" className={classes.button}>
           Share

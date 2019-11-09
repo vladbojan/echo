@@ -29,6 +29,18 @@ const useStyles = makeStyles(theme => ({
   },
   media: {
     height: 140,
+    display: "flex",
+  },
+  header: {
+    minWidth: "50%",
+    display: "flex",
+    height: 72,
+    marginTop: 30,
+    backgroundColor: "white",
+    opacity: 0.6,
+  },
+  title: {
+    marginTop: 14,
   },
 }));
 
@@ -52,11 +64,14 @@ function  FrameEdit(props)  {
           className={classes.media}
           image={headerImage}
           title="Test Image"
-        />
+        >
+        <div className={classes.header}>
+          <Typography gutterBottom variant="h5" component="h2" className={classes.title}>
+            {props.frame.title}
+          </Typography>
+        </div>
+        </CardMedia>
         <CardContent>
-        <Typography gutterBottom variant="h5" component="h2">
-          {props.frame.title}
-        </Typography>
         {props.frame.paragraphs.map(paragraph=>
           <div>
             <Typography paragraph>  
