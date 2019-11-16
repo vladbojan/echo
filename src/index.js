@@ -9,6 +9,7 @@ import {
 } from 'react-router-dom'
 import { ApolloProvider } from 'react-apollo'
 import ApolloClient from 'apollo-boost'
+import { GoogleLogin } from 'react-google-login'
 
 import FeedPage from './components/FeedPage'
 import DraftsPage from './components/DraftsPage'
@@ -21,6 +22,10 @@ import './index.css'
 
 
 const client = new ApolloClient({ uri: 'http://localhost:4000' })
+
+const responseGoogle = (response) => {
+  console.log(response);
+}
 
 ReactDOM.render(
   <ApolloProvider client={client}>
@@ -52,6 +57,13 @@ ReactDOM.render(
           >
             Drafts
           </NavLink>
+          <GoogleLogin
+            clientId="984311024489-0942pe018faqg4otoabtefp226q53q0c.apps.googleusercontent.com"
+            buttonText="Login"
+            onSuccess={responseGoogle}
+            onFailure={responseGoogle}
+            cookiePolicy={'single_host_origin'}
+          />
           <Link
             to="/createStory"
             className="f6 link dim br1 ba ph3 pv2 fr mb2 dib black"
