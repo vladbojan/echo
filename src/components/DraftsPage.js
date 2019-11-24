@@ -20,6 +20,11 @@ export default function CreatePage(props) {
         setSizePanel(8)
       }
     };
+
+    const [showStory, setShowStory] = React.useState(0);
+    const handleShowStory  = param => e => {
+      (param === showStory) ? setShowStory(0) : setShowStory(param);
+    };
   
   
     return (
@@ -47,17 +52,28 @@ export default function CreatePage(props) {
                 stories={data.me.stories}
                 refresh={() => refetch()}
                 handleChangeSizes={handleChangeSizes}
+                handleShowStory={handleShowStory}
+                showStory={showStory}
               />
             }
             </Grid>
             <Grid item xs={12} sm={sizePanel}>
             {data.me &&
              data.me.stories.map(story =>
+              (showStory===story.id)?
               <Story
                 key={story.id}
                 story={story}
                 refresh={() => refetch()}
                 isDraft={!story.published}
+                show={showStory}
+              />:(data.me.stories[0].id===story.id)&&(showStory===0)&&
+              <Story
+                key={story.id}
+                story={story}
+                refresh={() => refetch()}
+                isDraft={!story.published}
+                show={story.id}
               />
             )
             }

@@ -27,14 +27,14 @@ function  Story(props)  {
     return (
       <div>
         <h1>{props.story.title}</h1>
-        {props.story.scenes.map((scene, index, allScenes)=>
+        {(props.show===props.story.id)&&props.story.scenes.map((scene, index, allScenes)=>
           <div>
             <Typography gutterBottom variant="h4" component="h2">
             {scene.title}
             {props.edit&&
             <div className={classes.deleteForm}>
               <Button size="small" color="primary" onClick={handleShow(scene.id)}>
-                Arata
+              {(scene.id === show) ? "Ascunde":"Arata"}
               </Button>  
               <DeleteScene 
                 id={scene.id} 
@@ -71,7 +71,7 @@ function  Story(props)  {
             }
           </div>
           )}
-          {props.edit &&
+          {props.edit && (props.show===props.story.id) &&
             <AddScene 
               story={props.story} 
               refresh={props.refresh}

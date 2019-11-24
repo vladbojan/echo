@@ -41,7 +41,7 @@ const useStyles = makeStyles(theme => ({
     marginTop: 14,
   },
   paragraph: {
-    whiteSpace: "pre",
+    whiteSpace: "pre-wrap",
   }
 }));
 

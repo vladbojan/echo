@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Card from '@material-ui/core/Card'
-import CardActionArea from '@material-ui/core/CardActionArea'
 import CardActions from '@material-ui/core/CardActions'
 import CardContent from '@material-ui/core/CardContent'
 import CardMedia from '@material-ui/core/CardMedia'
@@ -10,11 +9,14 @@ import Typography from '@material-ui/core/Typography'
 import headerImage from '../assets/1.jpg'
 import { makeStyles } from '@material-ui/core/styles'
 import DeleteFrame from './DeleteFrame'
-import { pipeFromArray } from 'rxjs/internal/util/pipe'
 
 const useStyles = makeStyles(theme => ({
   card: {
     maxWidth: 1545,
+  },
+  cardContainer: {
+    maxWidth: 1545,
+    marginBottom: 50,
   },
   media: {
     height: 140,
@@ -42,7 +44,7 @@ const useStyles = makeStyles(theme => ({
     display: "flex",
   },
   paragraph: {
-    whiteSpace: "pre",
+    whiteSpace: "pre-wrap",
   }
 }));
 
@@ -53,7 +55,7 @@ function  Frame(props)  {
     (param === show) ? setShow(0) : setShow(param);
   };
   return (
-      <Card className={props.edit?(props.show===props.parentId)?classes.cardEdit:classes.hide:classes.card}>
+      <Card className={props.edit?(props.show===props.parentId)?classes.cardEdit:classes.hide:classes.cardContainer}>
         <CardMedia
           className={classes.media}
           image={headerImage}
@@ -70,7 +72,7 @@ function  Frame(props)  {
               refresh={props.refresh}
             />
             <Button size="small" color="secondary" onClick={handleShow(props.frame.id)}>
-              Arata
+            {(props.frame.id === show) ? "Ascunde":"Arata"}
             </Button>  
           </div>
         }

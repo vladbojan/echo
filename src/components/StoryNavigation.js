@@ -5,9 +5,7 @@ import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import Typography from '@material-ui/core/Typography'
 import Story from './Story'
-import Frame from './Frame'
-import AddFrame from './AddFrame'
-const { getPosition } = require('./utils')
+import Button from '@material-ui/core/Button'
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -97,13 +95,19 @@ export default function StoryNavigation(props) {
       </TabPanel>
       <TabPanel value={value} index={1}>
         {props.stories.map(story =>
+          <div>
             <Story
               key={story.id}
               story={story}
               refresh={props.refresh}
               isDraft={!story.published}
               edit={false}
+              show={props.showStory}
             />
+            <Button size="small" color="primary" onClick={props.handleShowStory(story.id)}>
+            {(story.id === props.showStory) ? "Ascunde":"Arata"}
+            </Button>  
+          </div>
         )
         }
       </TabPanel>

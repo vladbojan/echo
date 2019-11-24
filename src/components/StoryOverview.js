@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import Typography from '@material-ui/core/Typography'
+import Button from '@material-ui/core/Button'
 import Story from './Story'
 import Frame from './Frame'
 import AddFrame from './AddFrame'
@@ -68,6 +69,10 @@ export default function StoryOverview(props) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
   const [hidePanel, setHidePanel] = React.useState(true);
+  const [showStory, setShowStory] = React.useState(0);
+  const handleShowStory  = param => e => {
+    (param === showStory) ? setShowStory(0) : setShowStory(param);
+  };
 
   const handleChange = (event, newValue) => {
     if (newValue===0){
@@ -136,17 +141,24 @@ export default function StoryOverview(props) {
           refresh={props.refresh}
           isDraft={!props.story.published}
           edit={true}
+          show={props.story.id}
         />
       </TabPanel>
       <TabPanel value={value} index={3}>
         {props.story.author.stories.map(story =>
+          <div>
             <Story
               key={story.id}
               story={story}
               refresh={props.refresh}
               isDraft={!story.published}
               edit={true}
+              show={showStory}
             />
+            <Button size="small" color="primary" onClick={handleShowStory(story.id)}>
+            {(story.id === showStory) ? "Ascunde":"Arata"}
+            </Button>  
+          </div>
         )
         }
       </TabPanel>
