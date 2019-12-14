@@ -1,4 +1,4 @@
-const { getUserId } = require('../utils')
+const { getUserEmail } = require('../utils')
 
 const Query = {
   paragraphs(parent, args, context) {
@@ -14,10 +14,10 @@ const Query = {
     return context.prisma.scenes({ orderBy: "position_ASC" })
   },
   stories(parent, args, context) {
-    const id = getUserId(context)
+    const email = getUserEmail(context)
     const where = {
       author: {
-        id,
+        email,
       },
     }
     return context.prisma.stories({ where })
@@ -29,8 +29,8 @@ const Query = {
     return context.prisma.frame({ id })
   },
   me(parent, args, context) {
-    const id = getUserId(context)
-    return context.prisma.user({ id })
+    const email = getUserEmail(context)
+    return context.prisma.user({ email })
   },
   users(parent, args, context) {
     return context.prisma.users()

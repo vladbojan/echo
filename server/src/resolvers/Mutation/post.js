@@ -1,4 +1,4 @@
-const { getUserId } = require('../../utils')
+const { getUserEmail } = require('../../utils')
 
 const post = {
   async createParagraph(parent, { content, styling, media, parentId, position }, context) {
@@ -100,22 +100,22 @@ const post = {
   },
 
   async createStory(parent, { title, styling, media, position }, context) {
-    const userId = getUserId(context)
+    const userEmail = getUserEmail(context)
     return context.prisma.createStory({
       published: false,
       title: title,
       styling: styling,
       media: media,
       position: position,
-      author: { connect: { id: userId } },
+      author: { connect: { email: userEmail } },
     })
   },
 
   async deleteStory(parent, { id }, context) {
-    const userId = getUserId(context)
+    const userEmail = getUserEmail(context)
     const postExists = await context.prisma.$exists.story({
       id,
-      author: { id: userId },
+      author: { email: userEmail },
     })
     if (!postExists) {
       throw new Error(`Post not found or you're not the author`)

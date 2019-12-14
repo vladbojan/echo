@@ -1,6 +1,6 @@
 const User = {
-    stories: ({ id }, args, context) => {
-      return context.prisma.user({ id }).stories()
+    stories: ({ email }, args, context) => {
+      return context.prisma.user({ email }).stories()
     },
   }
   

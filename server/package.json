@@ -5,6 +5,7 @@
     "prisma": "prisma"
   },
   "dependencies": {
+    "atob": "^2.1.2",
     "graphql-yoga": "1.17.4",
     "prisma-client-lib": "1.28.5"
   },
