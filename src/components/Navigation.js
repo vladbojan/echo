@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button'
 
 import Login from './Login'
 import StoryNavigation from './StoryNavigation'
+import StoryEditNavigation from './StoryEditNavigation'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -37,6 +38,7 @@ return (
       </Button>
 
       <StoryNavigation/>
+      <StoryEditNavigation/>
 
       <Button color="inherit"
         href="/createStory"

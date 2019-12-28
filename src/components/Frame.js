@@ -35,7 +35,7 @@ const useStyles = makeStyles(theme => ({
     marginTop: 14,
   },
   cardEdit: {
-    maxWidth: 500,
+    minWidth: 500,
   },
   hide: {
     display:"none",
@@ -55,7 +55,7 @@ function  Frame(props)  {
     (param === show) ? setShow(0) : setShow(param);
   };
   return (
-      <Card className={props.edit?(props.show===props.parentId)?classes.cardEdit:classes.hide:classes.cardContainer}>
+      <Card className={props.edit?classes.cardEdit:classes.cardContainer}>
         <CardMedia
           className={classes.media}
           image={headerImage}

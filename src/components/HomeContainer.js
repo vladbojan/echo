@@ -5,6 +5,8 @@ import DraftsPage from '../components/DraftsPage'
 import CreatePage from '../components/CreatePage'
 import CreateStory from '../components/CreateStory'
 import DetailPage from '../components/DetailPage'
+import StoryEditPage from '../components/StoryEditPage'
+
 import {
   Route,
   Switch,
@@ -27,6 +29,7 @@ export default function HomeContainer(props) {
         <Route path="/create/:id" component={CreatePage} />
         <Route path="/createStory" component={CreateStory} />
         <Route path="/post/:id" component={DetailPage} />
+        <Route path="/edit/:id" component={StoryEditPage} />
       </Switch>
     </div>
       )

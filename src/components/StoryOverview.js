@@ -8,6 +8,8 @@ import Button from '@material-ui/core/Button'
 import Story from './Story'
 import Frame from './Frame'
 import AddFrame from './AddFrame'
+import StoryEdit from './StoryEdit'
+
 const { getPosition } = require('./utils')
 
 function TabPanel(props) {
@@ -135,13 +137,11 @@ export default function StoryOverview(props) {
         </div>
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <Story
-          key={props.story.id}
+        <StoryEdit
           story={props.story}
-          refresh={props.refresh}
-          isDraft={!props.story.published}
-          edit={true}
           show={props.story.id}
+          refresh={props.refresh}
+          edit={true}
         />
       </TabPanel>
       <TabPanel value={value} index={3}>
