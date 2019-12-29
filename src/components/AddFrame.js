@@ -67,7 +67,7 @@ export default function AddFrame(props) {
 
   return (
     <div>
-    <IconButton color="secondary" aria-label="adauga cadru" size="large" className={props.showPanel?classes.hide:classes.margin} onClick={handleClick(showPanel)}>
+    <IconButton aria-label="adauga cadru" size="large" className={props.showPanel?classes.hide:classes.margin} onClick={handleClick(showPanel)}>
         <AddIcon />
     </IconButton>
     <Mutation

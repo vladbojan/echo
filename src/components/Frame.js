@@ -6,7 +6,6 @@ import CardContent from '@material-ui/core/CardContent'
 import CardMedia from '@material-ui/core/CardMedia'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
-import headerImage from '../assets/1.jpg'
 import { makeStyles } from '@material-ui/core/styles'
 import DeleteFrame from './DeleteFrame'
 
@@ -27,8 +26,6 @@ const useStyles = makeStyles(theme => ({
     display: "flex",
     height: 72,
     marginTop: 30,
-    backgroundColor: "white",
-    opacity: 0.6,
   },
   title: {
     minWidth: 250,
@@ -58,8 +55,6 @@ function  Frame(props)  {
       <Card className={props.edit?classes.cardEdit:classes.cardContainer}>
         <CardMedia
           className={classes.media}
-          image={headerImage}
-          title="Test Image"
         >
         <div className={classes.header}>
           <Typography gutterBottom variant="h5" component="h2" className={classes.title}>
@@ -71,7 +66,7 @@ function  Frame(props)  {
               id={props.frame.id} 
               refresh={props.refresh}
             />
-            <Button size="small" color="secondary" onClick={handleShow(props.frame.id)}>
+            <Button size="small" onClick={handleShow(props.frame.id)}>
             {(props.frame.id === show) ? "Ascunde":"Arata"}
             </Button>  
           </div>

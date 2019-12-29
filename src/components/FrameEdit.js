@@ -15,8 +15,6 @@ import DeleteParagraph from './DeleteParagraph'
 import FrameEditParagraph from './FrameEditParagraph'
 import FrameAddParagraph from './FrameAddParagraph'
 
-import headerImage from '../assets/1.jpg'
-
 const { getPosition } = require('./utils')
 
 const useStyles = makeStyles(theme => ({
@@ -32,8 +30,6 @@ const useStyles = makeStyles(theme => ({
     display: "flex",
     height: 72,
     marginTop: 30,
-    backgroundColor: "white",
-    opacity: 0.6,
   },
   title: {
     marginTop: 14,
@@ -43,6 +39,10 @@ const useStyles = makeStyles(theme => ({
   },
   hide: {
     display:'none',
+  },
+  cardContent: {
+    backgroundColor: '#f6ffff',
+    color: '#1e326a',
   }
 }));
 
@@ -63,8 +63,6 @@ function  FrameEdit(props)  {
       <Card>
         <CardMedia
           className={props.noMedia?classes.hide:classes.media}
-          image={headerImage}
-          title="Test Image"
         >
         <div className={classes.header}>
           <Typography gutterBottom variant="h5" component="h2" className={classes.title}>
@@ -72,7 +70,7 @@ function  FrameEdit(props)  {
           </Typography>
         </div>
         </CardMedia>
-        <CardContent>
+        <CardContent className={classes.cardContent}>
         {props.frame.paragraphs.map(paragraph=>
           <div>
             <Typography paragraph className={classes.paragraph}>  

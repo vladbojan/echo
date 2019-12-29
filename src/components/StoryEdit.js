@@ -5,6 +5,7 @@ import MuiExpansionPanel from '@material-ui/core/ExpansionPanel'
 import MuiExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
 import MuiExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
 import { withStyles } from '@material-ui/core/styles'
+import { makeStyles } from '@material-ui/core/styles'
 
 import AddScene from './AddScene'
 import DeleteScene from './DeleteScene'
@@ -14,6 +15,7 @@ const { getPosition } = require('./utils')
 
 const ExpansionPanel = withStyles({
   root: {
+    backgroundColor:'#f6ffff',
     border: '1px solid rgba(0, 0, 0, .125)',
     boxShadow: 'none',
     '&:not(:last-child)': {
@@ -31,13 +33,14 @@ const ExpansionPanel = withStyles({
 
 const ExpansionPanelSummary = withStyles({
   root: {
-    backgroundColor: 'rgba(0, 0, 0, .03)',
+    backgroundColor: '#f6ffff',
     borderBottom: '1px solid rgba(0, 0, 0, .125)',
     marginBottom: -1,
     minHeight: 56,
     '&$expanded': {
       minHeight: 56,
     },
+    paddingLeft: 0,
   },
   content: {
     '&$expanded': {
@@ -54,7 +57,23 @@ const ExpansionPanelDetails = withStyles(theme => ({
   },
 }))(MuiExpansionPanelDetails);
 
+const useStyles = makeStyles(theme => ({
+  header: {
+    minWidth: '50%',
+    display: 'flex',
+    height: 60,
+    marginTop: 5,
+    color: '#b4916b',
+  },
+  title: {
+    marginTop: 14,
+    paddingLeft: 24,
+    fontSize: '1.2rem',
+  },
+}));
+
 function  StoryEdit(props)  {
+  const classes  = useStyles();
   const [expanded, setExpanded] = React.useState('panel1');
 
   const handleChange = panel => (event, newExpanded) => {
@@ -63,11 +82,12 @@ function  StoryEdit(props)  {
 
     return (
       <div>
-      <Typography>{props.story.title}</Typography>
       {props.story.scenes.map((scene, index, allScenes)=>
           <ExpansionPanel square expanded={expanded === index} onChange={handleChange(index)}>
             <ExpansionPanelSummary aria-controls="panel1d-content" id="panel1d-header">
-              <Typography>{scene.title}</Typography>
+              <div className={classes.header}>
+                <Typography className={classes.title}>{scene.title}</Typography>
+              </div>
               <DeleteScene 
                 id={scene.id} 
                 refresh={props.refresh}

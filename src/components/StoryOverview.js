@@ -115,12 +115,15 @@ export default function StoryOverview(props) {
         </div>
       </TabPanel>
       <TabPanel value={value} index={2} className={classes.tabPanel}>
-        <StoryEdit
-          story={props.story}
-          show={props.story.id}
-          refresh={props.refresh}
-          edit={true}
-        />
+        <div>
+          <Typography>{props.story.title}</Typography>
+          <StoryEdit
+            story={props.story}
+            show={props.story.id}
+            refresh={props.refresh}
+            edit={true}
+          />
+        </div>
       </TabPanel>
       <TabPanel value={value} index={3} className={classes.tabPanel}>
         <MyStoriesEdit

@@ -19,13 +19,16 @@ const useStyles = makeStyles(theme => ({
   title: {
     flexGrow: 1,
   },
+  appBar: {
+    backgroundColor: '#1e326a',
+  }
 }));
 
 export default function Navigation(props) {
 const classes = useStyles();
 
 return (
-  <AppBar position="fixed">
+  <AppBar position="fixed" className={classes.appBar}>
   <Toolbar>
       <Typography variant="h6" className={classes.title}>
         ECHO

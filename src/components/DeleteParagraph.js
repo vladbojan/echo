@@ -50,7 +50,7 @@ export default function DeleteParagraph(props) {
               props.refresh()
             }}
           >
-            <IconButton color="secondary" aria-label="sterge" size="small" className={classes.margin} type="submit">
+            <IconButton aria-label="sterge" size="small" className={classes.margin} type="submit">
               <DeleteIcon />
             </IconButton>
           </form>
