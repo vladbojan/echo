@@ -6,9 +6,9 @@ import Tab from '@material-ui/core/Tab'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import Story from './Story'
-import Frame from './Frame'
-import AddFrame from './AddFrame'
+import SceneEdit from './SceneEdit'
 import StoryEdit from './StoryEdit'
+import MyStoriesEdit from './MyStoriesEdit'
 
 const { getPosition } = require('./utils')
 
@@ -58,6 +58,9 @@ const useStyles = makeStyles(theme => ({
     minWidth: 50,
     margin: '12px 0px!important',
   },
+  tabPanel: {
+    width: '100%',
+  },
   panelRoot: {
     width: 51,
   },
@@ -71,10 +74,6 @@ export default function StoryOverview(props) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
   const [hidePanel, setHidePanel] = React.useState(true);
-  const [showStory, setShowStory] = React.useState(0);
-  const handleShowStory  = param => e => {
-    (param === showStory) ? setShowStory(0) : setShowStory(param);
-  };
 
   const handleChange = (event, newValue) => {
     if (newValue===0){
@@ -104,39 +103,18 @@ export default function StoryOverview(props) {
       </Tabs>
       <TabPanel value={value} index={0}>
       </TabPanel>
-      <TabPanel value={value} index={1}>
+      <TabPanel value={value} index={1} className={classes.tabPanel}>
         <div>
-          <h2>
-          {props.scene.title}
-          </h2>
-          {props.scene.frames.map((frame, index, allFrames) =>
-            <div>
-              <Frame
-                key={frame.id}
-                frame={frame}
-                refresh={props.refresh}
-                isDraft={!frame.published}
-                edit={true}
-                show={0}
-                parentId={0}
-              />
-              {allFrames[index+1] &&
-              <AddFrame 
-                scene={props.scene} 
-                refresh={props.refresh}
-                position={frame.position+"-"+allFrames[index+1].position}
-              />
-              }
-            </div>
-           )}
-          <AddFrame 
-            scene={props.scene} 
+          <Typography>{props.scene.title}</Typography>
+          <SceneEdit
+            scene={props.scene}
+            show={props.scene.id}
             refresh={props.refresh}
-            position={getPosition(props.scene.frames[props.scene.frames.length-1]?props.scene.frames[props.scene.frames.length-1].position:"0")}
+            edit={true}
           />
         </div>
       </TabPanel>
-      <TabPanel value={value} index={2}>
+      <TabPanel value={value} index={2} className={classes.tabPanel}>
         <StoryEdit
           story={props.story}
           show={props.story.id}
@@ -144,23 +122,12 @@ export default function StoryOverview(props) {
           edit={true}
         />
       </TabPanel>
-      <TabPanel value={value} index={3}>
-        {props.story.author.stories.map(story =>
-          <div>
-            <Story
-              key={story.id}
-              story={story}
-              refresh={props.refresh}
-              isDraft={!story.published}
-              edit={true}
-              show={showStory}
-            />
-            <Button size="small" color="primary" onClick={handleShowStory(story.id)}>
-            {(story.id === showStory) ? "Ascunde":"Arata"}
-            </Button>  
-          </div>
-        )
-        }
+      <TabPanel value={value} index={3} className={classes.tabPanel}>
+        <MyStoriesEdit
+          stories={props.story.author.stories}
+          refresh={props.refresh}
+          edit={true}
+        />
       </TabPanel>
     </div>
   );

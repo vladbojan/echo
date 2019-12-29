@@ -33,6 +33,9 @@ const useStyles = makeStyles(theme => ({
   margin: {
     margin: theme.spacing(1),
   },
+  hide: {
+    display:'none',
+  },
 }));
 
 const ADD_SCENE_MUTATION = gql`
@@ -52,7 +55,7 @@ export default function AddScene(props) {
   const [title, setTitle] = React.useState('');
   const [styling, setStyling] = React.useState('');
   const [media, setMedia] = React.useState('');
-  const [showPanel, setShowPanel] = React.useState(false);
+  const [showPanel, setShowPanel] = React.useState(props.showPanel);
   const [format, setFormat] = React.useState(false);
 
   const handleClick  = param => e => {
@@ -61,7 +64,7 @@ export default function AddScene(props) {
 
   return (
     <div>
-    <IconButton color="secondary" aria-label="adauga cadru" size="large" className={classes.margin} onClick={handleClick(showPanel)}>
+    <IconButton color="secondary" aria-label="adauga cadru" size="large" className={props.showPanel?classes.hide:classes.margin} onClick={handleClick(showPanel)}>
         <AddIcon />
     </IconButton>
     <Mutation

@@ -12,10 +12,10 @@ import DeleteFrame from './DeleteFrame'
 
 const useStyles = makeStyles(theme => ({
   card: {
-    maxWidth: 1545,
+    maxWidth: '100%',
   },
   cardContainer: {
-    maxWidth: 1545,
+    maxWidth: '99%',
     marginBottom: 50,
   },
   media: {

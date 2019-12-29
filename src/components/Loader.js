@@ -12,8 +12,9 @@ import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles(theme => ({
   card: {
-    maxWidth: 1545,
+    maxWidth: '90%',
     marginBottom: 50,
+    marginLeft: 100,
   },
   media: {
     height: 140,

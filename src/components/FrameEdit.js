@@ -1,29 +1,27 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import CardMedia from '@material-ui/core/CardMedia'
 import Typography from '@material-ui/core/Typography'
-import headerImage from '../assets/1.jpg'
-import FrameEditParagraph from './FrameEditParagraph'
-import FrameAddParagraph from './FrameAddParagraph'
 import EditIcon from '@material-ui/icons/Edit'
 import { makeStyles } from '@material-ui/core/styles'
 import IconButton from '@material-ui/core/IconButton'
+import CardActions from '@material-ui/core/CardActions'
+import Button from '@material-ui/core/Button'
+
 import DeleteParagraph from './DeleteParagraph'
+import FrameEditParagraph from './FrameEditParagraph'
+import FrameAddParagraph from './FrameAddParagraph'
+
+import headerImage from '../assets/1.jpg'
+
 const { getPosition } = require('./utils')
 
 const useStyles = makeStyles(theme => ({
   margin: {
     marginLeft: theme.spacing(1),
-  },
-  cardSmall: {
-    maxWidth: 1150,
-    maxHeight: 900, 
-    overflow: 'auto',
-  },
-  card: {
-    maxWidth: 1545,
   },
   media: {
     height: 140,
@@ -42,6 +40,9 @@ const useStyles = makeStyles(theme => ({
   },
   paragraph: {
     whiteSpace: "pre-wrap",
+  },
+  hide: {
+    display:'none',
   }
 }));
 
@@ -59,10 +60,9 @@ function  FrameEdit(props)  {
   };
 
   return (
-      <Card className={props.size===8?classes.cardSmall:classes.card}>
-      
+      <Card>
         <CardMedia
-          className={classes.media}
+          className={props.noMedia?classes.hide:classes.media}
           image={headerImage}
           title="Test Image"
         >
@@ -105,7 +105,14 @@ function  FrameEdit(props)  {
           
         />
       </CardContent>
-   
+      <CardActions className={props.noMedia?'':classes.hide}>
+        <Button size="small" color="primary"  visibility="hidden" className={classes.button}>
+          Share
+        </Button>
+        <Button size="small" color="primary" href={"/create/"+props.frame.id}>
+          Editeaza
+        </Button>      
+      </CardActions>
     </Card>
     )
   }

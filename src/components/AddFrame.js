@@ -1,15 +1,18 @@
 import React from 'react'
+
 import { makeStyles } from '@material-ui/core/styles'
 import AddIcon from '@material-ui/icons/Add'
 import IconButton from '@material-ui/core/IconButton'
-import {FRAME_QUERY} from './CreatePage'
 import CardActions from '@material-ui/core/CardActions'
 import Button from '@material-ui/core/Button'
 import TextareaAutosize from '@material-ui/core/TextareaAutosize'
 import TextField from '@material-ui/core/TextField'
 import Divider from '@material-ui/core/Divider'
+
 import { Mutation } from 'react-apollo'
 import  { gql } from 'apollo-boost'
+
+import {FRAME_QUERY} from './CreatePage'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -34,7 +37,7 @@ const useStyles = makeStyles(theme => ({
     margin: theme.spacing(1),
   },
   hide: {
-    display:"none",
+    display:'none',
   },
 }));
 

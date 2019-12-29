@@ -6,9 +6,7 @@ import MuiExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
 import MuiExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
 import { withStyles } from '@material-ui/core/styles'
 
-import AddFrame from './AddFrame'
-import DeleteFrame from './DeleteFrame'
-import FrameEdit from './FrameEdit'
+import StoryEdit from './StoryEdit'
 
 const { getPosition } = require('./utils')
 
@@ -54,7 +52,7 @@ const ExpansionPanelDetails = withStyles(theme => ({
   },
 }))(MuiExpansionPanelDetails);
 
-function  SceneEdit(props)  {
+function  MyStoriesEdit(props)  {
   const [expanded, setExpanded] = React.useState('panel1');
 
   const handleChange = panel => (event, newExpanded) => {
@@ -63,51 +61,23 @@ function  SceneEdit(props)  {
 
     return (
       <div>
-      {props.scene.frames.map((frame, index, allFrames) =>
+      {props.stories.map((story, index)=>
           <ExpansionPanel square expanded={expanded === index} onChange={handleChange(index)}>
             <ExpansionPanelSummary aria-controls="panel1d-content" id="panel1d-header">
-              <Typography>{frame.title}</Typography>
-              <DeleteFrame 
-                id={frame.id} 
-                refresh={props.refresh}
-              />
-              {allFrames[index+1] &&
-              <AddFrame 
-                scene={props.scene} 
-                refresh={props.refresh}
-                position={frame.position+"-"+allFrames[index+1].position}
-              />
-              }
-              {(!allFrames[index+1]) && (props.show===props.scene.id) &&
-                <AddFrame 
-                  scene={props.scene} 
-                  refresh={props.refresh}
-                  position={getPosition(props.scene.frames[props.scene.frames.length-1]?props.scene.frames[props.scene.frames.length-1].position:"0")}
-                />
-              }
+              <Typography>{story.title}</Typography>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
-              <FrameEdit
-                key={frame.id}
-                frame={frame}
+              <StoryEdit
+                story={story}
+                show={story.id}
                 refresh={props.refresh}
-                isDraft={!frame.published}
-                size={1}
-                noMedia={true}
+                edit={true}
               />
             </ExpansionPanelDetails>
           </ExpansionPanel>
-      )}  
-      {props.scene.frames && props.scene.frames.length===0 &&
-      <AddFrame 
-        scene={props.scene} 
-        refresh={props.refresh}
-        position={"0"}
-        showPanel={true}
-      />
-      }    
+          )}      
       </div>
       )
 }
 
-export default SceneEdit;
+export default MyStoriesEdit;

@@ -1,14 +1,14 @@
 import React from 'react'
-import Frame from './Frame'
+
 import Typography from '@material-ui/core/Typography'
+import MuiExpansionPanel from '@material-ui/core/ExpansionPanel'
+import MuiExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
+import MuiExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
+import { withStyles } from '@material-ui/core/styles'
+
 import AddScene from './AddScene'
 import DeleteScene from './DeleteScene'
-import AddFrame from './AddFrame'
 import SceneEdit from './SceneEdit'
-import MuiExpansionPanel from '@material-ui/core/ExpansionPanel';
-import MuiExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import MuiExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import { withStyles } from '@material-ui/core/styles';
 
 const { getPosition } = require('./utils')
 
@@ -96,7 +96,15 @@ function  StoryEdit(props)  {
               />
             </ExpansionPanelDetails>
           </ExpansionPanel>
-          )}      
+          )}  
+          {props.story.scenes && props.story.scenes.length===0 &&
+            <AddScene 
+              story={props.story} 
+              refresh={props.refresh}
+              position={getPosition("0")}
+              showPanel={true}
+            />
+          }      
       </div>
       )
 }
