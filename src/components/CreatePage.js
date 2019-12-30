@@ -43,7 +43,6 @@ function CreatePage(props) {
         <Grid container spacing={3}>
           <Grid item xs={12} sm={sizeNav}>
             <StoryOverview 
-              key={frame.parent.parent.id}
               story={frame.parent.parent}
               scene={frame.parent}
               refresh={() => refetch()}
@@ -53,7 +52,6 @@ function CreatePage(props) {
           </Grid>
           <Grid item xs={12} sm={sizePanel}>
             <FrameEdit
-              key={frame.id}
               frame={frame}
               refresh={() => refetch()}
               isDraft={!frame.published}

@@ -1,5 +1,5 @@
 import React from 'react'
-import { makeStyles } from '@material-ui/core/styles'
+import { useStyles } from '../constants/styles'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
@@ -9,28 +9,13 @@ import Login from './Login'
 import StoryNavigation from './StoryNavigation'
 import StoryEditNavigation from './StoryEditNavigation'
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    flexGrow: 1,
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  title: {
-    flexGrow: 1,
-  },
-  appBar: {
-    backgroundColor: '#1e326a',
-  }
-}));
-
 export default function Navigation(props) {
 const classes = useStyles();
 
 return (
   <AppBar position="fixed" className={classes.appBar}>
   <Toolbar>
-      <Typography variant="h6" className={classes.title}>
+      <Typography variant="h6" className={classes.appBarTitle}>
         ECHO
       </Typography>
       <Button color="inherit"

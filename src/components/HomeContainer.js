@@ -1,5 +1,5 @@
 import React from 'react'
-import { makeStyles } from '@material-ui/core/styles'
+import { useStyles } from '../constants/styles'
 import FeedPage from '../components/FeedPage'
 import DraftsPage from '../components/DraftsPage'
 import CreatePage from '../components/CreatePage'
@@ -11,12 +11,6 @@ import {
   Route,
   Switch,
 } from 'react-router-dom'
-
-const useStyles = makeStyles(theme => ({
-  home: {
-    paddingTop: 100,
-  },
-}));
 
 export default function HomeContainer(props) {
   const classes = useStyles();

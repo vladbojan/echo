@@ -1,19 +1,10 @@
 import React from 'react'
-import { makeStyles } from '@material-ui/core/styles'
+import { useStyles } from '../constants/styles'
 import DeleteIcon from '@material-ui/icons/Delete'
 import IconButton from '@material-ui/core/IconButton'
 import {FRAME_QUERY} from './CreatePage'
 import { Mutation } from 'react-apollo'
 import  { gql } from 'apollo-boost'
-
-const useStyles = makeStyles(theme => ({
-  margin: {
-    margin: 0,
-  },
-  deleteForm: {
-    display: "inline",
-  },
-}));
 
 const DELETE_PARAGRAPH_MUTATION = gql`
   mutation DeleteParagraphMutation($id: ID!) {
@@ -40,7 +31,7 @@ export default function DeleteParagraph(props) {
     {(deleteDraft, { data, loading, error }) => {
       return (
           <form
-            className={classes.deleteForm}
+            className={classes.flex}
             onSubmit={async e => {
               e.preventDefault()
               const id = props.id

@@ -4,14 +4,7 @@ import { Query } from 'react-apollo'
 import  { gql } from 'apollo-boost'
 import ErrorPage from './ErrorPage'
 import Loader from './Loader'
-import { makeStyles } from '@material-ui/core/styles'
-
-const useStyles = makeStyles(theme => ({
-  home: {
-    paddingLeft: 100,
-    paddingRight: 100,
-  },
-}));
+import { useStyles } from '../constants/styles'
 
 function  StoryEditPage(props)  {
 const classes = useStyles();
@@ -32,7 +25,7 @@ return (
 
       const { story } = data
       return (
-        <div className={classes.home}>
+        <div className={classes.homeEdit}>
           <StoryEdit
             story={story}
             show={story.id}

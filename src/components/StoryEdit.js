@@ -5,7 +5,7 @@ import MuiExpansionPanel from '@material-ui/core/ExpansionPanel'
 import MuiExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
 import MuiExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
 import { withStyles } from '@material-ui/core/styles'
-import { makeStyles } from '@material-ui/core/styles'
+import { useStyles } from '../constants/styles'
 
 import AddScene from './AddScene'
 import DeleteScene from './DeleteScene'
@@ -56,21 +56,6 @@ const ExpansionPanelDetails = withStyles(theme => ({
     display: 'block',
   },
 }))(MuiExpansionPanelDetails);
-
-const useStyles = makeStyles(theme => ({
-  header: {
-    minWidth: '50%',
-    display: 'flex',
-    height: 60,
-    marginTop: 5,
-    color: '#b4916b',
-  },
-  title: {
-    marginTop: 14,
-    paddingLeft: 24,
-    fontSize: '1.2rem',
-  },
-}));
 
 function  StoryEdit(props)  {
   const classes  = useStyles();

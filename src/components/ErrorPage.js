@@ -8,18 +8,7 @@ import CardMedia from '@material-ui/core/CardMedia'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import headerImage from '../assets/1.jpg'
-import { makeStyles } from '@material-ui/core/styles'
-
-const useStyles = makeStyles(theme => ({
-  card: {
-    maxWidth: '90%',
-    marginBottom: 50,
-    marginLeft: 100,
-  },
-  media: {
-    height: 140,
-  },
-}));
+import { useStyles } from '../constants/styles'
 
 function  ErrorPage(props)  {
   const classes  = useStyles();

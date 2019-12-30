@@ -1,11 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { makeStyles } from '@material-ui/core/styles'
+import { useStyles } from '../constants/styles'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import Typography from '@material-ui/core/Typography'
-import Button from '@material-ui/core/Button'
-import Story from './Story'
 import SceneEdit from './SceneEdit'
 import StoryEdit from './StoryEdit'
 import MyStoriesEdit from './MyStoriesEdit'
@@ -41,34 +39,6 @@ function a11yProps(index) {
     'aria-controls': `vertical-tabpanel-${index}`,
   };
 }
-
-const useStyles = makeStyles(theme => ({
-  root: {
-    flexGrow: 1,
-    backgroundColor: theme.palette.background.paper,
-    display: 'flex',
-    maxHeight: 900, 
-    overflow: 'auto',
-  },
-  tabs: {
-    borderRight: `1px solid ${theme.palette.divider}`,
-    minWidth: '50px!important',
-  },
-  tab: {
-    minWidth: 50,
-    margin: '12px 0px!important',
-  },
-  tabPanel: {
-    width: '100%',
-  },
-  panelRoot: {
-    width: 51,
-  },
-  margin: {
-    margin: theme.spacing(1),
-  },
-}));
-
 
 export default function StoryOverview(props) {
   const classes = useStyles();

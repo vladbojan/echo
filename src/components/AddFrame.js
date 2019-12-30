@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { makeStyles } from '@material-ui/core/styles'
+import { useStyles } from '../constants/styles'
 import AddIcon from '@material-ui/icons/Add'
 import IconButton from '@material-ui/core/IconButton'
 import CardActions from '@material-ui/core/CardActions'
@@ -13,33 +13,6 @@ import { Mutation } from 'react-apollo'
 import  { gql } from 'apollo-boost'
 
 import {FRAME_QUERY} from './CreatePage'
-
-const useStyles = makeStyles(theme => ({
-  root: {
-    flexGrow: 1,
-    backgroundColor: theme.palette.background.paper,
-    display: 'flex',
-    maxHeight: 900, 
-    overflow: 'auto',
-  },
-  tabs: {
-    borderRight: `1px solid ${theme.palette.divider}`,
-    minWidth: '50px!important',
-  },
-  tab: {
-    minWidth: 50,
-    margin: '12px 0px!important',
-  },
-  panelRoot: {
-    width: 51,
-  },
-  margin: {
-    margin: theme.spacing(1),
-  },
-  hide: {
-    display:'none',
-  },
-}));
 
 const ADD_FRAME_MUTATION = gql`
   mutation CreateFrameMutation($title: String!, $styling: String!, $media: String!, $parentId: String!, $position: String) {

@@ -1,16 +1,10 @@
 import React from 'react'
-import { makeStyles } from '@material-ui/core/styles'
+import { useStyles } from '../constants/styles'
 import Story from './Story'
 import ErrorPage from './ErrorPage'
 import Loader from './Loader'
 import { Query } from 'react-apollo'
 import  { gql } from 'apollo-boost'
-
-const useStyles = makeStyles(theme => ({
-  home: {
-    paddingLeft: 100,
-  },
-}));
 
 export default function DraftsPage(props) {
 const classes = useStyles();
@@ -32,19 +26,17 @@ return (
     }
 
     return (
-      <div className={classes.home}>
+      <div className={classes.homeEdit}>
         {data.me &&
           data.me.stories.map(story =>
           (showStory===story.id)?
           <Story
-            key={story.id}
             story={story}
             refresh={() => refetch()}
             isDraft={!story.published}
             show={showStory}
           />:(data.me.stories[0].id===story.id)&&(showStory===0)&&
           <Story
-            key={story.id}
             story={story}
             refresh={() => refetch()}
             isDraft={!story.published}

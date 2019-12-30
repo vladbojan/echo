@@ -6,7 +6,7 @@ import CardContent from '@material-ui/core/CardContent'
 import CardMedia from '@material-ui/core/CardMedia'
 import Typography from '@material-ui/core/Typography'
 import EditIcon from '@material-ui/icons/Edit'
-import { makeStyles } from '@material-ui/core/styles'
+import { useStyles } from '../constants/styles'
 import IconButton from '@material-ui/core/IconButton'
 import CardActions from '@material-ui/core/CardActions'
 import Button from '@material-ui/core/Button'
@@ -16,35 +16,6 @@ import FrameEditParagraph from './FrameEditParagraph'
 import FrameAddParagraph from './FrameAddParagraph'
 
 const { getPosition } = require('./utils')
-
-const useStyles = makeStyles(theme => ({
-  margin: {
-    marginLeft: theme.spacing(1),
-  },
-  media: {
-    height: 140,
-    display: "flex",
-  },
-  header: {
-    minWidth: "50%",
-    display: "flex",
-    height: 72,
-    marginTop: 30,
-  },
-  title: {
-    marginTop: 14,
-  },
-  paragraph: {
-    whiteSpace: "pre-wrap",
-  },
-  hide: {
-    display:'none',
-  },
-  cardContent: {
-    backgroundColor: '#f6ffff',
-    color: '#1e326a',
-  }
-}));
 
 function  FrameEdit(props)  {
   const classes  = useStyles();
@@ -61,41 +32,41 @@ function  FrameEdit(props)  {
 
   return (
       <Card>
-        <CardMedia
-          className={props.noMedia?classes.hide:classes.media}
-        >
-        <div className={classes.header}>
-          <Typography gutterBottom variant="h5" component="h2" className={classes.title}>
-            {props.frame.title}
-          </Typography>
-        </div>
-        </CardMedia>
+        { !props.noMedia && 
+        <CardMedia className={classes.media}>
+          <div className={classes.header}>
+            <Typography gutterBottom variant="h5" component="h2" className={classes.title}>
+              {props.frame.title}
+            </Typography>
+          </div>
+        </CardMedia> }
         <CardContent className={classes.cardContent}>
         {props.frame.paragraphs.map(paragraph=>
           <div>
             <Typography paragraph className={classes.paragraph}>  
             {paragraph.content}  
-            <IconButton className={classes.margin} size="small" aria-label="edit" onClick={handleClick(paragraph.id)}>
-              <EditIcon />
-            </IconButton>
-            <DeleteParagraph 
-              id={paragraph.id} 
-              refresh={props.refresh}
-            />
             </Typography>
+            <div className={classes.flex}>
+              <div className={classes.appBarTitle}></div>
+              <IconButton className={classes.margin} size="small" aria-label="edit" onClick={handleClick(paragraph.id)}>
+                <EditIcon />
+              </IconButton>
+              <DeleteParagraph 
+                id={paragraph.id} 
+                refresh={props.refresh}
+              />
+            </div>
             <FrameEditParagraph
-              key={paragraph.id}
-              id= {paragraph.id}
-              content= {paragraph.content}
-              styling= {paragraph.styling}
-              media= {paragraph.media}
-              show= {value}
-              refresh={refreshPage}
-            />
+                id= {paragraph.id}
+                content= {paragraph.content}
+                styling= {paragraph.styling}
+                media= {paragraph.media}
+                show= {value}
+                refresh={refreshPage}
+              />
           </div>
         )}
         <FrameAddParagraph
-          key={props.frame.id}
           frame={props.frame}
           refresh={props.refresh}
           isDraft={props.isDraft}

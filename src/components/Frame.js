@@ -6,44 +6,8 @@ import CardContent from '@material-ui/core/CardContent'
 import CardMedia from '@material-ui/core/CardMedia'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
-import { makeStyles } from '@material-ui/core/styles'
+import { useStyles } from '../constants/styles'
 import DeleteFrame from './DeleteFrame'
-
-const useStyles = makeStyles(theme => ({
-  card: {
-    maxWidth: '100%',
-  },
-  cardContainer: {
-    maxWidth: '99%',
-    marginBottom: 50,
-  },
-  media: {
-    height: 140,
-    display: "flex",
-  },
-  header: {
-    minWidth: "50%",
-    display: "flex",
-    height: 72,
-    marginTop: 30,
-  },
-  title: {
-    minWidth: 250,
-    marginTop: 14,
-  },
-  cardEdit: {
-    minWidth: 500,
-  },
-  hide: {
-    display:"none",
-  },
-  deleteForm: {
-    display: "flex",
-  },
-  paragraph: {
-    whiteSpace: "pre-wrap",
-  }
-}));
 
 function  Frame(props)  {
   const classes  = useStyles();
@@ -61,7 +25,7 @@ function  Frame(props)  {
             {props.frame.title}
           </Typography>
           {props.edit&&
-          <div className={classes.deleteForm}>
+          <div className={classes.flex}>
             <DeleteFrame 
               id={props.frame.id} 
               refresh={props.refresh}

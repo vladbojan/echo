@@ -1,21 +1,12 @@
 import React from 'react'
 import Frame from './Frame'
-import { makeStyles } from '@material-ui/core/styles'
+import { useStyles } from '../constants/styles'
 import Typography from '@material-ui/core/Typography'
 import AddScene from './AddScene'
 import DeleteScene from './DeleteScene'
 import AddFrame from './AddFrame'
 import Button from '@material-ui/core/Button'
 const { getPosition } = require('./utils')
-
-const useStyles = makeStyles(theme => ({
-  margin: {
-    margin: theme.spacing(1),
-  },
-  deleteForm: {
-    display: "inline",
-  },
-}));
 
 function  Story(props)  {
   const classes = useStyles();
@@ -32,7 +23,7 @@ function  Story(props)  {
             <Typography gutterBottom variant="h4" component="h2">
             {scene.title}
             {props.edit&&
-            <div className={classes.deleteForm}>
+            <div className={classes.flex}>
               <Button size="small" color="primary" onClick={handleShow(scene.id)}>
               {(scene.id === show) ? "Ascunde":"Arata"}
               </Button>  
@@ -45,7 +36,6 @@ function  Story(props)  {
             </Typography>
             {scene.frames.map(frame=>
               <Frame
-                key={frame.id}
                 frame={frame}
                 refresh={props.refresh}
                 isDraft={!frame.published}

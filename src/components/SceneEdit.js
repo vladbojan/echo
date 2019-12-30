@@ -5,7 +5,7 @@ import MuiExpansionPanel from '@material-ui/core/ExpansionPanel'
 import MuiExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
 import MuiExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
 import { withStyles } from '@material-ui/core/styles'
-import { makeStyles } from '@material-ui/core/styles'
+import { useStyles } from '../constants/styles'
 
 import AddFrame from './AddFrame'
 import DeleteFrame from './DeleteFrame'
@@ -57,21 +57,6 @@ const ExpansionPanelDetails = withStyles(theme => ({
   },
 }))(MuiExpansionPanelDetails);
 
-const useStyles = makeStyles(theme => ({
-  header: {
-    minWidth: '50%',
-    display: 'flex',
-    height: 60,
-    marginTop: 5,
-    color: '#b4916b',
-  },
-  title: {
-    marginTop: 14,
-    paddingLeft: 24,
-    fontSize: '1.1rem',
-  },
-}));
-
 function  SceneEdit(props)  {
   const classes  = useStyles();
   const [expanded, setExpanded] = React.useState('panel1');
@@ -109,7 +94,6 @@ function  SceneEdit(props)  {
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
               <FrameEdit
-                key={frame.id}
                 frame={frame}
                 refresh={props.refresh}
                 isDraft={!frame.published}
