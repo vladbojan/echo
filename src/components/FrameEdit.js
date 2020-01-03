@@ -6,7 +6,6 @@ import CardContent from '@material-ui/core/CardContent'
 import CardMedia from '@material-ui/core/CardMedia'
 import Typography from '@material-ui/core/Typography'
 import EditIcon from '@material-ui/icons/Edit'
-import { useStyles } from '../constants/styles'
 import IconButton from '@material-ui/core/IconButton'
 import CardActions from '@material-ui/core/CardActions'
 import Button from '@material-ui/core/Button'
@@ -14,6 +13,7 @@ import Button from '@material-ui/core/Button'
 import DeleteParagraph from './DeleteParagraph'
 import FrameEditParagraph from './FrameEditParagraph'
 import FrameAddParagraph from './FrameAddParagraph'
+import { useStyles } from '../constants/styles'
 
 const { getPosition } = require('./utils')
 
@@ -31,7 +31,7 @@ function  FrameEdit(props)  {
   };
 
   return (
-      <Card>
+      <Card className={classes.cardRoot}>
         { !props.noMedia && 
         <CardMedia className={classes.media}>
           <div className={classes.header}>
@@ -48,7 +48,7 @@ function  FrameEdit(props)  {
             </Typography>
             <div className={classes.flex}>
               <div className={classes.appBarTitle}></div>
-              <IconButton className={classes.margin} size="small" aria-label="edit" onClick={handleClick(paragraph.id)}>
+              <IconButton className={classes.iconButtonParagraph} size="small" aria-label="edit" onClick={handleClick(paragraph.id)}>
                 <EditIcon />
               </IconButton>
               <DeleteParagraph 
@@ -75,10 +75,10 @@ function  FrameEdit(props)  {
         />
       </CardContent>
       <CardActions className={props.noMedia?'':classes.hide}>
-        <Button size="small" color="primary"  visibility="hidden" className={classes.button}>
+        <Button size="small" visibility="hidden" className={classes.actionButton}>
           Share
         </Button>
-        <Button size="small" color="primary" href={"/create/"+props.frame.id}>
+        <Button size="small" className={classes.actionButton} href={"/create/"+props.frame.id}>
           Editeaza
         </Button>      
       </CardActions>

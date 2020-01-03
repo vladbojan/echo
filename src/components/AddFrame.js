@@ -40,7 +40,7 @@ export default function AddFrame(props) {
 
   return (
     <div>
-    <IconButton aria-label="adauga cadru" size="large" className={props.showPanel?classes.hide:classes.margin} onClick={handleClick(showPanel)}>
+    <IconButton aria-label="adauga cadru" size="large" className={props.showPanel?classes.hide:classes.iconButton} onClick={handleClick(showPanel)}>
         <AddIcon />
     </IconButton>
     <Mutation
@@ -72,10 +72,10 @@ export default function AddFrame(props) {
           >
             <Divider />
             <CardActions>
-              <Button size="small" color="primary" disabled={!title} type="submit">
+              <Button size="small" disabled={!title} type="submit" className={classes.actionButton}>
                 Salveaza
               </Button>
-              <Button size="small" color="primary" onClick={e => format? setFormat(false):setFormat(true)}>
+              <Button size="small" className={classes.actionButton} onClick={e => format? setFormat(false):setFormat(true)}>
                 Formatare
               </Button>
             </CardActions>  

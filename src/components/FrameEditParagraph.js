@@ -1,22 +1,26 @@
-import React, { Component } from 'react'
+import React from 'react'
 import CardActions from '@material-ui/core/CardActions'
 import Button from '@material-ui/core/Button'
 import TextareaAutosize from '@material-ui/core/TextareaAutosize'
 import TextField from '@material-ui/core/TextField'
 import Divider from '@material-ui/core/Divider'
+
 import { Mutation } from 'react-apollo'
-import {FRAME_QUERY} from './CreatePage'
 import  { gql } from 'apollo-boost'
 
-class  FrameEditParagraph extends Component  {
-  state = {
-    id: this.props.id,
-    content: this.props.content,
-    styling: this.props.styling,
-    media: this.props.media,
-    format: 'none',
-  }
-  render() {
+import {FRAME_QUERY} from './CreatePage'
+import { useStyles } from '../constants/styles'
+
+
+
+export default function FrameEditParagraph(props)  {
+  const classes = useStyles();
+  const [id, setId] = React.useState(props.id);
+  const [content, setContent] = React.useState(props.content);
+  const [styling, setStyling] = React.useState(props.styling);
+  const [media, setMedia] = React.useState(props.media);
+  const [format, setFormat] = React.useState('none');
+
   return (
         <Mutation
         mutation={EDIT_DRAFT_MUTATION}
@@ -30,58 +34,56 @@ class  FrameEditParagraph extends Component  {
       >
         {(createDraft, { data, loading, error }) => {
           return (
-            <div style={this.props.show===this.state.id?{ display: 'block' }:{ display: 'none' }}>
+            <div style={props.show===id?{ display: 'block' }:{ display: 'none' }}>
               <form
                 className="w-100"
                 onSubmit={async e => {
                   e.preventDefault()
-                  const { id, content, styling, media } = this.state
                   await createDraft({
                     variables: { id, content, styling, media },
                   })
-                  this.props.refresh()
+                  props.refresh()
                 }}
               >
                 <Divider />
                 <CardActions>
-                  <Button size="small" color="primary" disabled={!this.state.content} type="submit">
+                  <Button size="small" className={classes.actionButton} disabled={!content} type="submit">
                     Salveaza
                   </Button>
-                  <Button size="small" color="primary" onClick={e => this.state.format==='none'? this.setState({ format: 'block'}) : 
-                                                                                                this.setState({ format: 'none'})}>
+                  <Button size="small" className={classes.actionButton} onClick={e => format==='none'? setFormat('block') : setFormat('none')}>
                     Formatare
                   </Button>
                 </CardActions>  
                 <TextField
                   label="Styling"
-                  value={this.state.styling}
-                  onChange={e => this.setState({ styling: e.target.value })}
+                  value={styling}
+                  onChange={e => setStyling(e.target.value)}
                   margin="normal"
                   placeholder="Defineste tipul si culoarea fontului folosit"
                   fullWidth
                   InputLabelProps={{
                     shrink: true,
                   }}
-                  style={{ display: this.state.format }}
+                  style={{ display: format }}
                 />
                 <TextField
                   label="Media"
-                  value={this.state.media}
-                  onChange={e => this.setState({ media: e.target.value })}
+                  value={media}
+                  onChange={e => setMedia(e.target.value)}
                   margin="normal"
                   placeholder="Defineste un element media asociat paragrafului"
                   fullWidth
                   InputLabelProps={{
                     shrink: true,
                   }}
-                  style={{ display: this.state.format }}
+                  style={{ display: format }}
                 />                  
                 <TextareaAutosize
-                  className="db w-100 ba bw1 b--black-20 pa2 br2 mb2"
-                  onChange={e => this.setState({ content: e.target.value })}
+                  className={classes.paragraphEdit}
+                  onChange={e => setContent(e.target.value)}
                   placeholder="Continutul paragrafului"
                   rows={1}
-                  value={this.state.content}
+                  value={content}
                 />
   
         
@@ -91,7 +93,6 @@ class  FrameEditParagraph extends Component  {
         }}
       </Mutation>
     )
-  }
 }
 
 const EDIT_DRAFT_MUTATION = gql`
@@ -104,5 +105,3 @@ const EDIT_DRAFT_MUTATION = gql`
     }
   }
 `
-
-export default FrameEditParagraph;

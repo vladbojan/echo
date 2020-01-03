@@ -4,6 +4,14 @@ export const useStyles = makeStyles(theme => ({
   margin: {
     margin: theme.spacing(1),
   },
+  iconButton: {
+    extend: 'margin',
+    color: '#d7edff!important',
+  },
+  iconButtonParagraph: {
+    extend: 'margin',
+    color: '#4c586f!important',
+  },
   hide: {
     display:'none',
   },
@@ -28,16 +36,11 @@ export const useStyles = makeStyles(theme => ({
   media: {
     display: "flex",
   },
-  cardContainer: {
-    maxWidth: '99%',
-    marginBottom: 50,
-  },
   header: {
     flexGrow:1,
     display: "flex",
-    height: 72,
-    marginTop: 30,
-    color: '#b4916b',
+    paddingTop: 10,
+    color: '#ffffff',
   },
   title: {
     minWidth: 250,
@@ -45,18 +48,34 @@ export const useStyles = makeStyles(theme => ({
     paddingLeft: 24,
     fontSize: '1.1rem',
   },
-  cardEdit: {
-    minWidth: 500,
-  },
   paragraph: {
     whiteSpace: "pre-wrap",
   },
+  paragraphEdit: {
+    whiteSpace: "pre-wrap",
+    width: '100%',
+    borderRadius: 4,
+    backgroundColor: '#ebf6ff',
+    color: '#4c586f',
+    padding: '0.5rem',
+
+  },
+  cardEdit: {
+    minWidth: 500,
+  },
+  cardContainer: {
+    maxWidth: '99%',
+    marginBottom: 50,
+  },
+  cardRoot: {
+    border: '1px solid #35434e',
+  },
   cardContent: {
-    backgroundColor: '#f6ffff',
-    color: '#1e326a',
+    backgroundColor: '#ffffff',
+    color: '#4c586f',
   },
   appBar: {
-    backgroundColor: '#1e326a',
+    backgroundColor: '#35434e',
   },
   appBarTitle: {
     flexGrow: 1,
@@ -82,4 +101,55 @@ export const useStyles = makeStyles(theme => ({
   panelRoot: {
     width: 51,
   },
+  actionButton:{
+    color:'#4c586f!important',
+    fontWeight: '600!important',
+    '&:disabled': {
+      color:'#d7edff!important',
+    },
+  },
 }));
+
+export const panelSummaryStyle={
+  root: {
+    backgroundColor: '#4c586f',
+    borderBottom: '1px solid #35434e',
+    marginBottom: -1,
+    minHeight: 56,
+    '&$expanded': {
+      minHeight: 56,
+    },
+    paddingLeft: 0,
+  },
+  content: {
+    '&$expanded': {
+      margin: '12px 0',
+    },
+    margin: 0,
+  },
+  expanded: {},
+}
+
+export const panelDetailStyle={
+  root: {
+    display: 'block',
+    backgroundColor:'#E2E7EA',
+  },
+}
+
+export const panelStyle={
+  root: {
+    border: '1px solid #35434e',
+    boxShadow: 'none',
+    '&:not(:last-child)': {
+      borderBottom: 0,
+    },
+    '&:before': {
+      display: 'none',
+    },
+    '&$expanded': {
+      margin: 'auto',
+    },
+  },
+  expanded: {},
+}

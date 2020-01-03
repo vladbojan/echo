@@ -13,8 +13,8 @@ export default function Navigation(props) {
 const classes = useStyles();
 
 return (
-  <AppBar position="fixed" className={classes.appBar}>
-  <Toolbar>
+  <AppBar position="fixed">
+  <Toolbar  className={classes.appBar}>
       <Typography variant="h6" className={classes.appBarTitle}>
         ECHO
       </Typography>

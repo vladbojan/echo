@@ -45,10 +45,10 @@ function  Frame(props)  {
         )}
       </CardContent>
       <CardActions>
-        <Button size="small" color="primary"  visibility="hidden" className={classes.button}>
+        <Button size="small" visibility="hidden" className={classes.actionButton}>
           Share
         </Button>
-        <Button size="small" color="primary" href={"/create/"+props.frame.id}>
+        <Button size="small" className={classes.actionButton} href={"/create/"+props.frame.id}>
           Editeaza
         </Button>      
       </CardActions>

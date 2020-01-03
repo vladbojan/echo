@@ -41,7 +41,7 @@ export default function DeleteFrame(props) {
               props.refresh()
             }}
           >
-            <IconButton aria-label="sterge" size="large" className={classes.margin} type="submit">
+            <IconButton aria-label="sterge" size="large" className={classes.iconButton} type="submit">
               <DeleteIcon />
             </IconButton>
           </form>
