@@ -1,13 +1,17 @@
 import React, { Component, Fragment } from 'react'
 import { Query } from 'react-apollo'
 import  { gql } from 'apollo-boost'
-import TextCard from './TextCard'
+
+import { useStyles } from '../constants/styles'
+import Story from './Story'
 import ErrorPage from './ErrorPage'
 import Loader from './Loader'
-import Typography from '@material-ui/core/Typography';
+import CreateUser from './CreateUser'
+import CreateStory from './CreateStory'
 
-export default class FeedPage extends Component {
-  render() {
+export default function FeedPage(props) {
+const classes = useStyles();
+
     return (
       <Query query={FEED_QUERY}>
         {({ data, loading, error, refetch }) => {
@@ -24,19 +28,29 @@ export default class FeedPage extends Component {
           }
 
           return (
-            <Fragment>
-              <h1>Echo</h1>
-              <Typography gutterBottom variant="h4" component="h2">
-              Scena 1
-              </Typography>
-              <TextCard/>
-              <TextCard/>
-            </Fragment>
+            <div className={classes.homeEdit}>
+              {data.me &&
+                data.me.stories.map(story =>
+                <Story
+                  story={story}
+                  refresh={() => refetch()}
+                  isDraft={!story.published}
+                  show={story.id}
+                />
+              )
+              } 
+              {data.me && data.me.stories.length===0 &&
+              <CreateStory/>}
+              {!data.me &&
+                <CreateUser
+                  email={props.match.params.email}
+                  />
+              }
+            </div>
           )
         }}
       </Query>
     )
-  }
 }
 
 export const FEED_QUERY = gql`

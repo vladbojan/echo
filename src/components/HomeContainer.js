@@ -19,6 +19,7 @@ export default function HomeContainer(props) {
     <div className={classes.home}>
       <Switch>
         <Route exact path="/" component={FeedPage} />
+        <Route path="/user/:email" component={FeedPage} />
         <Route path="/drafts/:id" component={DraftsPage} />
         <Route path="/create/:id" component={CreatePage} />
         <Route path="/createStory" component={CreateStory} />

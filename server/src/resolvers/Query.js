@@ -35,6 +35,9 @@ const Query = {
   users(parent, args, context) {
     return context.prisma.users()
   },
+  user(parent, { email }, context) {
+    return context.prisma.user({ email })
+  },
 }
 
 module.exports = { Query }

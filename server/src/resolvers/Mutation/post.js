@@ -123,6 +123,14 @@ const post = {
 
     return context.prisma.deleteStory({ id })
   },
+
+  async createUser(parent, { email }, context) {
+    return context.prisma.createUser({
+      email: email,
+      password: email,
+      name: email,
+    })
+  },
 }
 
 module.exports = { post }

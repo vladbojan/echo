@@ -28,7 +28,7 @@ class CreateStory extends Component {
                   await createStory({
                     variables: { title, styling, media, position },
                   })
-                  this.props.history.replace('/drafts')
+                  this.props.history.replace('/')
                 }}
               >
                 <h1>Adauga Poveste</h1>

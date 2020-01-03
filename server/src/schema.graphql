@@ -16,6 +16,7 @@ type Query {
   users: [User!]
   stories: [Story!]
   story(id: ID!): Story
+  user(email: String!): User
 }
 
 input ParagraphInput {
@@ -45,6 +46,8 @@ type Mutation {
   updateStory(id: ID!, title: String!, styling: String, media: String): Story
   deleteStory(id: ID!): Story
   publishStory(id: ID!): Story
+
+  createUser(email: String!): User
 }
 
 type Paragraph {

@@ -1,10 +1,12 @@
 import React from 'react'
+
+import { Query } from 'react-apollo'
+import  { gql } from 'apollo-boost'
+
 import { useStyles } from '../constants/styles'
 import Story from './Story'
 import ErrorPage from './ErrorPage'
 import Loader from './Loader'
-import { Query } from 'react-apollo'
-import  { gql } from 'apollo-boost'
 
 export default function DraftsPage(props) {
 const classes = useStyles();
