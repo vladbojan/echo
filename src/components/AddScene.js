@@ -37,7 +37,7 @@ export default function AddScene(props) {
 
   return (
     <div>
-    <IconButton aria-label="adauga cadru" size="large" className={props.showPanel?classes.hide:classes.iconButton} onClick={handleClick(showPanel)}>
+    <IconButton aria-label="adauga cadru" size="large" className={props.showPanel?classes.hide:classes.addPanelButton} onClick={handleClick(showPanel)}>
         <AddIcon />
     </IconButton>
     <Mutation

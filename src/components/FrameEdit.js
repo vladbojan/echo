@@ -35,7 +35,7 @@ function  FrameEdit(props)  {
         { !props.noMedia && 
         <CardMedia className={classes.media}>
           <div className={classes.header}>
-            <Typography gutterBottom variant="h5" component="h2" className={classes.title}>
+            <Typography gutterBottom variant="h5" component="h2" className={classes.titleFrame}>
               {props.frame.title}
             </Typography>
           </div>

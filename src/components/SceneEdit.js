@@ -32,15 +32,30 @@ function  SceneEdit(props)  {
     return (
       <div>
       {props.scene.frames.map((frame, index, allFrames) =>
+      <div className={(expanded===index)?classes.expansionPanelMaximized:classes.expansionPanelMinimized}>
           <ExpansionPanel square expanded={expanded === index} onChange={handleChange(index)}>
             <ExpansionPanelSummary>
               <div className={classes.header}>
                 <Typography className={classes.title}>{frame.title}</Typography>
               </div>
+            </ExpansionPanelSummary>
+            <ExpansionPanelDetails>
+              <FrameEdit
+                frame={frame}
+                refresh={props.refresh}
+                isDraft={!frame.published}
+                size={1}
+                noMedia={true}
+              />
+            </ExpansionPanelDetails>
+          </ExpansionPanel>
+          <div className={(expanded===index)?classes.hide:classes.deletePanel}>
               <DeleteFrame 
                 id={frame.id} 
                 refresh={props.refresh}
               />
+          </div>
+          <div className={(expanded===index)?classes.addPanelExpanded:classes.addPanel}>
               {allFrames[index+1] &&
               <AddFrame 
                 scene={props.scene} 
@@ -55,17 +70,8 @@ function  SceneEdit(props)  {
                   position={getPosition(props.scene.frames[props.scene.frames.length-1]?props.scene.frames[props.scene.frames.length-1].position:"0")}
                 />
               }
-            </ExpansionPanelSummary>
-            <ExpansionPanelDetails>
-              <FrameEdit
-                frame={frame}
-                refresh={props.refresh}
-                isDraft={!frame.published}
-                size={1}
-                noMedia={true}
-              />
-            </ExpansionPanelDetails>
-          </ExpansionPanel>
+          </div>
+        </div>
       )}  
       {props.scene.frames && props.scene.frames.length===0 &&
       <AddFrame 

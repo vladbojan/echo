@@ -31,15 +31,29 @@ function  StoryEdit(props)  {
     return (
       <div>
       {props.story.scenes.map((scene, index, allScenes)=>
-          <ExpansionPanel square expanded={expanded === index} onChange={handleChange(index)}>
+      <div className={(expanded===index)?classes.expansionPanelMaximized:classes.expansionPanelMinimized}>
+          <ExpansionPanel square expanded={expanded === index} onChange={handleChange(index)} className={classes.expansionPanelMaximized}>
             <ExpansionPanelSummary>
               <div className={classes.header}>
                 <Typography className={classes.title}>{scene.title}</Typography>
               </div>
-              <DeleteScene 
+            </ExpansionPanelSummary>
+            <ExpansionPanelDetails>
+              <SceneEdit
+                scene={scene}
+                show={scene.id}
+                refresh={props.refresh}
+                edit={true}
+              />
+            </ExpansionPanelDetails>
+          </ExpansionPanel>
+          <div className={(expanded===index)?classes.hide:classes.deletePanel}>
+            <DeleteScene 
                 id={scene.id} 
                 refresh={props.refresh}
               />
+          </div>
+          <div className={(expanded===index)?classes.addPanelExpanded:classes.addPanel}>
               {allScenes[index+1] &&
                 <AddScene 
                   story={props.story} 
@@ -54,16 +68,8 @@ function  StoryEdit(props)  {
                   position={getPosition(props.story.scenes[props.story.scenes.length-1]?props.story.scenes[props.story.scenes.length-1].position:"0")}
                 />
               }
-            </ExpansionPanelSummary>
-            <ExpansionPanelDetails>
-              <SceneEdit
-                scene={scene}
-                show={scene.id}
-                refresh={props.refresh}
-                edit={true}
-              />
-            </ExpansionPanelDetails>
-          </ExpansionPanel>
+          </div>
+        </div>
           )}  
           {props.story.scenes && props.story.scenes.length===0 &&
             <AddScene 

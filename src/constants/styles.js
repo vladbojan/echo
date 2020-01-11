@@ -4,19 +4,48 @@ export const useStyles = makeStyles(theme => ({
   margin: {
     margin: theme.spacing(1),
   },
+  addPanel: {
+    minWidth: '95%',
+    top: '-1em',
+    position: 'relative',
+  },
+  addPanelExpanded: {
+    minWidth: '95%',
+    borderTop: 'solid 1px black',
+  },
+  addPanelButton: {
+    color: '#4c586f!important',
+    backgroundColor: '#d7edff!important',
+    marginLeft: '45%!important',
+    marginTop: '0.5em',
+  },
+  deletePanel: {
+    top: '-3.75em',
+    position: 'relative',
+    float: 'right',
+    paddingRight: '1.5em',
+  },
   iconButton: {
-    extend: 'margin',
-    color: '#d7edff!important',
+    color: '#4c586f!important',
+    backgroundColor: '#d7edff!important',
   },
   iconButtonParagraph: {
     extend: 'margin',
     color: '#4c586f!important',
   },
+  expansionPanelMinimized: {
+    maxHeight: '6em',
+    marginTop: '2em',
+  },
+  expansionPanelMaximized: {
+    backgroundColor:'#E2E7EA!important',
+    marginTop: '2em',
+  },
   hide: {
     display:'none',
   },
   flex: {
-    display: "flex",
+    display: 'flex',
   },
   formButton: {
     maxWidth: 100,
@@ -34,19 +63,21 @@ export const useStyles = makeStyles(theme => ({
     maxWidth: '100%',
   },
   media: {
-    display: "flex",
+    backgroundColor: '#4c586f',
+    minHeight: '6em',
   },
   header: {
     flexGrow:1,
-    display: "flex",
-    paddingTop: 10,
     color: '#ffffff',
   },
   title: {
-    minWidth: 250,
-    marginTop: 14,
-    paddingLeft: 24,
+    paddingLeft: '1em',
     fontSize: '1.1rem',
+  },
+  titleFrame: {
+    paddingLeft: '1em',
+    fontSize: '1.1rem',
+    paddingTop: '1.2em',
   },
   paragraph: {
     whiteSpace: "pre-wrap",
@@ -115,9 +146,9 @@ export const panelSummaryStyle={
     backgroundColor: '#4c586f',
     borderBottom: '1px solid #35434e',
     marginBottom: -1,
-    minHeight: 56,
+    minHeight: '5em',
     '&$expanded': {
-      minHeight: 56,
+      minHeight: '5em',
     },
     paddingLeft: 0,
   },

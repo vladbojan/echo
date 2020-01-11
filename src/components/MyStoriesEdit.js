@@ -30,7 +30,7 @@ function  MyStoriesEdit(props)  {
     return (
       <div>
       {props.stories.map((story, index)=>
-          <ExpansionPanel square expanded={expanded === index} onChange={handleChange(index)}>
+          <ExpansionPanel square expanded={expanded === index} onChange={handleChange(index)} className={classes.expansionPanelMaximized}>
             <ExpansionPanelSummary aria-controls="panel1d-content" id="panel1d-header">
               <div className={classes.header}>
                 <Typography className={classes.title}>{story.title}</Typography>
