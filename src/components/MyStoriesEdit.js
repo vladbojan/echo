@@ -12,6 +12,8 @@ import { panelDetailStyle } from '../constants/styles'
 import { panelStyle } from '../constants/styles'
 
 import StoryEdit from './StoryEdit'
+import EditStoryTitle from './EditStoryTitle'
+import DeleteStory from './DeleteStory'
 
 const { getPosition } = require('./utils')
 
@@ -23,18 +25,29 @@ function  MyStoriesEdit(props)  {
   const classes  = useStyles();
   const [expanded, setExpanded] = React.useState('panel1');
 
-  const handleChange = panel => (event, newExpanded) => {
-    setExpanded(newExpanded ? panel : false);
-  };
 
     return (
       <div>
       {props.stories.map((story, index)=>
-          <ExpansionPanel square expanded={expanded === index} onChange={handleChange(index)} className={classes.expansionPanelMaximized}>
-            <ExpansionPanelSummary aria-controls="panel1d-content" id="panel1d-header">
-              <div className={classes.header}>
+       <div className={(expanded===index)?classes.expansionPanelMaximized:classes.expansionPanelMinimized}>
+          <ExpansionPanel square expanded={expanded === index}>
+            <ExpansionPanelSummary>
+              <div className={classes.header} onClick={e => expanded===index? setExpanded(false):setExpanded(index)}>
                 <Typography className={classes.title}>{story.title}</Typography>
               </div>
+              <EditStoryTitle 
+                id={story.id} 
+                title={story.title}
+                styling={story.styling}
+                media={story.media}
+                position={story.position}
+                refresh={props.refresh}
+                showPanel={expanded===index}
+              />
+              <DeleteStory 
+                id={story.id} 
+                refresh={props.refresh}
+              />
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
               <StoryEdit
@@ -45,6 +58,7 @@ function  MyStoriesEdit(props)  {
               />
             </ExpansionPanelDetails>
           </ExpansionPanel>
+        </div>
           )}      
       </div>
       )

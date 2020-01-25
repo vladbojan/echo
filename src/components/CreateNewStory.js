@@ -1,15 +1,16 @@
-import React, { Component, Fragment } from 'react'
+import React from 'react'
 import { Query } from 'react-apollo'
-import  { gql } from 'apollo-boost'
 
 import { useStyles } from '../constants/styles'
-import Story from './Story'
+import {FEED_QUERY} from './FeedPage'
 import ErrorPage from './ErrorPage'
 import Loader from './Loader'
 import CreateUser from './CreateUser'
 import CreateStory from './CreateStory'
 
-export default function FeedPage(props) {
+const { getPosition } = require('./utils')
+
+export default function CreateNewStory(props) {
 const classes = useStyles();
 
     return (
@@ -29,18 +30,13 @@ const classes = useStyles();
 
           return (
             <div className={classes.homeEdit}>
-              {data.me &&
-                data.me.stories.map(story =>
-                <Story
-                  story={story}
-                  refresh={() => refetch()}
-                  isDraft={!story.published}
-                  show={story.id}
-                />
-              )
+              {data.me && data.me.stories &&
+                data.me.stories.length > 0 &&
+                <CreateStory position={getPosition(data.me.stories[data.me.stories.length-1]?data.me.stories[data.me.stories.length-1].position:"0")}/>
               } 
               {data.me && data.me.stories.length===0 &&
-              <CreateStory position={"0"}/>}
+              <CreateStory position={"0"}/>
+              }
               {!data.me &&
                 <CreateUser
                   email={props.match.params.email}
@@ -52,29 +48,3 @@ const classes = useStyles();
       </Query>
     )
 }
-
-export const FEED_QUERY = gql`
-  query FeedQuery {
-    me {
-      id
-      email
-      name
-      stories{
-        id
-        title
-        styling
-        media
-        position
-        scenes{
-          title
-          frames{
-            title
-            paragraphs{
-              content
-            }
-          }
-        }
-      }
-    }
-  }
-`

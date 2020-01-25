@@ -8,20 +8,20 @@ import  { gql } from 'apollo-boost'
 
 
 
-const DELETE_SCENE_MUTATION = gql`
-  mutation DeleteSceneMutation($id: ID!) {
-    deleteScene(id: $id) {
+const DELETE_STORY_MUTATION = gql`
+  mutation DeleteStoryMutation($id: ID!) {
+    deleteStory(id: $id) {
       id
     }
   }
 `
 
-export default function DeleteScene(props) {
+export default function DeleteStory(props) {
   const classes = useStyles();
 
   return (
     <Mutation
-      mutation={DELETE_SCENE_MUTATION}
+      mutation={DELETE_STORY_MUTATION}
       update={(cache, { data }) => {
         const { drafts } = cache.readQuery({ query: FRAME_QUERY })
         cache.writeQuery({

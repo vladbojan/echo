@@ -83,6 +83,9 @@ export const FRAME_QUERY = gql`
       parent{
         id
         title
+        styling
+        media
+        position
         frames{
           id
           title

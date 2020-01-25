@@ -77,6 +77,22 @@ const post = {
     return context.prisma.deleteFrame({ id })
   },
 
+  async updateFrame(parent, { id, title, styling, media, position }, context) {
+    const postExists = await context.prisma.$exists.frame({
+      id,
+    })
+    if (!postExists) {
+      throw new Error(`Post not found`)
+    }
+
+    return context.prisma.updateFrame(
+      {
+        where: { id },
+        data: { title: title, styling: styling, media: media, position: position },
+      },
+    )
+  },
+
   async createScene(parent, { title, styling, media, parentId, position }, context) {
     return context.prisma.createScene({
       published: false,
@@ -97,6 +113,22 @@ const post = {
     }
 
     return context.prisma.deleteScene({ id })
+  },
+
+  async updateScene(parent, { id, title, styling, media, position }, context) {
+    const postExists = await context.prisma.$exists.scene({
+      id,
+    })
+    if (!postExists) {
+      throw new Error(`Post not found`)
+    }
+
+    return context.prisma.updateScene(
+      {
+        where: { id },
+        data: { title: title, styling: styling, media: media, position: position },
+      },
+    )
   },
 
   async createStory(parent, { title, styling, media, position }, context) {
@@ -122,6 +154,22 @@ const post = {
     }
 
     return context.prisma.deleteStory({ id })
+  },
+
+  async updateStory(parent, { id, title, styling, media, position }, context) {
+    const postExists = await context.prisma.$exists.story({
+      id,
+    })
+    if (!postExists) {
+      throw new Error(`Post not found`)
+    }
+
+    return context.prisma.updateStory(
+      {
+        where: { id },
+        data: { title: title, styling: styling, media: media, position: position },
+      },
+    )
   },
 
   async createUser(parent, { email }, context) {

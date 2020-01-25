@@ -1,89 +1,12 @@
-import React, { Component } from 'react'
-import { withRouter } from 'react-router-dom'
+import React from 'react'
 import { Mutation } from 'react-apollo'
 import  { gql } from 'apollo-boost'
 
-class CreateStory extends Component {
-  state = {
-    title: '',
-    content: '',
-    styling: '',
-    media: '',
-    frame: '',
-  }
+import Button from '@material-ui/core/Button'
+import TextareaAutosize from '@material-ui/core/TextareaAutosize'
+import TextField from '@material-ui/core/TextField'
 
-  render() {
-    return (
-      <Mutation
-        mutation={CREATE_STORY_MUTATION}
-      >
-        {(createStory, { title, data, loading, error }) => {
-          return (
-            <div className="pa4 flex justify-center bg-white">
-              <form
-                onSubmit={async e => {
-                  e.preventDefault()
-                  const { title, styling, media } = this.state
-                  const position = this.props.position
-                  await createStory({
-                    variables: { title, styling, media, position },
-                  })
-                  this.props.history.replace('/')
-                }}
-              >
-                <h1>Adauga Poveste</h1>
-                <input
-                  autoFocus
-                  className="w-100 pa2 mv2 br2 b--black-20 bw1"
-                  onChange={e => this.setState({ title: e.target.value })}
-                  placeholder="Title"
-                  type="text"
-                  value={this.state.title}
-                />
-                <textarea
-                  className="db w-100 ba bw1 b--black-20 pa2 br2 mb2"
-                  cols={50}
-                  onChange={e => this.setState({ content: e.target.value })}
-                  placeholder="Content"
-                  rows={8}
-                  value={this.state.content}
-                />
-                <input
-                  autoFocus
-                  className="w-100 pa2 mv2 br2 b--black-20 bw1"
-                  onChange={e => this.setState({ styling: e.target.value })}
-                  placeholder="Styling"
-                  type="text"
-                  value={this.state.styling}
-                />
-                <input
-                  autoFocus
-                  className="w-100 pa2 mv2 br2 b--black-20 bw1"
-                  onChange={e => this.setState({ media: e.target.value })}
-                  placeholder="Media"
-                  type="text"
-                  value={this.state.media}
-                />
-                <input
-                  className={`pa3 bg-black-10 bn ${this.state.content &&
-                    this.state.title &&
-                    'dim pointer'}`}
-                  disabled={!this.state.content}
-                  type="submit"
-                  value="Create"
-                />
-                <a className="f6 pointer" onClick={this.props.history.goBack}>
-                  or cancel
-                </a>
-              </form>
-            </div>
-          )
-        }}
-      </Mutation>
-    )
-  }
-
-}
+import { useStyles } from '../constants/styles'
 
 const CREATE_STORY_MUTATION = gql`
   mutation CreateStoryMutation($title: String!, $styling: String!, $media: String!, $position: String) {
@@ -97,4 +20,64 @@ const CREATE_STORY_MUTATION = gql`
   }
 `
 
-export default withRouter(CreateStory)
+export default function CreateNewStory(props) {
+const classes = useStyles();
+const [title, setTitle] = React.useState('');
+const [styling, setStyling] = React.useState('');
+const [media, setMedia] = React.useState('');
+
+    return (
+      <Mutation mutation={CREATE_STORY_MUTATION}>
+      {(createStory, { data, loading, error }) => {
+        return (
+          <div className="pa4 flex justify-center bg-white">
+            <form
+              onSubmit={async e => {
+                e.preventDefault()
+                const position = props.position
+                await createStory({
+                  variables: { title, styling, media, position },
+                })
+                window.location="/"
+              }}
+            >
+              <h1>Adauga Poveste</h1>
+              <TextareaAutosize
+                className="db w-100 ba bw1 b--black-20 pa2 br2 mb2"
+                onChange={e => setTitle(e.target.value)}
+                placeholder="Titlul scenei"
+                rows={1}
+                value={title}
+              />
+              <TextField
+                label="Styling"
+                value={styling}
+                onChange={e => setStyling(e.target.value)}
+                margin="normal"
+                placeholder="Defineste tipul si culoarea fontului folosit"
+                fullWidth
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+              <TextField
+                label="Media"
+                value={media}
+                onChange={e => setMedia(e.target.value )}
+                margin="normal"
+                placeholder="Defineste un element media asociat paragrafului"
+                fullWidth
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />                  
+              <Button size="small" disabled={!title} type="submit" className={classes.actionButton}>
+                Salveaza
+              </Button>
+            </form>
+          </div>
+        )
+      }}
+    </Mutation>
+    )
+}

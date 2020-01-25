@@ -58,6 +58,8 @@ query StoryQuery($id: ID!) {
       frames{
         id
         title
+        styling
+        media
         position
         paragraphs{
           id

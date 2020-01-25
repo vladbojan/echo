@@ -19,12 +19,6 @@ export const useStyles = makeStyles(theme => ({
     marginLeft: '45%!important',
     marginTop: '0.5em',
   },
-  deletePanel: {
-    top: '-3.75em',
-    position: 'relative',
-    float: 'right',
-    paddingRight: '1.5em',
-  },
   iconButton: {
     color: '#4c586f!important',
     backgroundColor: '#d7edff!important',
@@ -97,6 +91,9 @@ export const useStyles = makeStyles(theme => ({
   cardContainer: {
     maxWidth: '99%',
     marginBottom: 50,
+  },
+  editPanel: {
+    minWidth: '50%!important',
   },
   cardRoot: {
     border: '1px solid #35434e',

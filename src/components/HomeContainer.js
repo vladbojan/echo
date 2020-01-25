@@ -3,7 +3,7 @@ import { useStyles } from '../constants/styles'
 import FeedPage from '../components/FeedPage'
 import DraftsPage from '../components/DraftsPage'
 import CreatePage from '../components/CreatePage'
-import CreateStory from '../components/CreateStory'
+import CreateNewStory from '../components/CreateNewStory'
 import DetailPage from '../components/DetailPage'
 import StoryEditPage from '../components/StoryEditPage'
 
@@ -22,7 +22,7 @@ export default function HomeContainer(props) {
         <Route path="/user/:email" component={FeedPage} />
         <Route path="/drafts/:id" component={DraftsPage} />
         <Route path="/create/:id" component={CreatePage} />
-        <Route path="/createStory" component={CreateStory} />
+        <Route path="/createStory" component={CreateNewStory} />
         <Route path="/post/:id" component={DetailPage} />
         <Route path="/edit/:id" component={StoryEditPage} />
       </Switch>

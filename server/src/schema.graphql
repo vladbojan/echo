@@ -38,12 +38,12 @@ type Mutation {
   publishFrame(id: ID!): Frame
 
   createScene(title: String!, styling: String, media: String, parentId: String, position: String): Scene
-  updateScene(id: ID!, title: String!, styling: String, media: String): Scene
+  updateScene(id: ID!, title: String!, styling: String, media: String, position: String): Scene
   deleteScene(id: ID!): Scene
   publishScene(id: ID!): Scene
 
   createStory(title: String!, styling: String, media: String, position: String): Story
-  updateStory(id: ID!, title: String!, styling: String, media: String): Story
+  updateStory(id: ID!, title: String!, styling: String, media: String, position: String): Story
   deleteStory(id: ID!): Story
   publishStory(id: ID!): Story
 

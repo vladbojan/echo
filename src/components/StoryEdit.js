@@ -13,6 +13,7 @@ import { panelStyle } from '../constants/styles'
 import AddScene from './AddScene'
 import DeleteScene from './DeleteScene'
 import SceneEdit from './SceneEdit'
+import EditSceneTitle from './EditSceneTitle'
 
 const { getPosition } = require('./utils')
 
@@ -24,19 +25,28 @@ function  StoryEdit(props)  {
   const classes  = useStyles();
   const [expanded, setExpanded] = React.useState('panel1');
 
-  const handleChange = panel => (event, newExpanded) => {
-    setExpanded(newExpanded ? panel : false);
-  };
-
     return (
       <div>
       {props.story.scenes.map((scene, index, allScenes)=>
       <div className={(expanded===index)?classes.expansionPanelMaximized:classes.expansionPanelMinimized}>
-          <ExpansionPanel square expanded={expanded === index} onChange={handleChange(index)} className={classes.expansionPanelMaximized}>
+          <ExpansionPanel square expanded={expanded === index}>
             <ExpansionPanelSummary>
-              <div className={classes.header}>
+              <div className={classes.header} onClick={e => expanded===index? setExpanded(false):setExpanded(index)}>
                 <Typography className={classes.title}>{scene.title}</Typography>
               </div>
+              <EditSceneTitle 
+                id={scene.id} 
+                title={scene.title}
+                styling={scene.styling}
+                media={scene.media}
+                position={scene.position}
+                refresh={props.refresh}
+                showPanel={expanded===index}
+              />
+              <DeleteScene 
+                id={scene.id} 
+                refresh={props.refresh}
+              />
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
               <SceneEdit
@@ -47,12 +57,6 @@ function  StoryEdit(props)  {
               />
             </ExpansionPanelDetails>
           </ExpansionPanel>
-          <div className={(expanded===index)?classes.hide:classes.deletePanel}>
-            <DeleteScene 
-                id={scene.id} 
-                refresh={props.refresh}
-              />
-          </div>
           <div className={(expanded===index)?classes.addPanelExpanded:classes.addPanel}>
               {allScenes[index+1] &&
                 <AddScene 

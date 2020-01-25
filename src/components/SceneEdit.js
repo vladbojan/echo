@@ -13,6 +13,7 @@ import { panelStyle } from '../constants/styles'
 
 import AddFrame from './AddFrame'
 import DeleteFrame from './DeleteFrame'
+import EditFrameTitle from './EditFrameTitle'
 import FrameEdit from './FrameEdit'
 
 const { getPosition } = require('./utils')
@@ -25,19 +26,28 @@ function  SceneEdit(props)  {
   const classes  = useStyles();
   const [expanded, setExpanded] = React.useState('panel1');
 
-  const handleChange = panel => (event, newExpanded) => {
-    setExpanded(newExpanded ? panel : false);
-  };
-
     return (
       <div>
       {props.scene.frames.map((frame, index, allFrames) =>
       <div className={(expanded===index)?classes.expansionPanelMaximized:classes.expansionPanelMinimized}>
-          <ExpansionPanel square expanded={expanded === index} onChange={handleChange(index)}>
+          <ExpansionPanel square expanded={expanded === index}>
             <ExpansionPanelSummary>
-              <div className={classes.header}>
+              <div className={classes.header} onClick={e => expanded===index? setExpanded(false):setExpanded(index)}>
                 <Typography className={classes.title}>{frame.title}</Typography>
               </div>
+              <EditFrameTitle 
+                id={frame.id} 
+                title={frame.title}
+                styling={frame.styling}
+                media={frame.media}
+                position={frame.position}
+                refresh={props.refresh}
+                showPanel={expanded===index}
+              />
+              <DeleteFrame 
+                id={frame.id} 
+                refresh={props.refresh}
+              />
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
               <FrameEdit
@@ -49,12 +59,6 @@ function  SceneEdit(props)  {
               />
             </ExpansionPanelDetails>
           </ExpansionPanel>
-          <div className={(expanded===index)?classes.hide:classes.deletePanel}>
-              <DeleteFrame 
-                id={frame.id} 
-                refresh={props.refresh}
-              />
-          </div>
           <div className={(expanded===index)?classes.addPanelExpanded:classes.addPanel}>
               {allFrames[index+1] &&
               <AddFrame 
