@@ -36,7 +36,7 @@ const middlewareLink = new ApolloLink((operation, forward) => {
 const httpLinkAuth = middlewareLink.concat(httpLink)
 
 const wsLink = new WebSocketLink({
-  uri: `ws://uj9g8nufug.execute-api.us-east-2.amazonaws.com/staging/`,
+  uri: `wss://uj9g8nufug.execute-api.us-east-2.amazonaws.com/staging/`,
   options: {
     reconnect: true,
     connectionParams: {
