@@ -21,7 +21,7 @@ const failGoogle = (response) => {
 export default function Login(props) {
     return (
         <GoogleLogin
-          clientId="984311024489-0942pe018faqg4otoabtefp226q53q0c.apps.googleusercontent.com"
+          clientId="477025713925-vj15s8ok6i4chp5sjntb5aom8vmjgruu.apps.googleusercontent.com"
           buttonText="Login"
           onSuccess={responseGoogle}
           onFailure={failGoogle}
