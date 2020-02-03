@@ -29,7 +29,7 @@ export const useStyles = makeStyles(theme => ({
   },
   expansionPanelMinimized: {
     maxHeight: '6em',
-    marginTop: '2em',
+    marginTop: '1em',
   },
   expansionPanelMaximized: {
     backgroundColor:'#E2E7EA!important',

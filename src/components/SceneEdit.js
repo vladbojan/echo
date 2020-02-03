@@ -29,7 +29,8 @@ function  SceneEdit(props)  {
     return (
       <div>
       {props.scene.frames.map((frame, index, allFrames) =>
-      <div className={(expanded===index)?classes.expansionPanelMaximized:classes.expansionPanelMinimized}>
+      <div>
+        <div className={(expanded===index)?classes.expansionPanelMaximized:classes.expansionPanelMinimized}>
           <ExpansionPanel square expanded={expanded === index}>
             <ExpansionPanelSummary>
               <div className={classes.header} onClick={e => expanded===index? setExpanded(false):setExpanded(index)}>
@@ -59,23 +60,24 @@ function  SceneEdit(props)  {
               />
             </ExpansionPanelDetails>
           </ExpansionPanel>
-          <div className={(expanded===index)?classes.addPanelExpanded:classes.addPanel}>
-              {allFrames[index+1] &&
-              <AddFrame 
-                scene={props.scene} 
-                refresh={props.refresh}
-                position={frame.position+"-"+allFrames[index+1].position}
-              />
-              }
-              {(!allFrames[index+1]) && (props.show===props.scene.id) &&
-                <AddFrame 
-                  scene={props.scene} 
-                  refresh={props.refresh}
-                  position={getPosition(props.scene.frames[props.scene.frames.length-1]?props.scene.frames[props.scene.frames.length-1].position:"0")}
-                />
-              }
-          </div>
         </div>
+        <div className={(expanded===index)?classes.addPanelExpanded:classes.addPanel}>
+          {allFrames[index+1] &&
+          <AddFrame 
+            scene={props.scene} 
+            refresh={props.refresh}
+            position={frame.position+"-"+allFrames[index+1].position}
+          />
+          }
+          {(!allFrames[index+1]) && (props.show===props.scene.id) &&
+            <AddFrame 
+              scene={props.scene} 
+              refresh={props.refresh}
+              position={getPosition(props.scene.frames[props.scene.frames.length-1]?props.scene.frames[props.scene.frames.length-1].position:"0")}
+            />
+          }
+        </div>
+      </div>
       )}  
       {props.scene.frames && props.scene.frames.length===0 &&
       <AddFrame 

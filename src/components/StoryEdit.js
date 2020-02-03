@@ -28,7 +28,8 @@ function  StoryEdit(props)  {
     return (
       <div>
       {props.story.scenes.map((scene, index, allScenes)=>
-      <div className={(expanded===index)?classes.expansionPanelMaximized:classes.expansionPanelMinimized}>
+      <div>
+        <div className={(expanded===index)?classes.expansionPanelMaximized:classes.expansionPanelMinimized}>
           <ExpansionPanel square expanded={expanded === index}>
             <ExpansionPanelSummary>
               <div className={classes.header} onClick={e => expanded===index? setExpanded(false):setExpanded(index)}>
@@ -53,36 +54,36 @@ function  StoryEdit(props)  {
                 scene={scene}
                 show={scene.id}
                 refresh={props.refresh}
-                edit={true}
               />
             </ExpansionPanelDetails>
           </ExpansionPanel>
-          <div className={(expanded===index)?classes.addPanelExpanded:classes.addPanel}>
-              {allScenes[index+1] &&
-                <AddScene 
-                  story={props.story} 
-                  refresh={props.refresh}
-                  position={scene.position+"-"+allScenes[index+1].position}
-                />
-              }
-              {(!allScenes[index+1]) && (props.show===props.story.id) &&
-                <AddScene 
-                  story={props.story} 
-                  refresh={props.refresh}
-                  position={getPosition(props.story.scenes[props.story.scenes.length-1]?props.story.scenes[props.story.scenes.length-1].position:"0")}
-                />
-              }
-          </div>
         </div>
-          )}  
-          {props.story.scenes && props.story.scenes.length===0 &&
+        <div className={(expanded===index)?classes.addPanelExpanded:classes.addPanel}>
+          {allScenes[index+1] &&
             <AddScene 
               story={props.story} 
               refresh={props.refresh}
-              position={getPosition("0")}
-              showPanel={true}
+              position={scene.position+"-"+allScenes[index+1].position}
             />
-          }      
+          }
+          {(!allScenes[index+1]) && (props.show===props.story.id) &&
+            <AddScene 
+              story={props.story} 
+              refresh={props.refresh}
+              position={getPosition(props.story.scenes[props.story.scenes.length-1]?props.story.scenes[props.story.scenes.length-1].position:"0")}
+            />
+          }
+        </div>
+      </div>
+      )}  
+      {props.story.scenes && props.story.scenes.length===0 &&
+        <AddScene 
+          story={props.story} 
+          refresh={props.refresh}
+          position={getPosition("0")}
+          showPanel={true}
+        />
+      }      
       </div>
       )
 }
