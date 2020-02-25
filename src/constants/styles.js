@@ -136,6 +136,24 @@ export const useStyles = makeStyles(theme => ({
       color:'#d7edff!important',
     },
   },
+  blurredEditor:{
+    border: 'none',
+    '& div.ql-toolbar': {
+      display: 'none!important',
+    },
+    '& div.ql-container': {
+      border: 'none!important',
+    },
+  },
+  activeEditor:{
+    border: 'none',
+    '& div.ql-container': {
+      border: 'none!important',
+    },
+  },
+  hidden:{
+    display: 'none!important',
+  }
 }));
 
 export const panelSummaryStyle={

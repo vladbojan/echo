@@ -22,7 +22,7 @@ return (
         href="/"
         title="Feed"
       >
-        Povesti Publicate
+        Home
       </Button>
 
       <StoryNavigation/>

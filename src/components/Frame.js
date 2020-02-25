@@ -9,6 +9,9 @@ import Typography from '@material-ui/core/Typography'
 import { useStyles } from '../constants/styles'
 import DeleteFrame from './DeleteFrame'
 
+import ReactQuill from 'react-quill'
+import 'react-quill/dist/quill.bubble.css' 
+
 function  Frame(props)  {
   const classes  = useStyles();
   const [show, setShow] = React.useState(0);
@@ -39,9 +42,11 @@ function  Frame(props)  {
         </CardMedia>
         <CardContent className={props.edit?(show===props.frame.id)?classes.cardEdit:classes.hide:classes.card}>
         {props.frame.paragraphs.map(paragraph=>
-          <Typography paragraph className={classes.paragraph}> 
-          {paragraph.content}  
-          </Typography>
+          <ReactQuill
+              value={paragraph.content}
+              readOnly={true}
+              theme={"bubble"}
+          />
         )}
       </CardContent>
       <CardActions>

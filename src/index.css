@@ -1,5 +1,29 @@
 @import 'https://fonts.googleapis.com/css?family=Open+Sans:300, 400';
 
+@import 'https://fonts.googleapis.com/css?family=Roboto:300, 400';
+
+@import 'https://fonts.googleapis.com/css?family=Calibri:300, 400';
+
+.ql-font-roboto {
+  font-family: 'Roboto';
+}
+
+.ql-font-sans-serif {
+  font-family: 'Sans Serif', sans-serif;
+}
+
+.ql-font-calibri {
+  font-family: 'Calibri';
+}
+
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value=calibri]::before {
+  content: 'Calibri';
+}
+
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value=roboto]::before {
+  content: 'Roboto';
+}
+
 body {
   margin: 0;
   padding: 0;

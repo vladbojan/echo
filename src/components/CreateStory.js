@@ -45,7 +45,7 @@ const [media, setMedia] = React.useState('');
               <TextareaAutosize
                 className="db w-100 ba bw1 b--black-20 pa2 br2 mb2"
                 onChange={e => setTitle(e.target.value)}
-                placeholder="Titlul scenei"
+                placeholder="Titlul povestii"
                 rows={1}
                 value={title}
               />

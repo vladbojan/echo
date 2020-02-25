@@ -1,16 +1,17 @@
 import React from 'react'
 import CardActions from '@material-ui/core/CardActions'
 import Button from '@material-ui/core/Button'
-import TextareaAutosize from '@material-ui/core/TextareaAutosize'
 import TextField from '@material-ui/core/TextField'
-import Divider from '@material-ui/core/Divider'
+import EditIcon from '@material-ui/icons/Edit'
+import IconButton from '@material-ui/core/IconButton'
 
 import { Mutation } from 'react-apollo'
 import  { gql } from 'apollo-boost'
 
 import {FRAME_QUERY} from './CreatePage'
+import DeleteParagraph from './DeleteParagraph'
 import { useStyles } from '../constants/styles'
-
+import TextEditor from './TextEditor'
 
 
 export default function FrameEditParagraph(props)  {
@@ -19,7 +20,11 @@ export default function FrameEditParagraph(props)  {
   const [content, setContent] = React.useState(props.content);
   const [styling, setStyling] = React.useState(props.styling);
   const [media, setMedia] = React.useState(props.media);
-  const [format, setFormat] = React.useState('none');
+  const [theme, setTheme] = React.useState('bubble');
+
+  const handleSetContent = (value) =>{
+    setContent(value)
+  }
 
   return (
         <Mutation
@@ -34,7 +39,6 @@ export default function FrameEditParagraph(props)  {
       >
         {(createDraft, { data, loading, error }) => {
           return (
-            <div style={props.show===id?{ display: 'block' }:{ display: 'none' }}>
               <form
                 className="w-100"
                 onSubmit={async e => {
@@ -43,17 +47,9 @@ export default function FrameEditParagraph(props)  {
                     variables: { id, content, styling, media },
                   })
                   props.refresh()
+                  setTheme('bubble')
                 }}
               >
-                <Divider />
-                <CardActions>
-                  <Button size="small" className={classes.actionButton} disabled={!content} type="submit">
-                    Salveaza
-                  </Button>
-                  <Button size="small" className={classes.actionButton} onClick={e => format==='none'? setFormat('block') : setFormat('none')}>
-                    Formatare
-                  </Button>
-                </CardActions>  
                 <TextField
                   label="Styling"
                   value={styling}
@@ -64,7 +60,7 @@ export default function FrameEditParagraph(props)  {
                   InputLabelProps={{
                     shrink: true,
                   }}
-                  style={{ display: format }}
+                  style={{ display: 'none' }}
                 />
                 <TextField
                   label="Media"
@@ -76,19 +72,22 @@ export default function FrameEditParagraph(props)  {
                   InputLabelProps={{
                     shrink: true,
                   }}
-                  style={{ display: format }}
-                />                  
-                <TextareaAutosize
-                  className={classes.paragraphEdit}
-                  onChange={e => setContent(e.target.value)}
-                  placeholder="Continutul paragrafului"
-                  rows={1}
-                  value={content}
-                />
-  
-        
+                  style={{ display: 'none' }}
+                />              
+                <TextEditor content={content}  setContent={handleSetContent} theme={theme}/>
+                <CardActions>
+                  <Button size="small" className={theme==='snow'?classes.actionButton:classes.hidden} disabled={!content} type="submit">
+                    Salveaza
+                  </Button>
+                  <IconButton className={classes.iconButtonParagraph} size="small" aria-label="edit" onClick={e => theme==='snow'?setTheme('bubble'):setTheme('snow')}>
+                    <EditIcon />
+                  </IconButton>
+                  <DeleteParagraph 
+                    id={id} 
+                    refresh={props.refresh}
+                  />
+                </CardActions> 
               </form>
-            </div>
           )
         }}
       </Mutation>

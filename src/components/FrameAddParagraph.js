@@ -11,15 +11,23 @@ import Divider from '@material-ui/core/Divider'
 import { Mutation } from 'react-apollo'
 import {FRAME_QUERY} from './CreatePage'
 import { useStyles } from '../constants/styles'
+import TextEditor from './TextEditor'
 
 
 function  FrameAddParagraph(props)  {
-const classes  = useStyles();
+const classes  = useStyles()
 
-const [content, setContent] = React.useState('');
-const [styling, setStyling] = React.useState('');
-const [media, setMedia] = React.useState('');
-const [format, setFormat] = React.useState('none');
+const [content, setContent] = React.useState('')
+const [styling, setStyling] = React.useState('')
+const [media, setMedia] = React.useState('')
+const [theme, setTheme] = React.useState('snow')
+
+const [fooKey, setFooKey] = React.useState(1);
+const refreshFoo = () => setFooKey(fooKey + 1);
+
+const handleSetContent = (value) =>{
+  setContent(value)
+}
 
 return (
       <Mutation
@@ -48,20 +56,9 @@ return (
                 setStyling('')
                 setMedia('')
                 props.refresh()
+                refreshFoo()
               }}
             >
-              <Divider />
-              <CardActions>
-                <Button size="small" className={classes.actionButton} disabled={!content} type="submit">
-                  Creeaza
-                </Button>
-                <Button size="small" className={classes.actionButton} onClick={e => format==='none'? setFormat('block') : setFormat('none')}>
-                  Formatare
-                </Button>
-                <Button size="small" className={classes.actionButton} onClick={e => {setContent(''); setStyling(''); setMedia('')}}>
-                  Anuleaza
-                </Button>
-              </CardActions>  
               <TextField
                 label="Styling"
                 value={styling}
@@ -72,7 +69,7 @@ return (
                 InputLabelProps={{
                   shrink: true,
                 }}
-                style={{ display: format }}
+                style={{ display: 'none' }}
               />
               <TextField
                 label="Media"
@@ -84,17 +81,18 @@ return (
                 InputLabelProps={{
                   shrink: true,
                 }}
-                style={{ display: format }}
+                style={{ display: 'none' }}
               />                  
-              <TextareaAutosize
-                className={classes.paragraphEdit}
-                onChange={e => setContent(e.target.value)}
-                placeholder="Continutul paragrafului"
-                rows={1}
-                value={content}
-              />
+              <TextEditor content={content}  class={classes.paragraphEdit} setContent={handleSetContent} theme={theme} key={fooKey}/>
+              <CardActions>
+                <Button size="small" className={classes.actionButton} disabled={!content} type="submit">
+                  Salveaza
+                </Button>
+                <Button size="small" className={classes.actionButton} onClick={e => {setContent(''); setStyling(''); setMedia('')}}>
+                  Anuleaza
+                </Button>
+              </CardActions>  
 
-      
             </form>
           </div>
         )

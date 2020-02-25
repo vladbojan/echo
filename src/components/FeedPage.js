@@ -68,6 +68,7 @@ export const FEED_QUERY = gql`
         scenes{
           title
           frames{
+            id
             title
             paragraphs{
               content
