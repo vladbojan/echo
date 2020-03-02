@@ -27,6 +27,7 @@ export default function FrameEditParagraph(props)  {
   }
 
   return (
+    <CardActions>
         <Mutation
         mutation={EDIT_DRAFT_MUTATION}
         update={(cache, { data }) => {
@@ -75,22 +76,22 @@ export default function FrameEditParagraph(props)  {
                   style={{ display: 'none' }}
                 />              
                 <TextEditor content={content}  setContent={handleSetContent} theme={theme}/>
-                <CardActions>
-                  <Button size="small" className={theme==='snow'?classes.actionButton:classes.hidden} disabled={!content} type="submit">
-                    Salveaza
-                  </Button>
-                  <IconButton className={classes.iconButtonParagraph} size="small" aria-label="edit" onClick={e => theme==='snow'?setTheme('bubble'):setTheme('snow')}>
-                    <EditIcon />
-                  </IconButton>
-                  <DeleteParagraph 
-                    id={id} 
-                    refresh={props.refresh}
-                  />
-                </CardActions> 
+                <Button size="small" className={theme==='snow'?classes.actionButton:classes.hidden} disabled={!content} type="submit">
+                  Salveaza
+                </Button>
+
               </form>
           )
         }}
       </Mutation>
+      <IconButton className={classes.iconButtonParagraph} size="small" aria-label="edit" onClick={e => theme==='snow'?setTheme('bubble'):setTheme('snow')}>
+        <EditIcon />
+      </IconButton>
+      <DeleteParagraph 
+        id={props.id} 
+        refresh={props.refresh}
+      />
+    </CardActions> 
     )
 }
 

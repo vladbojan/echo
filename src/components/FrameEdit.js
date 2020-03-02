@@ -37,6 +37,7 @@ function  FrameEdit(props)  {
         {props.frame.paragraphs.map(paragraph=>
           <div>
             <FrameEditParagraph
+                key= {paragraph.id}
                 id= {paragraph.id}
                 content= {paragraph.content}
                 styling= {paragraph.styling}
