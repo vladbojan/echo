@@ -108,6 +108,9 @@ export const useStyles = makeStyles(theme => ({
   appBarTitle: {
     flexGrow: 1,
   },
+  titleLarge: {
+    color: '#35434e',
+  },
   root: {
     flexGrow: 1,
     display: 'flex',
@@ -125,6 +128,7 @@ export const useStyles = makeStyles(theme => ({
   },
   tabPanel: {
     width: '100%',
+    overflowY: 'auto',
   },
   panelRoot: {
     width: 51,

@@ -17,10 +17,10 @@ function  Story(props)  {
 
     return (
       <div>
-        <h1>{props.story.title}</h1>
+        <h1 className={classes.titleLarge}>{props.story.title}</h1>
         {(props.show===props.story.id)&&props.story.scenes.map((scene, index, allScenes)=>
           <div>
-            <Typography gutterBottom variant="h4" component="h2">
+            <Typography gutterBottom variant="h4" component="h2" className={classes.titleLarge}>
             {scene.title}
             {props.edit&&
             <div className={classes.flex}>

@@ -17,8 +17,8 @@ function CreatePage(props) {
       setSizeNav(1)
       setSizePanel(11)
     } else {
-      setSizeNav(4)
-      setSizePanel(8)
+      setSizeNav(6)
+      setSizePanel(6)
     }
   };
 

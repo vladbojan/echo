@@ -75,7 +75,7 @@ export default function StoryOverview(props) {
       </TabPanel>
       <TabPanel value={value} index={1} className={classes.tabPanel}>
         <div>
-          <Typography>{props.scene.title}</Typography>
+          <Typography gutterBottom variant="h4" component="h2" className={classes.titleLarge}>{props.scene.title}</Typography>
           <SceneEdit
             scene={props.scene}
             show={props.scene.id}
@@ -86,7 +86,7 @@ export default function StoryOverview(props) {
       </TabPanel>
       <TabPanel value={value} index={2} className={classes.tabPanel}>
         <div>
-          <Typography>{props.story.title}</Typography>
+          <h1 className={classes.titleLarge}>{props.story.title}</h1>
           <StoryEdit
             story={props.story}
             show={props.story.id}

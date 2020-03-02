@@ -21,9 +21,15 @@ export default function FrameEditParagraph(props)  {
   const [styling, setStyling] = React.useState(props.styling);
   const [media, setMedia] = React.useState(props.media);
   const [theme, setTheme] = React.useState('bubble');
+  const [readOnly, setReadOnly] = React.useState(true);
 
   const handleSetContent = (value) =>{
     setContent(value)
+  }
+
+  const handleSetEdit = () =>{
+    theme==='snow'?setTheme('bubble'):setTheme('snow')
+    readOnly===true?setReadOnly(false):setReadOnly(true)
   }
 
   return (
@@ -49,6 +55,7 @@ export default function FrameEditParagraph(props)  {
                   })
                   props.refresh()
                   setTheme('bubble')
+                  setReadOnly(true)
                 }}
               >
                 <TextField
@@ -75,7 +82,7 @@ export default function FrameEditParagraph(props)  {
                   }}
                   style={{ display: 'none' }}
                 />              
-                <TextEditor content={content}  setContent={handleSetContent} theme={theme}/>
+                <TextEditor content={content}  setContent={handleSetContent} theme={theme} readOnly={readOnly}/>
                 <Button size="small" className={theme==='snow'?classes.actionButton:classes.hidden} disabled={!content} type="submit">
                   Salveaza
                 </Button>
@@ -84,7 +91,7 @@ export default function FrameEditParagraph(props)  {
           )
         }}
       </Mutation>
-      <IconButton className={classes.iconButtonParagraph} size="small" aria-label="edit" onClick={e => theme==='snow'?setTheme('bubble'):setTheme('snow')}>
+      <IconButton className={classes.iconButtonParagraph} size="small" aria-label="edit" onClick={e => handleSetEdit()}>
         <EditIcon />
       </IconButton>
       <DeleteParagraph 

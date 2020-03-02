@@ -26,6 +26,7 @@ return (
       const { story } = data
       return (
         <div className={classes.homeEdit}>
+          <h1 className={classes.titleLarge}>{story.title}</h1>
           <StoryEdit
             story={story}
             show={story.id}

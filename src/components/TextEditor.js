@@ -20,6 +20,7 @@ export default function TextEditor(props)  {
         ['bold', 'italic', 'underline', 'strike', 'blockquote'],
         [{'list': 'ordered'}, {'list': 'bullet'}, 
          {'indent': '-1'}, {'indent': '+1'}],
+        [{ align: '' }, { align: 'center' }, { align: 'right' }, { align: 'justify' }],
         ['link', 'image', 'video'],
         ['clean']
       ]
@@ -28,7 +29,7 @@ export default function TextEditor(props)  {
   const formats = [
       'header', 'font', 'size',
       'bold', 'italic', 'underline', 'strike', 'blockquote',
-      'list', 'bullet', 'indent',
+      'list', 'bullet', 'indent', 'align',
       'link', 'image', 'video'
     ]
 
@@ -44,6 +45,7 @@ export default function TextEditor(props)  {
               value={content}
               modules={modules}
               formats={formats}
+              readOnly={props.readOnly}
              />
            </div>
          )
