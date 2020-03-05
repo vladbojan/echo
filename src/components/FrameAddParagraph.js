@@ -88,7 +88,7 @@ return (
                 <Button size="small" className={classes.actionButton} disabled={!content} type="submit">
                   Salveaza
                 </Button>
-                <Button size="small" className={classes.actionButton} onClick={e => {setContent(''); setStyling(''); setMedia('')}}>
+                <Button size="small" className={classes.actionButton} onClick={e => {setContent(''); setStyling(''); setMedia(''); refreshFoo()}}>
                   Anuleaza
                 </Button>
               </CardActions>  

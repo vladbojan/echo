@@ -82,7 +82,7 @@ export default function FrameEditParagraph(props)  {
                   }}
                   style={{ display: 'none' }}
                 />              
-                <TextEditor content={content}  setContent={handleSetContent} theme={theme} readOnly={readOnly}/>
+                <TextEditor content={content}  class={readOnly?'':classes.paragraphEdit} setContent={handleSetContent} theme={theme} readOnly={readOnly}/>
                 <Button size="small" className={theme==='snow'?classes.actionButton:classes.hidden} disabled={!content} type="submit">
                   Salveaza
                 </Button>

@@ -83,7 +83,12 @@ export const useStyles = makeStyles(theme => ({
     backgroundColor: '#ebf6ff',
     color: '#4c586f',
     padding: '0.5rem',
-
+    '& div.ql-container': {
+      overflowY: 'auto',
+      maxHeight: 400,
+      display: 'flex',
+      flexDirection: 'column-reverse',
+    },
   },
   cardEdit: {
     minWidth: 500,
