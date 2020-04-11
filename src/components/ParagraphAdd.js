@@ -1,12 +1,10 @@
-import React, { Component } from 'react'
+import React from 'react'
 
 import  { gql } from 'apollo-boost'
 
 import CardActions from '@material-ui/core/CardActions'
 import Button from '@material-ui/core/Button'
-import TextareaAutosize from '@material-ui/core/TextareaAutosize'
 import TextField from '@material-ui/core/TextField'
-import Divider from '@material-ui/core/Divider'
 
 import { Mutation } from 'react-apollo'
 import {FRAME_QUERY} from './CreatePage'
@@ -14,7 +12,7 @@ import { useStyles } from '../constants/styles'
 import TextEditor from './TextEditor'
 
 
-function  FrameAddParagraph(props)  {
+function ParagraphAdd(props)  {
 const classes  = useStyles()
 
 const [content, setContent] = React.useState('')
@@ -113,4 +111,4 @@ const CREATE_DRAFT_MUTATION = gql`
   }
 `
 
-export default FrameAddParagraph;
+export default ParagraphAdd;

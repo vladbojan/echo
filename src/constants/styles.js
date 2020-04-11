@@ -160,6 +160,9 @@ export const useStyles = makeStyles(theme => ({
       border: 'none!important',
     },
   },
+  dnd:{
+    height: '1em',
+  },
   hidden:{
     display: 'none!important',
   }

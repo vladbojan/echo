@@ -29,21 +29,25 @@ input ParagraphInput {
 type Mutation {
   createParagraph(content: String!, styling: String, media: String, parentId: String, position: String): Paragraph
   updateParagraph(id: ID!, content: String!, styling: String, media: String): Paragraph
+  updateParagraphPosition(id: ID!, position: String): Paragraph
   deleteParagraph(id: ID!): Paragraph
   publishParagraph(id: ID!): Paragraph
 
   createFrame(title: String!, styling: String, media: String, parentId: String, position: String): Frame
   updateFrame(id: ID!, title: String!, styling: String, media: String, position: String): Frame
+  updateFramePosition(id: ID!, position: String): Frame
   deleteFrame(id: ID!): Frame
   publishFrame(id: ID!): Frame
 
   createScene(title: String!, styling: String, media: String, parentId: String, position: String): Scene
   updateScene(id: ID!, title: String!, styling: String, media: String, position: String): Scene
+  updateScenePosition(id: ID!, position: String): Scene
   deleteScene(id: ID!): Scene
   publishScene(id: ID!): Scene
 
   createStory(title: String!, styling: String, media: String, position: String): Story
   updateStory(id: ID!, title: String!, styling: String, media: String, position: String): Story
+  updateStoryPosition(id: ID!, position: String): Story
   deleteStory(id: ID!): Story
   publishStory(id: ID!): Story
 

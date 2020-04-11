@@ -28,6 +28,22 @@ const post = {
     )
   },
 
+  async updateParagraphPosition(parent, { id, position }, context) {
+    const postExists = await context.prisma.$exists.paragraph({
+      id,
+    })
+    if (!postExists) {
+      throw new Error(`Post not found`)
+    }
+
+    return context.prisma.updateParagraph(
+      {
+        where: { id },
+        data: { position: position },
+      },
+    )
+  },
+
   async deleteParagraph(parent, { id }, context) {
     const postExists = await context.prisma.$exists.paragraph({
       id,
@@ -93,6 +109,22 @@ const post = {
     )
   },
 
+  async updateFramePosition(parent, { id, position }, context) {
+    const postExists = await context.prisma.$exists.frame({
+      id,
+    })
+    if (!postExists) {
+      throw new Error(`Post not found`)
+    }
+
+    return context.prisma.updateFrame(
+      {
+        where: { id },
+        data: { position: position },
+      },
+    )
+  },
+
   async createScene(parent, { title, styling, media, parentId, position }, context) {
     return context.prisma.createScene({
       published: false,
@@ -127,6 +159,22 @@ const post = {
       {
         where: { id },
         data: { title: title, styling: styling, media: media, position: position },
+      },
+    )
+  },
+
+  async updateScenePosition(parent, { id, position }, context) {
+    const postExists = await context.prisma.$exists.scene({
+      id,
+    })
+    if (!postExists) {
+      throw new Error(`Post not found`)
+    }
+
+    return context.prisma.updateScene(
+      {
+        where: { id },
+        data: { position: position },
       },
     )
   },
@@ -168,6 +216,22 @@ const post = {
       {
         where: { id },
         data: { title: title, styling: styling, media: media, position: position },
+      },
+    )
+  },
+
+  async updateStoryPosition(parent, { id, position }, context) {
+    const postExists = await context.prisma.$exists.story({
+      id,
+    })
+    if (!postExists) {
+      throw new Error(`Post not found`)
+    }
+
+    return context.prisma.updateStory(
+      {
+        where: { id },
+        data: { position: position },
       },
     )
   },

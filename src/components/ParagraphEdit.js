@@ -1,4 +1,7 @@
-import React from 'react'
+import React, { useRef }  from 'react'
+
+import { useDrag, useDrop } from 'react-dnd'
+
 import CardActions from '@material-ui/core/CardActions'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
@@ -11,15 +14,17 @@ import  { gql } from 'apollo-boost'
 import {FRAME_QUERY} from './CreatePage'
 import DeleteParagraph from './DeleteParagraph'
 import { useStyles } from '../constants/styles'
+import { ItemTypes } from '../constants/ItemTypes'
 import TextEditor from './TextEditor'
 
 
-export default function FrameEditParagraph(props)  {
+export default function ParagraphEdit(props)  {
   const classes = useStyles();
   const [id, setId] = React.useState(props.id);
   const [content, setContent] = React.useState(props.content);
   const [styling, setStyling] = React.useState(props.styling);
   const [media, setMedia] = React.useState(props.media);
+  const [position, setPosition] = React.useState(props.position);
   const [theme, setTheme] = React.useState('bubble');
   const [readOnly, setReadOnly] = React.useState(true);
 
@@ -32,7 +37,18 @@ export default function FrameEditParagraph(props)  {
     readOnly===true?setReadOnly(false):setReadOnly(true)
   }
 
+  const [{isDragging}, drag] = useDrag({
+    item: { id:id, position:position, type: ItemTypes.PARAGRAPH },
+    end: (item, monitor) => {
+      const dropResult = monitor.getDropResult()
+    },
+		collect: monitor => ({
+			isDragging: !!monitor.isDragging(),
+		}),
+  })
+
   return (
+    <div ref={drag}>
     <CardActions>
         <Mutation
         mutation={EDIT_DRAFT_MUTATION}
@@ -81,7 +97,7 @@ export default function FrameEditParagraph(props)  {
                     shrink: true,
                   }}
                   style={{ display: 'none' }}
-                />              
+                />           
                 <TextEditor content={content}  class={readOnly?'':classes.paragraphEdit} setContent={handleSetContent} theme={theme} readOnly={readOnly}/>
                 <Button size="small" className={theme==='snow'?classes.actionButton:classes.hidden} disabled={!content} type="submit">
                   Salveaza
@@ -99,6 +115,7 @@ export default function FrameEditParagraph(props)  {
         refresh={props.refresh}
       />
     </CardActions> 
+    </div>
     )
 }
 
