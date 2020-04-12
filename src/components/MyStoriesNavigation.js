@@ -60,19 +60,19 @@ export default function MyStoriesNavigation(props) {
                     styling={story.styling}
                     media={story.media}
                     position={story.position}
-                    refresh={props.refresh}
+                    refresh={() => refetch()}
                     showPanel={expanded===index}
                   />
                   <DeleteStory 
                     id={story.id} 
-                    refresh={props.refresh}
+                    refresh={() => refetch()}
                   />
                 </ExpansionPanelSummary>
                 <ExpansionPanelDetails>
                   <StoryEdit
                     story={story}
                     show={story.id}
-                    refresh={props.refresh}
+                    refresh={() => refetch()}
                     edit={true}
                   />
                 </ExpansionPanelDetails>
