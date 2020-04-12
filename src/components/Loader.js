@@ -27,9 +27,4 @@ function  Loader(props)  {
     )
   }
 
-
-Loader.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-
 export default Loader;

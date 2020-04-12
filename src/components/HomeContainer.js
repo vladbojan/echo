@@ -6,6 +6,7 @@ import CreatePage from '../components/CreatePage'
 import CreateNewStory from '../components/CreateNewStory'
 import DetailPage from '../components/DetailPage'
 import StoryEditPage from '../components/StoryEditPage'
+import MyStoriesNavigation from './MyStoriesNavigation'
 
 import {
   Route,
@@ -25,6 +26,7 @@ export default function HomeContainer(props) {
         <Route path="/createStory" component={CreateNewStory} />
         <Route path="/post/:id" component={DetailPage} />
         <Route path="/edit/:id" component={StoryEditPage} />
+        <Route path="/navigator" component={MyStoriesNavigation} />
       </Switch>
     </div>
       )

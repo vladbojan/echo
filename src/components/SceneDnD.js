@@ -10,21 +10,21 @@ import { useStyles } from '../constants/styles'
 import { ItemTypes } from '../constants/ItemTypes'
 
 
-export default function ParagraphDnD(props)  {
+export default function SceneDnD(props)  {
   const classes = useStyles()
   const [id, setId] = React.useState(props.id)
   const [position, setPosition] = React.useState(props.position)
-  const [content, setContent] = React.useState('')
+  const [title, setTitle] = React.useState('')
   const inputRef = React.useRef(null)
 
   function handleDrop(item) {
     setId(item.id);
-    setContent(item.content);
+    setTitle(item.title);
     inputRef.current.click();
   }
 
   const [{ canDrop, isOver }, drop] = useDrop({
-    accept: ItemTypes.PARAGRAPH ,
+    accept: ItemTypes.SCENE ,
     canDrop: (item) => (id!==item.id),
     drop: (item) => (handleDrop(item)),
     collect: monitor => ({
@@ -52,16 +52,16 @@ export default function ParagraphDnD(props)  {
                 className="w-100"
                 onSubmit={async e => {
                   e.preventDefault()
-                  if (content!==''){
+                  if (title!==''){
                     await createDraft({
                       variables: { id, position },
                     })
-                    setContent('')
+                    setTitle('')
                     props.refresh()
                   }
                 }}
               >
-                <div ref={drop} className={isActive ? classes.dndHover:classes.dnd}>{isActive ? 'Muta paragraful aici' : '   '}</div>
+                <div ref={drop} className={isActive ? classes.dndHover:classes.dnd}>{isActive ? 'Muta scena aici' : '   '}</div>
                 <Button ref={inputRef} className={classes.hidden} type="submit">
                   Confirma
                 </Button>
@@ -73,8 +73,8 @@ export default function ParagraphDnD(props)  {
 }
 
 const EDIT_DRAFT_MUTATION = gql`
-  mutation MoveParagraphMutation($id: ID!, $position: String!) {
-    updateParagraphPosition(id: $id, position: $position) {
+  mutation MoveSceneMutation($id: ID!, $position: String!) {
+    updateScenePosition(id: $id, position: $position) {
       id
       position
     }

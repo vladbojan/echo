@@ -6,6 +6,9 @@ import MuiExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
 import MuiExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
 import { withStyles } from '@material-ui/core/styles'
 
+import { DndProvider } from 'react-dnd'
+import Backend from 'react-dnd-html5-backend'
+
 import { useStyles } from '../constants/styles'
 import { panelDetailStyle } from '../constants/styles'
 import { panelSummaryStyle } from '../constants/styles'
@@ -15,6 +18,8 @@ import AddFrame from './AddFrame'
 import DeleteFrame from './DeleteFrame'
 import EditFrameTitle from './EditFrameTitle'
 import FrameEdit from './FrameEdit'
+import FrameDnD from './FrameDnD'
+import FrameDrag from './FrameDrag'
 
 const { getPosition } = require('./utils')
 
@@ -30,12 +35,15 @@ function  SceneEdit(props)  {
       <div>
       {props.scene.frames.map((frame, index, allFrames) =>
       <div>
+        <DndProvider backend={Backend}>
         <div className={(expanded===index)?classes.expansionPanelMaximized:classes.expansionPanelMinimized}>
           <ExpansionPanel square expanded={expanded === index}>
             <ExpansionPanelSummary>
-              <div className={classes.header} onClick={e => expanded===index? setExpanded(false):setExpanded(index)}>
-                <Typography className={classes.title}>{frame.title}</Typography>
-              </div>
+                <div className={classes.header} onClick={e => expanded===index? setExpanded(false):setExpanded(index)}>
+                  <FrameDrag
+                  frame={frame}
+                  />
+                </div>
               <EditFrameTitle 
                 id={frame.id} 
                 title={frame.title}
@@ -76,7 +84,22 @@ function  SceneEdit(props)  {
               position={getPosition(props.scene.frames[props.scene.frames.length-1]?props.scene.frames[props.scene.frames.length-1].position:"0")}
             />
           }
+          {allFrames[index+1] &&
+          <FrameDnD
+            id={frame.id}
+            position={frame.position+"-"+allFrames[index+1].position}
+            refresh={props.refresh}
+          />
+          }
+          {(!allFrames[index+1]) && (props.show===props.scene.id) &&
+          <FrameDnD
+            id={frame.id}
+            position={getPosition(props.scene.frames[props.scene.frames.length-1]?props.scene.frames[props.scene.frames.length-1].position:"0")}
+            refresh={props.refresh}
+          />
+          }
         </div>
+        </DndProvider>
       </div>
       )}  
       {props.scene.frames && props.scene.frames.length===0 &&

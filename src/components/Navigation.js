@@ -26,6 +26,14 @@ return (
       </Button>
 
       <StoryNavigation/>
+
+      <Button color="inherit"
+        href="/navigator"
+        title="Navigator povesti"
+      >
+        Navigator
+      </Button>
+
       <StoryEditNavigation/>
 
       <Button color="inherit"

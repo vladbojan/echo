@@ -1,6 +1,6 @@
 import React, { useRef }  from 'react'
 
-import { useDrag, useDrop } from 'react-dnd'
+import { useDrag } from 'react-dnd'
 
 import CardActions from '@material-ui/core/CardActions'
 import Button from '@material-ui/core/Button'
@@ -38,7 +38,7 @@ export default function ParagraphEdit(props)  {
   }
 
   const [{isDragging}, drag] = useDrag({
-    item: { id:id, position:position, type: ItemTypes.PARAGRAPH },
+    item: { id:id, position:position, content: content, type: ItemTypes.PARAGRAPH },
     end: (item, monitor) => {
       const dropResult = monitor.getDropResult()
     },

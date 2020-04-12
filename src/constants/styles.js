@@ -163,6 +163,11 @@ export const useStyles = makeStyles(theme => ({
   dnd:{
     height: '1em',
   },
+  dndHover:{
+    paddingTop: '2em',
+    paddingBottom: '2em',
+    color: '#35434e',
+  },
   hidden:{
     display: 'none!important',
   }

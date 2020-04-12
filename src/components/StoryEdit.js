@@ -1,6 +1,8 @@
 import React from 'react'
 
-import Typography from '@material-ui/core/Typography'
+import { DndProvider } from 'react-dnd'
+import Backend from 'react-dnd-html5-backend'
+
 import MuiExpansionPanel from '@material-ui/core/ExpansionPanel'
 import MuiExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
 import MuiExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
@@ -14,6 +16,8 @@ import AddScene from './AddScene'
 import DeleteScene from './DeleteScene'
 import SceneEdit from './SceneEdit'
 import EditSceneTitle from './EditSceneTitle'
+import SceneDnD from './SceneDnD'
+import SceneDrag from './SceneDrag'
 
 const { getPosition } = require('./utils')
 
@@ -29,11 +33,14 @@ function  StoryEdit(props)  {
       <div>
       {props.story.scenes.map((scene, index, allScenes)=>
       <div>
+        <DndProvider backend={Backend}>
         <div className={(expanded===index)?classes.expansionPanelMaximized:classes.expansionPanelMinimized}>
           <ExpansionPanel square expanded={expanded === index}>
             <ExpansionPanelSummary>
               <div className={classes.header} onClick={e => expanded===index? setExpanded(false):setExpanded(index)}>
-                <Typography className={classes.title}>{scene.title}</Typography>
+                <SceneDrag
+                  scene={scene}
+                  />
               </div>
               <EditSceneTitle 
                 id={scene.id} 
@@ -73,7 +80,22 @@ function  StoryEdit(props)  {
               position={getPosition(props.story.scenes[props.story.scenes.length-1]?props.story.scenes[props.story.scenes.length-1].position:"0")}
             />
           }
+          {allScenes[index+1] &&
+            <SceneDnD
+              id={scene.id}
+              refresh={props.refresh}
+              position={scene.position+"-"+allScenes[index+1].position}
+            />
+          }
+          {(!allScenes[index+1]) && (props.show===props.story.id) &&
+            <SceneDnD
+              id={scene.id}
+              refresh={props.refresh}
+              position={getPosition(props.story.scenes[props.story.scenes.length-1]?props.story.scenes[props.story.scenes.length-1].position:"0")}
+            />
+          }
         </div>
+        </DndProvider>
       </div>
       )}  
       {props.story.scenes && props.story.scenes.length===0 &&

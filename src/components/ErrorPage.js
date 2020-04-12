@@ -37,9 +37,4 @@ function  ErrorPage(props)  {
     )
   }
 
-
-ErrorPage.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-
 export default ErrorPage;
