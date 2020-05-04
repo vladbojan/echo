@@ -4,6 +4,7 @@ type User {
   password: String!
   name: String!
   stories: [Story!]! @relation(name: "StoryToUser" onDelete: CASCADE)
+  notes: [Note!]! @relation(name: "NoteToUser" onDelete: CASCADE)
 }
 
 type Paragraph {
@@ -46,5 +47,12 @@ type Story {
   media: String! @default(value: "false")
   scenes: [Scene!]! @relation(name: "SceneToStory" onDelete: CASCADE)
   author: User! @relation(name: "StoryToUser")
+  position: String
+}
+
+type Note {
+  id: ID! @id
+  content: String!
+  author: User! @relation(name: "NoteToUser")
   position: String
 }

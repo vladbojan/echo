@@ -236,6 +236,60 @@ const post = {
     )
   },
 
+  async createNote(parent, { content, position }, context) {
+    const userEmail = getUserEmail(context)
+    return context.prisma.createNote({
+      content: content,
+      position: position,
+      author: { connect: { email: userEmail } },
+    })
+  },
+
+  async deleteNote(parent, { id }, context) {
+    const userEmail = getUserEmail(context)
+    const postExists = await context.prisma.$exists.note({
+      id,
+      author: { email: userEmail },
+    })
+    if (!postExists) {
+      throw new Error(`Post not found or you're not the author`)
+    }
+
+    return context.prisma.deleteNote({ id })
+  },
+
+  async updateNote(parent, { id, content, position }, context) {
+    const postExists = await context.prisma.$exists.note({
+      id,
+    })
+    if (!postExists) {
+      throw new Error(`Post not found`)
+    }
+
+    return context.prisma.updateNote(
+      {
+        where: { id },
+        data: { content: content, position: position },
+      },
+    )
+  },
+
+  async updateNotePosition(parent, { id, position }, context) {
+    const postExists = await context.prisma.$exists.note({
+      id,
+    })
+    if (!postExists) {
+      throw new Error(`Post not found`)
+    }
+
+    return context.prisma.updateNote(
+      {
+        where: { id },
+        data: { position: position },
+      },
+    )
+  },
+
   async createUser(parent, { email }, context) {
     return context.prisma.createUser({
       email: email,

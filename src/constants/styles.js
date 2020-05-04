@@ -170,7 +170,16 @@ export const useStyles = makeStyles(theme => ({
   },
   hidden:{
     display: 'none!important',
-  }
+  },
+  notesContainer: {
+    display: 'flex',
+    overflowY: 'auto',
+  },
+  note: {
+    margin: theme.spacing(1),
+    minWidth: '35em',
+    maxWidth: '35em',
+  },
 }));
 
 export const panelSummaryStyle={

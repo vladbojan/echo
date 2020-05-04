@@ -28,6 +28,18 @@ const Query = {
   frame(parent, { id }, context) {
     return context.prisma.frame({ id })
   },
+  notes(parent, args, context) {
+    const email = getUserEmail(context)
+    const where = {
+      author: {
+        email,
+      },
+    }
+    return context.prisma.notes({ where })
+  },
+  note(parent, { id }, context) {
+    return context.prisma.note({ id })
+  },
   me(parent, args, context) {
     const email = getUserEmail(context)
     return context.prisma.user({ email })

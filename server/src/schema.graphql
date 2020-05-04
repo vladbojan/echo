@@ -16,6 +16,8 @@ type Query {
   users: [User!]
   stories: [Story!]
   story(id: ID!): Story
+  notes: [Note!]
+  note(id: ID!): Note
   user(email: String!): User
 }
 
@@ -50,6 +52,11 @@ type Mutation {
   updateStoryPosition(id: ID!, position: String): Story
   deleteStory(id: ID!): Story
   publishStory(id: ID!): Story
+
+  createNote(content: String!, position: String): Note
+  updateNote(id: ID!, content: String!, position: String): Note
+  updateNotePosition(id: ID!, position: String): Note
+  deleteNote(id: ID!): Note
 
   createUser(email: String!): User
 }
@@ -97,9 +104,17 @@ type Story {
   position: String
 }
 
+type Note {
+  id: ID!
+  content: String!
+  author: User!
+  position: String
+}
+
 type User {
   id: ID!
   email: String!
   name: String!
   stories: [Story!]!
+  notes: [Note!]!
 }

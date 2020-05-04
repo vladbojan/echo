@@ -17,6 +17,7 @@ export type Maybe<T> = T | undefined | null;
 
 export interface Exists {
   frame: (where?: FrameWhereInput) => Promise<boolean>;
+  note: (where?: NoteWhereInput) => Promise<boolean>;
   paragraph: (where?: ParagraphWhereInput) => Promise<boolean>;
   scene: (where?: SceneWhereInput) => Promise<boolean>;
   story: (where?: StoryWhereInput) => Promise<boolean>;
@@ -61,6 +62,25 @@ export interface Prisma {
     first?: Int;
     last?: Int;
   }) => FrameConnectionPromise;
+  note: (where: NoteWhereUniqueInput) => NoteNullablePromise;
+  notes: (args?: {
+    where?: NoteWhereInput;
+    orderBy?: NoteOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<Note>;
+  notesConnection: (args?: {
+    where?: NoteWhereInput;
+    orderBy?: NoteOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => NoteConnectionPromise;
   paragraph: (where: ParagraphWhereUniqueInput) => ParagraphNullablePromise;
   paragraphs: (args?: {
     where?: ParagraphWhereInput;
@@ -159,6 +179,22 @@ export interface Prisma {
   }) => FramePromise;
   deleteFrame: (where: FrameWhereUniqueInput) => FramePromise;
   deleteManyFrames: (where?: FrameWhereInput) => BatchPayloadPromise;
+  createNote: (data: NoteCreateInput) => NotePromise;
+  updateNote: (args: {
+    data: NoteUpdateInput;
+    where: NoteWhereUniqueInput;
+  }) => NotePromise;
+  updateManyNotes: (args: {
+    data: NoteUpdateManyMutationInput;
+    where?: NoteWhereInput;
+  }) => BatchPayloadPromise;
+  upsertNote: (args: {
+    where: NoteWhereUniqueInput;
+    create: NoteCreateInput;
+    update: NoteUpdateInput;
+  }) => NotePromise;
+  deleteNote: (where: NoteWhereUniqueInput) => NotePromise;
+  deleteManyNotes: (where?: NoteWhereInput) => BatchPayloadPromise;
   createParagraph: (data: ParagraphCreateInput) => ParagraphPromise;
   updateParagraph: (args: {
     data: ParagraphUpdateInput;
@@ -235,6 +271,9 @@ export interface Subscription {
   frame: (
     where?: FrameSubscriptionWhereInput
   ) => FrameSubscriptionPayloadSubscription;
+  note: (
+    where?: NoteSubscriptionWhereInput
+  ) => NoteSubscriptionPayloadSubscription;
   paragraph: (
     where?: ParagraphSubscriptionWhereInput
   ) => ParagraphSubscriptionPayloadSubscription;
@@ -313,6 +352,14 @@ export type StoryOrderByInput =
   | "position_ASC"
   | "position_DESC";
 
+export type NoteOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "content_ASC"
+  | "content_DESC"
+  | "position_ASC"
+  | "position_DESC";
+
 export type UserOrderByInput =
   | "id_ASC"
   | "id_DESC"
@@ -325,51 +372,181 @@ export type UserOrderByInput =
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
-export interface StoryUpsertWithoutScenesInput {
-  update: StoryUpdateWithoutScenesDataInput;
-  create: StoryCreateWithoutScenesInput;
+export interface NoteUpdateManyWithWhereNestedInput {
+  where: NoteScalarWhereInput;
+  data: NoteUpdateManyDataInput;
 }
 
 export type FrameWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
 
-export interface ParagraphUpdateManyWithoutParentInput {
-  create?: Maybe<
-    ParagraphCreateWithoutParentInput[] | ParagraphCreateWithoutParentInput
-  >;
-  delete?: Maybe<ParagraphWhereUniqueInput[] | ParagraphWhereUniqueInput>;
-  connect?: Maybe<ParagraphWhereUniqueInput[] | ParagraphWhereUniqueInput>;
-  set?: Maybe<ParagraphWhereUniqueInput[] | ParagraphWhereUniqueInput>;
-  disconnect?: Maybe<ParagraphWhereUniqueInput[] | ParagraphWhereUniqueInput>;
-  update?: Maybe<
-    | ParagraphUpdateWithWhereUniqueWithoutParentInput[]
-    | ParagraphUpdateWithWhereUniqueWithoutParentInput
-  >;
-  upsert?: Maybe<
-    | ParagraphUpsertWithWhereUniqueWithoutParentInput[]
-    | ParagraphUpsertWithWhereUniqueWithoutParentInput
-  >;
-  deleteMany?: Maybe<ParagraphScalarWhereInput[] | ParagraphScalarWhereInput>;
-  updateMany?: Maybe<
-    | ParagraphUpdateManyWithWhereNestedInput[]
-    | ParagraphUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface StoryUpdateInput {
+export interface FrameUpdateManyMutationInput {
   published?: Maybe<Boolean>;
   title?: Maybe<String>;
   styling?: Maybe<String>;
   media?: Maybe<String>;
-  scenes?: Maybe<SceneUpdateManyWithoutParentInput>;
-  author?: Maybe<UserUpdateOneRequiredWithoutStoriesInput>;
   position?: Maybe<String>;
 }
 
-export interface ParagraphUpdateWithWhereUniqueWithoutParentInput {
+export interface UserWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  email?: Maybe<String>;
+  email_not?: Maybe<String>;
+  email_in?: Maybe<String[] | String>;
+  email_not_in?: Maybe<String[] | String>;
+  email_lt?: Maybe<String>;
+  email_lte?: Maybe<String>;
+  email_gt?: Maybe<String>;
+  email_gte?: Maybe<String>;
+  email_contains?: Maybe<String>;
+  email_not_contains?: Maybe<String>;
+  email_starts_with?: Maybe<String>;
+  email_not_starts_with?: Maybe<String>;
+  email_ends_with?: Maybe<String>;
+  email_not_ends_with?: Maybe<String>;
+  password?: Maybe<String>;
+  password_not?: Maybe<String>;
+  password_in?: Maybe<String[] | String>;
+  password_not_in?: Maybe<String[] | String>;
+  password_lt?: Maybe<String>;
+  password_lte?: Maybe<String>;
+  password_gt?: Maybe<String>;
+  password_gte?: Maybe<String>;
+  password_contains?: Maybe<String>;
+  password_not_contains?: Maybe<String>;
+  password_starts_with?: Maybe<String>;
+  password_not_starts_with?: Maybe<String>;
+  password_ends_with?: Maybe<String>;
+  password_not_ends_with?: Maybe<String>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  stories_every?: Maybe<StoryWhereInput>;
+  stories_some?: Maybe<StoryWhereInput>;
+  stories_none?: Maybe<StoryWhereInput>;
+  notes_every?: Maybe<NoteWhereInput>;
+  notes_some?: Maybe<NoteWhereInput>;
+  notes_none?: Maybe<NoteWhereInput>;
+  AND?: Maybe<UserWhereInput[] | UserWhereInput>;
+  OR?: Maybe<UserWhereInput[] | UserWhereInput>;
+  NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
+}
+
+export interface ParagraphUpsertWithWhereUniqueWithoutParentInput {
   where: ParagraphWhereUniqueInput;
-  data: ParagraphUpdateWithoutParentDataInput;
+  update: ParagraphUpdateWithoutParentDataInput;
+  create: ParagraphCreateWithoutParentInput;
+}
+
+export interface SceneUpdateManyDataInput {
+  published?: Maybe<Boolean>;
+  title?: Maybe<String>;
+  styling?: Maybe<String>;
+  media?: Maybe<String>;
+  position?: Maybe<String>;
+}
+
+export interface ParagraphScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  published?: Maybe<Boolean>;
+  published_not?: Maybe<Boolean>;
+  content?: Maybe<String>;
+  content_not?: Maybe<String>;
+  content_in?: Maybe<String[] | String>;
+  content_not_in?: Maybe<String[] | String>;
+  content_lt?: Maybe<String>;
+  content_lte?: Maybe<String>;
+  content_gt?: Maybe<String>;
+  content_gte?: Maybe<String>;
+  content_contains?: Maybe<String>;
+  content_not_contains?: Maybe<String>;
+  content_starts_with?: Maybe<String>;
+  content_not_starts_with?: Maybe<String>;
+  content_ends_with?: Maybe<String>;
+  content_not_ends_with?: Maybe<String>;
+  styling?: Maybe<String>;
+  styling_not?: Maybe<String>;
+  styling_in?: Maybe<String[] | String>;
+  styling_not_in?: Maybe<String[] | String>;
+  styling_lt?: Maybe<String>;
+  styling_lte?: Maybe<String>;
+  styling_gt?: Maybe<String>;
+  styling_gte?: Maybe<String>;
+  styling_contains?: Maybe<String>;
+  styling_not_contains?: Maybe<String>;
+  styling_starts_with?: Maybe<String>;
+  styling_not_starts_with?: Maybe<String>;
+  styling_ends_with?: Maybe<String>;
+  styling_not_ends_with?: Maybe<String>;
+  media?: Maybe<String>;
+  media_not?: Maybe<String>;
+  media_in?: Maybe<String[] | String>;
+  media_not_in?: Maybe<String[] | String>;
+  media_lt?: Maybe<String>;
+  media_lte?: Maybe<String>;
+  media_gt?: Maybe<String>;
+  media_gte?: Maybe<String>;
+  media_contains?: Maybe<String>;
+  media_not_contains?: Maybe<String>;
+  media_starts_with?: Maybe<String>;
+  media_not_starts_with?: Maybe<String>;
+  media_ends_with?: Maybe<String>;
+  media_not_ends_with?: Maybe<String>;
+  position?: Maybe<String>;
+  position_not?: Maybe<String>;
+  position_in?: Maybe<String[] | String>;
+  position_not_in?: Maybe<String[] | String>;
+  position_lt?: Maybe<String>;
+  position_lte?: Maybe<String>;
+  position_gt?: Maybe<String>;
+  position_gte?: Maybe<String>;
+  position_contains?: Maybe<String>;
+  position_not_contains?: Maybe<String>;
+  position_starts_with?: Maybe<String>;
+  position_not_starts_with?: Maybe<String>;
+  position_ends_with?: Maybe<String>;
+  position_not_ends_with?: Maybe<String>;
+  AND?: Maybe<ParagraphScalarWhereInput[] | ParagraphScalarWhereInput>;
+  OR?: Maybe<ParagraphScalarWhereInput[] | ParagraphScalarWhereInput>;
+  NOT?: Maybe<ParagraphScalarWhereInput[] | ParagraphScalarWhereInput>;
 }
 
 export interface StoryWhereInput {
@@ -454,29 +631,28 @@ export interface StoryWhereInput {
   NOT?: Maybe<StoryWhereInput[] | StoryWhereInput>;
 }
 
-export interface ParagraphUpdateWithoutParentDataInput {
+export interface ParagraphUpdateManyWithWhereNestedInput {
+  where: ParagraphScalarWhereInput;
+  data: ParagraphUpdateManyDataInput;
+}
+
+export interface StorySubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<StoryWhereInput>;
+  AND?: Maybe<StorySubscriptionWhereInput[] | StorySubscriptionWhereInput>;
+  OR?: Maybe<StorySubscriptionWhereInput[] | StorySubscriptionWhereInput>;
+  NOT?: Maybe<StorySubscriptionWhereInput[] | StorySubscriptionWhereInput>;
+}
+
+export interface ParagraphUpdateManyDataInput {
   published?: Maybe<Boolean>;
   content?: Maybe<String>;
   styling?: Maybe<String>;
   media?: Maybe<String>;
   position?: Maybe<String>;
-}
-
-export interface UserSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<UserWhereInput>;
-  AND?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
-  OR?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
-  NOT?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
-}
-
-export interface ParagraphUpsertWithWhereUniqueWithoutParentInput {
-  where: ParagraphWhereUniqueInput;
-  update: ParagraphUpdateWithoutParentDataInput;
-  create: ParagraphCreateWithoutParentInput;
 }
 
 export interface SceneSubscriptionWhereInput {
@@ -490,82 +666,11 @@ export interface SceneSubscriptionWhereInput {
   NOT?: Maybe<SceneSubscriptionWhereInput[] | SceneSubscriptionWhereInput>;
 }
 
-export interface ParagraphScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  published?: Maybe<Boolean>;
-  published_not?: Maybe<Boolean>;
-  content?: Maybe<String>;
-  content_not?: Maybe<String>;
-  content_in?: Maybe<String[] | String>;
-  content_not_in?: Maybe<String[] | String>;
-  content_lt?: Maybe<String>;
-  content_lte?: Maybe<String>;
-  content_gt?: Maybe<String>;
-  content_gte?: Maybe<String>;
-  content_contains?: Maybe<String>;
-  content_not_contains?: Maybe<String>;
-  content_starts_with?: Maybe<String>;
-  content_not_starts_with?: Maybe<String>;
-  content_ends_with?: Maybe<String>;
-  content_not_ends_with?: Maybe<String>;
-  styling?: Maybe<String>;
-  styling_not?: Maybe<String>;
-  styling_in?: Maybe<String[] | String>;
-  styling_not_in?: Maybe<String[] | String>;
-  styling_lt?: Maybe<String>;
-  styling_lte?: Maybe<String>;
-  styling_gt?: Maybe<String>;
-  styling_gte?: Maybe<String>;
-  styling_contains?: Maybe<String>;
-  styling_not_contains?: Maybe<String>;
-  styling_starts_with?: Maybe<String>;
-  styling_not_starts_with?: Maybe<String>;
-  styling_ends_with?: Maybe<String>;
-  styling_not_ends_with?: Maybe<String>;
-  media?: Maybe<String>;
-  media_not?: Maybe<String>;
-  media_in?: Maybe<String[] | String>;
-  media_not_in?: Maybe<String[] | String>;
-  media_lt?: Maybe<String>;
-  media_lte?: Maybe<String>;
-  media_gt?: Maybe<String>;
-  media_gte?: Maybe<String>;
-  media_contains?: Maybe<String>;
-  media_not_contains?: Maybe<String>;
-  media_starts_with?: Maybe<String>;
-  media_not_starts_with?: Maybe<String>;
-  media_ends_with?: Maybe<String>;
-  media_not_ends_with?: Maybe<String>;
-  position?: Maybe<String>;
-  position_not?: Maybe<String>;
-  position_in?: Maybe<String[] | String>;
-  position_not_in?: Maybe<String[] | String>;
-  position_lt?: Maybe<String>;
-  position_lte?: Maybe<String>;
-  position_gt?: Maybe<String>;
-  position_gte?: Maybe<String>;
-  position_contains?: Maybe<String>;
-  position_not_contains?: Maybe<String>;
-  position_starts_with?: Maybe<String>;
-  position_not_starts_with?: Maybe<String>;
-  position_ends_with?: Maybe<String>;
-  position_not_ends_with?: Maybe<String>;
-  AND?: Maybe<ParagraphScalarWhereInput[] | ParagraphScalarWhereInput>;
-  OR?: Maybe<ParagraphScalarWhereInput[] | ParagraphScalarWhereInput>;
-  NOT?: Maybe<ParagraphScalarWhereInput[] | ParagraphScalarWhereInput>;
+export interface SceneUpdateOneRequiredWithoutFramesInput {
+  create?: Maybe<SceneCreateWithoutFramesInput>;
+  update?: Maybe<SceneUpdateWithoutFramesDataInput>;
+  upsert?: Maybe<SceneUpsertWithoutFramesInput>;
+  connect?: Maybe<SceneWhereUniqueInput>;
 }
 
 export interface ParagraphSubscriptionWhereInput {
@@ -585,28 +690,240 @@ export interface ParagraphSubscriptionWhereInput {
   >;
 }
 
-export interface ParagraphUpdateManyWithWhereNestedInput {
-  where: ParagraphScalarWhereInput;
-  data: ParagraphUpdateManyDataInput;
+export interface SceneUpdateWithoutFramesDataInput {
+  published?: Maybe<Boolean>;
+  title?: Maybe<String>;
+  styling?: Maybe<String>;
+  media?: Maybe<String>;
+  parent?: Maybe<StoryUpdateOneRequiredWithoutScenesInput>;
+  position?: Maybe<String>;
 }
 
-export interface FrameSubscriptionWhereInput {
+export interface NoteSubscriptionWhereInput {
   mutation_in?: Maybe<MutationType[] | MutationType>;
   updatedFields_contains?: Maybe<String>;
   updatedFields_contains_every?: Maybe<String[] | String>;
   updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<FrameWhereInput>;
-  AND?: Maybe<FrameSubscriptionWhereInput[] | FrameSubscriptionWhereInput>;
-  OR?: Maybe<FrameSubscriptionWhereInput[] | FrameSubscriptionWhereInput>;
-  NOT?: Maybe<FrameSubscriptionWhereInput[] | FrameSubscriptionWhereInput>;
+  node?: Maybe<NoteWhereInput>;
+  AND?: Maybe<NoteSubscriptionWhereInput[] | NoteSubscriptionWhereInput>;
+  OR?: Maybe<NoteSubscriptionWhereInput[] | NoteSubscriptionWhereInput>;
+  NOT?: Maybe<NoteSubscriptionWhereInput[] | NoteSubscriptionWhereInput>;
 }
 
-export interface ParagraphUpdateManyDataInput {
+export interface StoryUpdateOneRequiredWithoutScenesInput {
+  create?: Maybe<StoryCreateWithoutScenesInput>;
+  update?: Maybe<StoryUpdateWithoutScenesDataInput>;
+  upsert?: Maybe<StoryUpsertWithoutScenesInput>;
+  connect?: Maybe<StoryWhereUniqueInput>;
+}
+
+export interface UserUpdateManyMutationInput {
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  name?: Maybe<String>;
+}
+
+export interface StoryUpdateWithoutScenesDataInput {
   published?: Maybe<Boolean>;
-  content?: Maybe<String>;
+  title?: Maybe<String>;
   styling?: Maybe<String>;
   media?: Maybe<String>;
+  author?: Maybe<UserUpdateOneRequiredWithoutStoriesInput>;
   position?: Maybe<String>;
+}
+
+export interface UserCreateInput {
+  id?: Maybe<ID_Input>;
+  email: String;
+  password: String;
+  name: String;
+  stories?: Maybe<StoryCreateManyWithoutAuthorInput>;
+  notes?: Maybe<NoteCreateManyWithoutAuthorInput>;
+}
+
+export interface UserUpdateOneRequiredWithoutStoriesInput {
+  create?: Maybe<UserCreateWithoutStoriesInput>;
+  update?: Maybe<UserUpdateWithoutStoriesDataInput>;
+  upsert?: Maybe<UserUpsertWithoutStoriesInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export type NoteWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface UserUpdateWithoutStoriesDataInput {
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  name?: Maybe<String>;
+  notes?: Maybe<NoteUpdateManyWithoutAuthorInput>;
+}
+
+export interface StoryCreateInput {
+  id?: Maybe<ID_Input>;
+  published?: Maybe<Boolean>;
+  title?: Maybe<String>;
+  styling?: Maybe<String>;
+  media?: Maybe<String>;
+  scenes?: Maybe<SceneCreateManyWithoutParentInput>;
+  author: UserCreateOneWithoutStoriesInput;
+  position?: Maybe<String>;
+}
+
+export interface NoteUpdateManyWithoutAuthorInput {
+  create?: Maybe<NoteCreateWithoutAuthorInput[] | NoteCreateWithoutAuthorInput>;
+  delete?: Maybe<NoteWhereUniqueInput[] | NoteWhereUniqueInput>;
+  connect?: Maybe<NoteWhereUniqueInput[] | NoteWhereUniqueInput>;
+  set?: Maybe<NoteWhereUniqueInput[] | NoteWhereUniqueInput>;
+  disconnect?: Maybe<NoteWhereUniqueInput[] | NoteWhereUniqueInput>;
+  update?: Maybe<
+    | NoteUpdateWithWhereUniqueWithoutAuthorInput[]
+    | NoteUpdateWithWhereUniqueWithoutAuthorInput
+  >;
+  upsert?: Maybe<
+    | NoteUpsertWithWhereUniqueWithoutAuthorInput[]
+    | NoteUpsertWithWhereUniqueWithoutAuthorInput
+  >;
+  deleteMany?: Maybe<NoteScalarWhereInput[] | NoteScalarWhereInput>;
+  updateMany?: Maybe<
+    NoteUpdateManyWithWhereNestedInput[] | NoteUpdateManyWithWhereNestedInput
+  >;
+}
+
+export type ParagraphWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface NoteUpdateWithWhereUniqueWithoutAuthorInput {
+  where: NoteWhereUniqueInput;
+  data: NoteUpdateWithoutAuthorDataInput;
+}
+
+export interface SceneCreateInput {
+  id?: Maybe<ID_Input>;
+  published?: Maybe<Boolean>;
+  title?: Maybe<String>;
+  styling?: Maybe<String>;
+  media?: Maybe<String>;
+  frames?: Maybe<FrameCreateManyWithoutParentInput>;
+  parent: StoryCreateOneWithoutScenesInput;
+  position?: Maybe<String>;
+}
+
+export interface NoteUpdateWithoutAuthorDataInput {
+  content?: Maybe<String>;
+  position?: Maybe<String>;
+}
+
+export type SceneWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface NoteUpsertWithWhereUniqueWithoutAuthorInput {
+  where: NoteWhereUniqueInput;
+  update: NoteUpdateWithoutAuthorDataInput;
+  create: NoteCreateWithoutAuthorInput;
+}
+
+export interface FrameUpdateWithoutParagraphsDataInput {
+  published?: Maybe<Boolean>;
+  title?: Maybe<String>;
+  styling?: Maybe<String>;
+  media?: Maybe<String>;
+  parent?: Maybe<SceneUpdateOneRequiredWithoutFramesInput>;
+  position?: Maybe<String>;
+}
+
+export interface NoteScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  content?: Maybe<String>;
+  content_not?: Maybe<String>;
+  content_in?: Maybe<String[] | String>;
+  content_not_in?: Maybe<String[] | String>;
+  content_lt?: Maybe<String>;
+  content_lte?: Maybe<String>;
+  content_gt?: Maybe<String>;
+  content_gte?: Maybe<String>;
+  content_contains?: Maybe<String>;
+  content_not_contains?: Maybe<String>;
+  content_starts_with?: Maybe<String>;
+  content_not_starts_with?: Maybe<String>;
+  content_ends_with?: Maybe<String>;
+  content_not_ends_with?: Maybe<String>;
+  position?: Maybe<String>;
+  position_not?: Maybe<String>;
+  position_in?: Maybe<String[] | String>;
+  position_not_in?: Maybe<String[] | String>;
+  position_lt?: Maybe<String>;
+  position_lte?: Maybe<String>;
+  position_gt?: Maybe<String>;
+  position_gte?: Maybe<String>;
+  position_contains?: Maybe<String>;
+  position_not_contains?: Maybe<String>;
+  position_starts_with?: Maybe<String>;
+  position_not_starts_with?: Maybe<String>;
+  position_ends_with?: Maybe<String>;
+  position_not_ends_with?: Maybe<String>;
+  AND?: Maybe<NoteScalarWhereInput[] | NoteScalarWhereInput>;
+  OR?: Maybe<NoteScalarWhereInput[] | NoteScalarWhereInput>;
+  NOT?: Maybe<NoteScalarWhereInput[] | NoteScalarWhereInput>;
+}
+
+export type StoryWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface StoryUpdateManyWithWhereNestedInput {
+  where: StoryScalarWhereInput;
+  data: StoryUpdateManyDataInput;
+}
+
+export interface FrameCreateWithoutParagraphsInput {
+  id?: Maybe<ID_Input>;
+  published?: Maybe<Boolean>;
+  title: String;
+  styling?: Maybe<String>;
+  media?: Maybe<String>;
+  parent: SceneCreateOneWithoutFramesInput;
+  position?: Maybe<String>;
+}
+
+export interface NoteUpdateManyDataInput {
+  content?: Maybe<String>;
+  position?: Maybe<String>;
+}
+
+export type UserWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+  email?: Maybe<String>;
+}>;
+
+export interface UserUpsertWithoutStoriesInput {
+  update: UserUpdateWithoutStoriesDataInput;
+  create: UserCreateWithoutStoriesInput;
+}
+
+export interface NoteUpdateManyMutationInput {
+  content?: Maybe<String>;
+  position?: Maybe<String>;
+}
+
+export interface StoryUpsertWithoutScenesInput {
+  update: StoryUpdateWithoutScenesDataInput;
+  create: StoryCreateWithoutScenesInput;
 }
 
 export interface StoryUpdateManyDataInput {
@@ -617,11 +934,78 @@ export interface StoryUpdateManyDataInput {
   position?: Maybe<String>;
 }
 
-export interface SceneUpdateOneRequiredWithoutFramesInput {
-  create?: Maybe<SceneCreateWithoutFramesInput>;
-  update?: Maybe<SceneUpdateWithoutFramesDataInput>;
-  upsert?: Maybe<SceneUpsertWithoutFramesInput>;
-  connect?: Maybe<SceneWhereUniqueInput>;
+export interface SceneUpsertWithoutFramesInput {
+  update: SceneUpdateWithoutFramesDataInput;
+  create: SceneCreateWithoutFramesInput;
+}
+
+export interface FrameCreateInput {
+  id?: Maybe<ID_Input>;
+  published?: Maybe<Boolean>;
+  title: String;
+  styling?: Maybe<String>;
+  media?: Maybe<String>;
+  paragraphs?: Maybe<ParagraphCreateManyWithoutParentInput>;
+  parent: SceneCreateOneWithoutFramesInput;
+  position?: Maybe<String>;
+}
+
+export interface NoteWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  content?: Maybe<String>;
+  content_not?: Maybe<String>;
+  content_in?: Maybe<String[] | String>;
+  content_not_in?: Maybe<String[] | String>;
+  content_lt?: Maybe<String>;
+  content_lte?: Maybe<String>;
+  content_gt?: Maybe<String>;
+  content_gte?: Maybe<String>;
+  content_contains?: Maybe<String>;
+  content_not_contains?: Maybe<String>;
+  content_starts_with?: Maybe<String>;
+  content_not_starts_with?: Maybe<String>;
+  content_ends_with?: Maybe<String>;
+  content_not_ends_with?: Maybe<String>;
+  author?: Maybe<UserWhereInput>;
+  position?: Maybe<String>;
+  position_not?: Maybe<String>;
+  position_in?: Maybe<String[] | String>;
+  position_not_in?: Maybe<String[] | String>;
+  position_lt?: Maybe<String>;
+  position_lte?: Maybe<String>;
+  position_gt?: Maybe<String>;
+  position_gte?: Maybe<String>;
+  position_contains?: Maybe<String>;
+  position_not_contains?: Maybe<String>;
+  position_starts_with?: Maybe<String>;
+  position_not_starts_with?: Maybe<String>;
+  position_ends_with?: Maybe<String>;
+  position_not_ends_with?: Maybe<String>;
+  AND?: Maybe<NoteWhereInput[] | NoteWhereInput>;
+  OR?: Maybe<NoteWhereInput[] | NoteWhereInput>;
+  NOT?: Maybe<NoteWhereInput[] | NoteWhereInput>;
+}
+
+export interface ParagraphCreateWithoutParentInput {
+  id?: Maybe<ID_Input>;
+  published?: Maybe<Boolean>;
+  content: String;
+  styling?: Maybe<String>;
+  media?: Maybe<String>;
+  position?: Maybe<String>;
 }
 
 export interface StoryScalarWhereInput {
@@ -702,311 +1086,6 @@ export interface StoryScalarWhereInput {
   NOT?: Maybe<StoryScalarWhereInput[] | StoryScalarWhereInput>;
 }
 
-export interface SceneUpdateWithoutFramesDataInput {
-  published?: Maybe<Boolean>;
-  title?: Maybe<String>;
-  styling?: Maybe<String>;
-  media?: Maybe<String>;
-  parent?: Maybe<StoryUpdateOneRequiredWithoutScenesInput>;
-  position?: Maybe<String>;
-}
-
-export type ParagraphWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export interface StoryUpdateOneRequiredWithoutScenesInput {
-  create?: Maybe<StoryCreateWithoutScenesInput>;
-  update?: Maybe<StoryUpdateWithoutScenesDataInput>;
-  upsert?: Maybe<StoryUpsertWithoutScenesInput>;
-  connect?: Maybe<StoryWhereUniqueInput>;
-}
-
-export interface StoryUpdateWithWhereUniqueWithoutAuthorInput {
-  where: StoryWhereUniqueInput;
-  data: StoryUpdateWithoutAuthorDataInput;
-}
-
-export interface StoryUpdateWithoutScenesDataInput {
-  published?: Maybe<Boolean>;
-  title?: Maybe<String>;
-  styling?: Maybe<String>;
-  media?: Maybe<String>;
-  author?: Maybe<UserUpdateOneRequiredWithoutStoriesInput>;
-  position?: Maybe<String>;
-}
-
-export type SceneWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export interface UserUpdateOneRequiredWithoutStoriesInput {
-  create?: Maybe<UserCreateWithoutStoriesInput>;
-  update?: Maybe<UserUpdateWithoutStoriesDataInput>;
-  upsert?: Maybe<UserUpsertWithoutStoriesInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface StoryCreateWithoutAuthorInput {
-  id?: Maybe<ID_Input>;
-  published?: Maybe<Boolean>;
-  title?: Maybe<String>;
-  styling?: Maybe<String>;
-  media?: Maybe<String>;
-  scenes?: Maybe<SceneCreateManyWithoutParentInput>;
-  position?: Maybe<String>;
-}
-
-export interface UserUpdateWithoutStoriesDataInput {
-  email?: Maybe<String>;
-  password?: Maybe<String>;
-  name?: Maybe<String>;
-}
-
-export type StoryWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export interface UserUpsertWithoutStoriesInput {
-  update: UserUpdateWithoutStoriesDataInput;
-  create: UserCreateWithoutStoriesInput;
-}
-
-export interface StoryUpdateManyMutationInput {
-  published?: Maybe<Boolean>;
-  title?: Maybe<String>;
-  styling?: Maybe<String>;
-  media?: Maybe<String>;
-  position?: Maybe<String>;
-}
-
-export interface SceneUpdateWithWhereUniqueWithoutParentInput {
-  where: SceneWhereUniqueInput;
-  data: SceneUpdateWithoutParentDataInput;
-}
-
-export type UserWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-  email?: Maybe<String>;
-}>;
-
-export interface SceneUpsertWithoutFramesInput {
-  update: SceneUpdateWithoutFramesDataInput;
-  create: SceneCreateWithoutFramesInput;
-}
-
-export interface SceneScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  published?: Maybe<Boolean>;
-  published_not?: Maybe<Boolean>;
-  title?: Maybe<String>;
-  title_not?: Maybe<String>;
-  title_in?: Maybe<String[] | String>;
-  title_not_in?: Maybe<String[] | String>;
-  title_lt?: Maybe<String>;
-  title_lte?: Maybe<String>;
-  title_gt?: Maybe<String>;
-  title_gte?: Maybe<String>;
-  title_contains?: Maybe<String>;
-  title_not_contains?: Maybe<String>;
-  title_starts_with?: Maybe<String>;
-  title_not_starts_with?: Maybe<String>;
-  title_ends_with?: Maybe<String>;
-  title_not_ends_with?: Maybe<String>;
-  styling?: Maybe<String>;
-  styling_not?: Maybe<String>;
-  styling_in?: Maybe<String[] | String>;
-  styling_not_in?: Maybe<String[] | String>;
-  styling_lt?: Maybe<String>;
-  styling_lte?: Maybe<String>;
-  styling_gt?: Maybe<String>;
-  styling_gte?: Maybe<String>;
-  styling_contains?: Maybe<String>;
-  styling_not_contains?: Maybe<String>;
-  styling_starts_with?: Maybe<String>;
-  styling_not_starts_with?: Maybe<String>;
-  styling_ends_with?: Maybe<String>;
-  styling_not_ends_with?: Maybe<String>;
-  media?: Maybe<String>;
-  media_not?: Maybe<String>;
-  media_in?: Maybe<String[] | String>;
-  media_not_in?: Maybe<String[] | String>;
-  media_lt?: Maybe<String>;
-  media_lte?: Maybe<String>;
-  media_gt?: Maybe<String>;
-  media_gte?: Maybe<String>;
-  media_contains?: Maybe<String>;
-  media_not_contains?: Maybe<String>;
-  media_starts_with?: Maybe<String>;
-  media_not_starts_with?: Maybe<String>;
-  media_ends_with?: Maybe<String>;
-  media_not_ends_with?: Maybe<String>;
-  position?: Maybe<String>;
-  position_not?: Maybe<String>;
-  position_in?: Maybe<String[] | String>;
-  position_not_in?: Maybe<String[] | String>;
-  position_lt?: Maybe<String>;
-  position_lte?: Maybe<String>;
-  position_gt?: Maybe<String>;
-  position_gte?: Maybe<String>;
-  position_contains?: Maybe<String>;
-  position_not_contains?: Maybe<String>;
-  position_starts_with?: Maybe<String>;
-  position_not_starts_with?: Maybe<String>;
-  position_ends_with?: Maybe<String>;
-  position_not_ends_with?: Maybe<String>;
-  AND?: Maybe<SceneScalarWhereInput[] | SceneScalarWhereInput>;
-  OR?: Maybe<SceneScalarWhereInput[] | SceneScalarWhereInput>;
-  NOT?: Maybe<SceneScalarWhereInput[] | SceneScalarWhereInput>;
-}
-
-export interface FrameUpdateManyMutationInput {
-  published?: Maybe<Boolean>;
-  title?: Maybe<String>;
-  styling?: Maybe<String>;
-  media?: Maybe<String>;
-  position?: Maybe<String>;
-}
-
-export interface SceneUpdateWithoutParentDataInput {
-  published?: Maybe<Boolean>;
-  title?: Maybe<String>;
-  styling?: Maybe<String>;
-  media?: Maybe<String>;
-  frames?: Maybe<FrameUpdateManyWithoutParentInput>;
-  position?: Maybe<String>;
-}
-
-export interface SceneUpdateManyWithoutParentInput {
-  create?: Maybe<
-    SceneCreateWithoutParentInput[] | SceneCreateWithoutParentInput
-  >;
-  delete?: Maybe<SceneWhereUniqueInput[] | SceneWhereUniqueInput>;
-  connect?: Maybe<SceneWhereUniqueInput[] | SceneWhereUniqueInput>;
-  set?: Maybe<SceneWhereUniqueInput[] | SceneWhereUniqueInput>;
-  disconnect?: Maybe<SceneWhereUniqueInput[] | SceneWhereUniqueInput>;
-  update?: Maybe<
-    | SceneUpdateWithWhereUniqueWithoutParentInput[]
-    | SceneUpdateWithWhereUniqueWithoutParentInput
-  >;
-  upsert?: Maybe<
-    | SceneUpsertWithWhereUniqueWithoutParentInput[]
-    | SceneUpsertWithWhereUniqueWithoutParentInput
-  >;
-  deleteMany?: Maybe<SceneScalarWhereInput[] | SceneScalarWhereInput>;
-  updateMany?: Maybe<
-    SceneUpdateManyWithWhereNestedInput[] | SceneUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface FrameCreateInput {
-  id?: Maybe<ID_Input>;
-  published?: Maybe<Boolean>;
-  title: String;
-  styling?: Maybe<String>;
-  media?: Maybe<String>;
-  paragraphs?: Maybe<ParagraphCreateManyWithoutParentInput>;
-  parent: SceneCreateOneWithoutFramesInput;
-  position?: Maybe<String>;
-}
-
-export interface UserWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  email?: Maybe<String>;
-  email_not?: Maybe<String>;
-  email_in?: Maybe<String[] | String>;
-  email_not_in?: Maybe<String[] | String>;
-  email_lt?: Maybe<String>;
-  email_lte?: Maybe<String>;
-  email_gt?: Maybe<String>;
-  email_gte?: Maybe<String>;
-  email_contains?: Maybe<String>;
-  email_not_contains?: Maybe<String>;
-  email_starts_with?: Maybe<String>;
-  email_not_starts_with?: Maybe<String>;
-  email_ends_with?: Maybe<String>;
-  email_not_ends_with?: Maybe<String>;
-  password?: Maybe<String>;
-  password_not?: Maybe<String>;
-  password_in?: Maybe<String[] | String>;
-  password_not_in?: Maybe<String[] | String>;
-  password_lt?: Maybe<String>;
-  password_lte?: Maybe<String>;
-  password_gt?: Maybe<String>;
-  password_gte?: Maybe<String>;
-  password_contains?: Maybe<String>;
-  password_not_contains?: Maybe<String>;
-  password_starts_with?: Maybe<String>;
-  password_not_starts_with?: Maybe<String>;
-  password_ends_with?: Maybe<String>;
-  password_not_ends_with?: Maybe<String>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
-  stories_every?: Maybe<StoryWhereInput>;
-  stories_some?: Maybe<StoryWhereInput>;
-  stories_none?: Maybe<StoryWhereInput>;
-  AND?: Maybe<UserWhereInput[] | UserWhereInput>;
-  OR?: Maybe<UserWhereInput[] | UserWhereInput>;
-  NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
-}
-
-export interface ParagraphCreateWithoutParentInput {
-  id?: Maybe<ID_Input>;
-  published?: Maybe<Boolean>;
-  content: String;
-  styling?: Maybe<String>;
-  media?: Maybe<String>;
-  position?: Maybe<String>;
-}
-
-export interface ParagraphCreateInput {
-  id?: Maybe<ID_Input>;
-  published?: Maybe<Boolean>;
-  content: String;
-  styling?: Maybe<String>;
-  media?: Maybe<String>;
-  parent: FrameCreateOneWithoutParagraphsInput;
-  position?: Maybe<String>;
-}
-
 export interface SceneCreateWithoutFramesInput {
   id?: Maybe<ID_Input>;
   published?: Maybe<Boolean>;
@@ -1017,9 +1096,10 @@ export interface SceneCreateWithoutFramesInput {
   position?: Maybe<String>;
 }
 
-export interface FrameCreateOneWithoutParagraphsInput {
-  create?: Maybe<FrameCreateWithoutParagraphsInput>;
-  connect?: Maybe<FrameWhereUniqueInput>;
+export interface StoryUpsertWithWhereUniqueWithoutAuthorInput {
+  where: StoryWhereUniqueInput;
+  update: StoryUpdateWithoutAuthorDataInput;
+  create: StoryCreateWithoutAuthorInput;
 }
 
 export interface StoryCreateWithoutScenesInput {
@@ -1032,13 +1112,10 @@ export interface StoryCreateWithoutScenesInput {
   position?: Maybe<String>;
 }
 
-export interface FrameCreateWithoutParagraphsInput {
+export interface NoteCreateInput {
   id?: Maybe<ID_Input>;
-  published?: Maybe<Boolean>;
-  title: String;
-  styling?: Maybe<String>;
-  media?: Maybe<String>;
-  parent: SceneCreateOneWithoutFramesInput;
+  content: String;
+  author: UserCreateOneWithoutNotesInput;
   position?: Maybe<String>;
 }
 
@@ -1047,14 +1124,73 @@ export interface UserCreateWithoutStoriesInput {
   email: String;
   password: String;
   name: String;
+  notes?: Maybe<NoteCreateManyWithoutAuthorInput>;
 }
 
-export interface ParagraphUpdateInput {
+export interface UserCreateOneWithoutNotesInput {
+  create?: Maybe<UserCreateWithoutNotesInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface NoteCreateWithoutAuthorInput {
+  id?: Maybe<ID_Input>;
+  content: String;
+  position?: Maybe<String>;
+}
+
+export interface UserCreateWithoutNotesInput {
+  id?: Maybe<ID_Input>;
+  email: String;
+  password: String;
+  name: String;
+  stories?: Maybe<StoryCreateManyWithoutAuthorInput>;
+}
+
+export interface ParagraphUpdateManyWithoutParentInput {
+  create?: Maybe<
+    ParagraphCreateWithoutParentInput[] | ParagraphCreateWithoutParentInput
+  >;
+  delete?: Maybe<ParagraphWhereUniqueInput[] | ParagraphWhereUniqueInput>;
+  connect?: Maybe<ParagraphWhereUniqueInput[] | ParagraphWhereUniqueInput>;
+  set?: Maybe<ParagraphWhereUniqueInput[] | ParagraphWhereUniqueInput>;
+  disconnect?: Maybe<ParagraphWhereUniqueInput[] | ParagraphWhereUniqueInput>;
+  update?: Maybe<
+    | ParagraphUpdateWithWhereUniqueWithoutParentInput[]
+    | ParagraphUpdateWithWhereUniqueWithoutParentInput
+  >;
+  upsert?: Maybe<
+    | ParagraphUpsertWithWhereUniqueWithoutParentInput[]
+    | ParagraphUpsertWithWhereUniqueWithoutParentInput
+  >;
+  deleteMany?: Maybe<ParagraphScalarWhereInput[] | ParagraphScalarWhereInput>;
+  updateMany?: Maybe<
+    | ParagraphUpdateManyWithWhereNestedInput[]
+    | ParagraphUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface StoryCreateManyWithoutAuthorInput {
+  create?: Maybe<
+    StoryCreateWithoutAuthorInput[] | StoryCreateWithoutAuthorInput
+  >;
+  connect?: Maybe<StoryWhereUniqueInput[] | StoryWhereUniqueInput>;
+}
+
+export interface ParagraphUpdateWithoutParentDataInput {
   published?: Maybe<Boolean>;
   content?: Maybe<String>;
   styling?: Maybe<String>;
   media?: Maybe<String>;
-  parent?: Maybe<FrameUpdateOneRequiredWithoutParagraphsInput>;
+  position?: Maybe<String>;
+}
+
+export interface StoryCreateWithoutAuthorInput {
+  id?: Maybe<ID_Input>;
+  published?: Maybe<Boolean>;
+  title?: Maybe<String>;
+  styling?: Maybe<String>;
+  media?: Maybe<String>;
+  scenes?: Maybe<SceneCreateManyWithoutParentInput>;
   position?: Maybe<String>;
 }
 
@@ -1140,11 +1276,583 @@ export interface SceneWhereInput {
   NOT?: Maybe<SceneWhereInput[] | SceneWhereInput>;
 }
 
+export interface SceneCreateManyWithoutParentInput {
+  create?: Maybe<
+    SceneCreateWithoutParentInput[] | SceneCreateWithoutParentInput
+  >;
+  connect?: Maybe<SceneWhereUniqueInput[] | SceneWhereUniqueInput>;
+}
+
+export interface ParagraphWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  published?: Maybe<Boolean>;
+  published_not?: Maybe<Boolean>;
+  content?: Maybe<String>;
+  content_not?: Maybe<String>;
+  content_in?: Maybe<String[] | String>;
+  content_not_in?: Maybe<String[] | String>;
+  content_lt?: Maybe<String>;
+  content_lte?: Maybe<String>;
+  content_gt?: Maybe<String>;
+  content_gte?: Maybe<String>;
+  content_contains?: Maybe<String>;
+  content_not_contains?: Maybe<String>;
+  content_starts_with?: Maybe<String>;
+  content_not_starts_with?: Maybe<String>;
+  content_ends_with?: Maybe<String>;
+  content_not_ends_with?: Maybe<String>;
+  styling?: Maybe<String>;
+  styling_not?: Maybe<String>;
+  styling_in?: Maybe<String[] | String>;
+  styling_not_in?: Maybe<String[] | String>;
+  styling_lt?: Maybe<String>;
+  styling_lte?: Maybe<String>;
+  styling_gt?: Maybe<String>;
+  styling_gte?: Maybe<String>;
+  styling_contains?: Maybe<String>;
+  styling_not_contains?: Maybe<String>;
+  styling_starts_with?: Maybe<String>;
+  styling_not_starts_with?: Maybe<String>;
+  styling_ends_with?: Maybe<String>;
+  styling_not_ends_with?: Maybe<String>;
+  media?: Maybe<String>;
+  media_not?: Maybe<String>;
+  media_in?: Maybe<String[] | String>;
+  media_not_in?: Maybe<String[] | String>;
+  media_lt?: Maybe<String>;
+  media_lte?: Maybe<String>;
+  media_gt?: Maybe<String>;
+  media_gte?: Maybe<String>;
+  media_contains?: Maybe<String>;
+  media_not_contains?: Maybe<String>;
+  media_starts_with?: Maybe<String>;
+  media_not_starts_with?: Maybe<String>;
+  media_ends_with?: Maybe<String>;
+  media_not_ends_with?: Maybe<String>;
+  parent?: Maybe<FrameWhereInput>;
+  position?: Maybe<String>;
+  position_not?: Maybe<String>;
+  position_in?: Maybe<String[] | String>;
+  position_not_in?: Maybe<String[] | String>;
+  position_lt?: Maybe<String>;
+  position_lte?: Maybe<String>;
+  position_gt?: Maybe<String>;
+  position_gte?: Maybe<String>;
+  position_contains?: Maybe<String>;
+  position_not_contains?: Maybe<String>;
+  position_starts_with?: Maybe<String>;
+  position_not_starts_with?: Maybe<String>;
+  position_ends_with?: Maybe<String>;
+  position_not_ends_with?: Maybe<String>;
+  AND?: Maybe<ParagraphWhereInput[] | ParagraphWhereInput>;
+  OR?: Maybe<ParagraphWhereInput[] | ParagraphWhereInput>;
+  NOT?: Maybe<ParagraphWhereInput[] | ParagraphWhereInput>;
+}
+
+export interface SceneCreateWithoutParentInput {
+  id?: Maybe<ID_Input>;
+  published?: Maybe<Boolean>;
+  title?: Maybe<String>;
+  styling?: Maybe<String>;
+  media?: Maybe<String>;
+  frames?: Maybe<FrameCreateManyWithoutParentInput>;
+  position?: Maybe<String>;
+}
+
+export interface UserUpdateInput {
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  name?: Maybe<String>;
+  stories?: Maybe<StoryUpdateManyWithoutAuthorInput>;
+  notes?: Maybe<NoteUpdateManyWithoutAuthorInput>;
+}
+
+export interface FrameCreateManyWithoutParentInput {
+  create?: Maybe<
+    FrameCreateWithoutParentInput[] | FrameCreateWithoutParentInput
+  >;
+  connect?: Maybe<FrameWhereUniqueInput[] | FrameWhereUniqueInput>;
+}
+
+export interface StoryUpdateInput {
+  published?: Maybe<Boolean>;
+  title?: Maybe<String>;
+  styling?: Maybe<String>;
+  media?: Maybe<String>;
+  scenes?: Maybe<SceneUpdateManyWithoutParentInput>;
+  author?: Maybe<UserUpdateOneRequiredWithoutStoriesInput>;
+  position?: Maybe<String>;
+}
+
+export interface FrameCreateWithoutParentInput {
+  id?: Maybe<ID_Input>;
+  published?: Maybe<Boolean>;
+  title: String;
+  styling?: Maybe<String>;
+  media?: Maybe<String>;
+  paragraphs?: Maybe<ParagraphCreateManyWithoutParentInput>;
+  position?: Maybe<String>;
+}
+
+export interface SceneUpdateInput {
+  published?: Maybe<Boolean>;
+  title?: Maybe<String>;
+  styling?: Maybe<String>;
+  media?: Maybe<String>;
+  frames?: Maybe<FrameUpdateManyWithoutParentInput>;
+  parent?: Maybe<StoryUpdateOneRequiredWithoutScenesInput>;
+  position?: Maybe<String>;
+}
+
+export interface NoteUpdateInput {
+  content?: Maybe<String>;
+  author?: Maybe<UserUpdateOneRequiredWithoutNotesInput>;
+  position?: Maybe<String>;
+}
+
+export interface FrameUpsertWithoutParagraphsInput {
+  update: FrameUpdateWithoutParagraphsDataInput;
+  create: FrameCreateWithoutParagraphsInput;
+}
+
+export interface UserUpdateOneRequiredWithoutNotesInput {
+  create?: Maybe<UserCreateWithoutNotesInput>;
+  update?: Maybe<UserUpdateWithoutNotesDataInput>;
+  upsert?: Maybe<UserUpsertWithoutNotesInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface ParagraphUpdateInput {
+  published?: Maybe<Boolean>;
+  content?: Maybe<String>;
+  styling?: Maybe<String>;
+  media?: Maybe<String>;
+  parent?: Maybe<FrameUpdateOneRequiredWithoutParagraphsInput>;
+  position?: Maybe<String>;
+}
+
+export interface UserUpdateWithoutNotesDataInput {
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  name?: Maybe<String>;
+  stories?: Maybe<StoryUpdateManyWithoutAuthorInput>;
+}
+
+export interface ParagraphCreateInput {
+  id?: Maybe<ID_Input>;
+  published?: Maybe<Boolean>;
+  content: String;
+  styling?: Maybe<String>;
+  media?: Maybe<String>;
+  parent: FrameCreateOneWithoutParagraphsInput;
+  position?: Maybe<String>;
+}
+
+export interface StoryUpdateManyWithoutAuthorInput {
+  create?: Maybe<
+    StoryCreateWithoutAuthorInput[] | StoryCreateWithoutAuthorInput
+  >;
+  delete?: Maybe<StoryWhereUniqueInput[] | StoryWhereUniqueInput>;
+  connect?: Maybe<StoryWhereUniqueInput[] | StoryWhereUniqueInput>;
+  set?: Maybe<StoryWhereUniqueInput[] | StoryWhereUniqueInput>;
+  disconnect?: Maybe<StoryWhereUniqueInput[] | StoryWhereUniqueInput>;
+  update?: Maybe<
+    | StoryUpdateWithWhereUniqueWithoutAuthorInput[]
+    | StoryUpdateWithWhereUniqueWithoutAuthorInput
+  >;
+  upsert?: Maybe<
+    | StoryUpsertWithWhereUniqueWithoutAuthorInput[]
+    | StoryUpsertWithWhereUniqueWithoutAuthorInput
+  >;
+  deleteMany?: Maybe<StoryScalarWhereInput[] | StoryScalarWhereInput>;
+  updateMany?: Maybe<
+    StoryUpdateManyWithWhereNestedInput[] | StoryUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface SceneCreateOneWithoutFramesInput {
+  create?: Maybe<SceneCreateWithoutFramesInput>;
+  connect?: Maybe<SceneWhereUniqueInput>;
+}
+
+export interface StoryUpdateWithWhereUniqueWithoutAuthorInput {
+  where: StoryWhereUniqueInput;
+  data: StoryUpdateWithoutAuthorDataInput;
+}
+
+export interface UserCreateOneWithoutStoriesInput {
+  create?: Maybe<UserCreateWithoutStoriesInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface StoryUpdateWithoutAuthorDataInput {
+  published?: Maybe<Boolean>;
+  title?: Maybe<String>;
+  styling?: Maybe<String>;
+  media?: Maybe<String>;
+  scenes?: Maybe<SceneUpdateManyWithoutParentInput>;
+  position?: Maybe<String>;
+}
+
+export interface FrameUpdateInput {
+  published?: Maybe<Boolean>;
+  title?: Maybe<String>;
+  styling?: Maybe<String>;
+  media?: Maybe<String>;
+  paragraphs?: Maybe<ParagraphUpdateManyWithoutParentInput>;
+  parent?: Maybe<SceneUpdateOneRequiredWithoutFramesInput>;
+  position?: Maybe<String>;
+}
+
+export interface SceneUpdateManyWithoutParentInput {
+  create?: Maybe<
+    SceneCreateWithoutParentInput[] | SceneCreateWithoutParentInput
+  >;
+  delete?: Maybe<SceneWhereUniqueInput[] | SceneWhereUniqueInput>;
+  connect?: Maybe<SceneWhereUniqueInput[] | SceneWhereUniqueInput>;
+  set?: Maybe<SceneWhereUniqueInput[] | SceneWhereUniqueInput>;
+  disconnect?: Maybe<SceneWhereUniqueInput[] | SceneWhereUniqueInput>;
+  update?: Maybe<
+    | SceneUpdateWithWhereUniqueWithoutParentInput[]
+    | SceneUpdateWithWhereUniqueWithoutParentInput
+  >;
+  upsert?: Maybe<
+    | SceneUpsertWithWhereUniqueWithoutParentInput[]
+    | SceneUpsertWithWhereUniqueWithoutParentInput
+  >;
+  deleteMany?: Maybe<SceneScalarWhereInput[] | SceneScalarWhereInput>;
+  updateMany?: Maybe<
+    SceneUpdateManyWithWhereNestedInput[] | SceneUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface UserSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<UserWhereInput>;
+  AND?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
+  OR?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
+  NOT?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
+}
+
+export interface SceneUpdateWithWhereUniqueWithoutParentInput {
+  where: SceneWhereUniqueInput;
+  data: SceneUpdateWithoutParentDataInput;
+}
+
+export interface FrameSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<FrameWhereInput>;
+  AND?: Maybe<FrameSubscriptionWhereInput[] | FrameSubscriptionWhereInput>;
+  OR?: Maybe<FrameSubscriptionWhereInput[] | FrameSubscriptionWhereInput>;
+  NOT?: Maybe<FrameSubscriptionWhereInput[] | FrameSubscriptionWhereInput>;
+}
+
+export interface SceneUpdateWithoutParentDataInput {
+  published?: Maybe<Boolean>;
+  title?: Maybe<String>;
+  styling?: Maybe<String>;
+  media?: Maybe<String>;
+  frames?: Maybe<FrameUpdateManyWithoutParentInput>;
+  position?: Maybe<String>;
+}
+
+export interface SceneUpdateManyMutationInput {
+  published?: Maybe<Boolean>;
+  title?: Maybe<String>;
+  styling?: Maybe<String>;
+  media?: Maybe<String>;
+  position?: Maybe<String>;
+}
+
+export interface FrameUpdateManyWithoutParentInput {
+  create?: Maybe<
+    FrameCreateWithoutParentInput[] | FrameCreateWithoutParentInput
+  >;
+  delete?: Maybe<FrameWhereUniqueInput[] | FrameWhereUniqueInput>;
+  connect?: Maybe<FrameWhereUniqueInput[] | FrameWhereUniqueInput>;
+  set?: Maybe<FrameWhereUniqueInput[] | FrameWhereUniqueInput>;
+  disconnect?: Maybe<FrameWhereUniqueInput[] | FrameWhereUniqueInput>;
+  update?: Maybe<
+    | FrameUpdateWithWhereUniqueWithoutParentInput[]
+    | FrameUpdateWithWhereUniqueWithoutParentInput
+  >;
+  upsert?: Maybe<
+    | FrameUpsertWithWhereUniqueWithoutParentInput[]
+    | FrameUpsertWithWhereUniqueWithoutParentInput
+  >;
+  deleteMany?: Maybe<FrameScalarWhereInput[] | FrameScalarWhereInput>;
+  updateMany?: Maybe<
+    FrameUpdateManyWithWhereNestedInput[] | FrameUpdateManyWithWhereNestedInput
+  >;
+}
+
 export interface FrameUpdateOneRequiredWithoutParagraphsInput {
   create?: Maybe<FrameCreateWithoutParagraphsInput>;
   update?: Maybe<FrameUpdateWithoutParagraphsDataInput>;
   upsert?: Maybe<FrameUpsertWithoutParagraphsInput>;
   connect?: Maybe<FrameWhereUniqueInput>;
+}
+
+export interface FrameUpdateWithWhereUniqueWithoutParentInput {
+  where: FrameWhereUniqueInput;
+  data: FrameUpdateWithoutParentDataInput;
+}
+
+export interface UserUpsertWithoutNotesInput {
+  update: UserUpdateWithoutNotesDataInput;
+  create: UserCreateWithoutNotesInput;
+}
+
+export interface FrameUpdateWithoutParentDataInput {
+  published?: Maybe<Boolean>;
+  title?: Maybe<String>;
+  styling?: Maybe<String>;
+  media?: Maybe<String>;
+  paragraphs?: Maybe<ParagraphUpdateManyWithoutParentInput>;
+  position?: Maybe<String>;
+}
+
+export interface StoryCreateOneWithoutScenesInput {
+  create?: Maybe<StoryCreateWithoutScenesInput>;
+  connect?: Maybe<StoryWhereUniqueInput>;
+}
+
+export interface FrameUpsertWithWhereUniqueWithoutParentInput {
+  where: FrameWhereUniqueInput;
+  update: FrameUpdateWithoutParentDataInput;
+  create: FrameCreateWithoutParentInput;
+}
+
+export interface ParagraphUpdateWithWhereUniqueWithoutParentInput {
+  where: ParagraphWhereUniqueInput;
+  data: ParagraphUpdateWithoutParentDataInput;
+}
+
+export interface FrameScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  published?: Maybe<Boolean>;
+  published_not?: Maybe<Boolean>;
+  title?: Maybe<String>;
+  title_not?: Maybe<String>;
+  title_in?: Maybe<String[] | String>;
+  title_not_in?: Maybe<String[] | String>;
+  title_lt?: Maybe<String>;
+  title_lte?: Maybe<String>;
+  title_gt?: Maybe<String>;
+  title_gte?: Maybe<String>;
+  title_contains?: Maybe<String>;
+  title_not_contains?: Maybe<String>;
+  title_starts_with?: Maybe<String>;
+  title_not_starts_with?: Maybe<String>;
+  title_ends_with?: Maybe<String>;
+  title_not_ends_with?: Maybe<String>;
+  styling?: Maybe<String>;
+  styling_not?: Maybe<String>;
+  styling_in?: Maybe<String[] | String>;
+  styling_not_in?: Maybe<String[] | String>;
+  styling_lt?: Maybe<String>;
+  styling_lte?: Maybe<String>;
+  styling_gt?: Maybe<String>;
+  styling_gte?: Maybe<String>;
+  styling_contains?: Maybe<String>;
+  styling_not_contains?: Maybe<String>;
+  styling_starts_with?: Maybe<String>;
+  styling_not_starts_with?: Maybe<String>;
+  styling_ends_with?: Maybe<String>;
+  styling_not_ends_with?: Maybe<String>;
+  media?: Maybe<String>;
+  media_not?: Maybe<String>;
+  media_in?: Maybe<String[] | String>;
+  media_not_in?: Maybe<String[] | String>;
+  media_lt?: Maybe<String>;
+  media_lte?: Maybe<String>;
+  media_gt?: Maybe<String>;
+  media_gte?: Maybe<String>;
+  media_contains?: Maybe<String>;
+  media_not_contains?: Maybe<String>;
+  media_starts_with?: Maybe<String>;
+  media_not_starts_with?: Maybe<String>;
+  media_ends_with?: Maybe<String>;
+  media_not_ends_with?: Maybe<String>;
+  position?: Maybe<String>;
+  position_not?: Maybe<String>;
+  position_in?: Maybe<String[] | String>;
+  position_not_in?: Maybe<String[] | String>;
+  position_lt?: Maybe<String>;
+  position_lte?: Maybe<String>;
+  position_gt?: Maybe<String>;
+  position_gte?: Maybe<String>;
+  position_contains?: Maybe<String>;
+  position_not_contains?: Maybe<String>;
+  position_starts_with?: Maybe<String>;
+  position_not_starts_with?: Maybe<String>;
+  position_ends_with?: Maybe<String>;
+  position_not_ends_with?: Maybe<String>;
+  AND?: Maybe<FrameScalarWhereInput[] | FrameScalarWhereInput>;
+  OR?: Maybe<FrameScalarWhereInput[] | FrameScalarWhereInput>;
+  NOT?: Maybe<FrameScalarWhereInput[] | FrameScalarWhereInput>;
+}
+
+export interface StoryUpdateManyMutationInput {
+  published?: Maybe<Boolean>;
+  title?: Maybe<String>;
+  styling?: Maybe<String>;
+  media?: Maybe<String>;
+  position?: Maybe<String>;
+}
+
+export interface FrameUpdateManyWithWhereNestedInput {
+  where: FrameScalarWhereInput;
+  data: FrameUpdateManyDataInput;
+}
+
+export interface FrameCreateOneWithoutParagraphsInput {
+  create?: Maybe<FrameCreateWithoutParagraphsInput>;
+  connect?: Maybe<FrameWhereUniqueInput>;
+}
+
+export interface SceneUpdateManyWithWhereNestedInput {
+  where: SceneScalarWhereInput;
+  data: SceneUpdateManyDataInput;
+}
+
+export interface SceneScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  published?: Maybe<Boolean>;
+  published_not?: Maybe<Boolean>;
+  title?: Maybe<String>;
+  title_not?: Maybe<String>;
+  title_in?: Maybe<String[] | String>;
+  title_not_in?: Maybe<String[] | String>;
+  title_lt?: Maybe<String>;
+  title_lte?: Maybe<String>;
+  title_gt?: Maybe<String>;
+  title_gte?: Maybe<String>;
+  title_contains?: Maybe<String>;
+  title_not_contains?: Maybe<String>;
+  title_starts_with?: Maybe<String>;
+  title_not_starts_with?: Maybe<String>;
+  title_ends_with?: Maybe<String>;
+  title_not_ends_with?: Maybe<String>;
+  styling?: Maybe<String>;
+  styling_not?: Maybe<String>;
+  styling_in?: Maybe<String[] | String>;
+  styling_not_in?: Maybe<String[] | String>;
+  styling_lt?: Maybe<String>;
+  styling_lte?: Maybe<String>;
+  styling_gt?: Maybe<String>;
+  styling_gte?: Maybe<String>;
+  styling_contains?: Maybe<String>;
+  styling_not_contains?: Maybe<String>;
+  styling_starts_with?: Maybe<String>;
+  styling_not_starts_with?: Maybe<String>;
+  styling_ends_with?: Maybe<String>;
+  styling_not_ends_with?: Maybe<String>;
+  media?: Maybe<String>;
+  media_not?: Maybe<String>;
+  media_in?: Maybe<String[] | String>;
+  media_not_in?: Maybe<String[] | String>;
+  media_lt?: Maybe<String>;
+  media_lte?: Maybe<String>;
+  media_gt?: Maybe<String>;
+  media_gte?: Maybe<String>;
+  media_contains?: Maybe<String>;
+  media_not_contains?: Maybe<String>;
+  media_starts_with?: Maybe<String>;
+  media_not_starts_with?: Maybe<String>;
+  media_ends_with?: Maybe<String>;
+  media_not_ends_with?: Maybe<String>;
+  position?: Maybe<String>;
+  position_not?: Maybe<String>;
+  position_in?: Maybe<String[] | String>;
+  position_not_in?: Maybe<String[] | String>;
+  position_lt?: Maybe<String>;
+  position_lte?: Maybe<String>;
+  position_gt?: Maybe<String>;
+  position_gte?: Maybe<String>;
+  position_contains?: Maybe<String>;
+  position_not_contains?: Maybe<String>;
+  position_starts_with?: Maybe<String>;
+  position_not_starts_with?: Maybe<String>;
+  position_ends_with?: Maybe<String>;
+  position_not_ends_with?: Maybe<String>;
+  AND?: Maybe<SceneScalarWhereInput[] | SceneScalarWhereInput>;
+  OR?: Maybe<SceneScalarWhereInput[] | SceneScalarWhereInput>;
+  NOT?: Maybe<SceneScalarWhereInput[] | SceneScalarWhereInput>;
+}
+
+export interface SceneUpsertWithWhereUniqueWithoutParentInput {
+  where: SceneWhereUniqueInput;
+  update: SceneUpdateWithoutParentDataInput;
+  create: SceneCreateWithoutParentInput;
+}
+
+export interface FrameUpdateManyDataInput {
+  published?: Maybe<Boolean>;
+  title?: Maybe<String>;
+  styling?: Maybe<String>;
+  media?: Maybe<String>;
+  position?: Maybe<String>;
+}
+
+export interface ParagraphCreateManyWithoutParentInput {
+  create?: Maybe<
+    ParagraphCreateWithoutParentInput[] | ParagraphCreateWithoutParentInput
+  >;
+  connect?: Maybe<ParagraphWhereUniqueInput[] | ParagraphWhereUniqueInput>;
+}
+
+export interface ParagraphUpdateManyMutationInput {
+  published?: Maybe<Boolean>;
+  content?: Maybe<String>;
+  styling?: Maybe<String>;
+  media?: Maybe<String>;
+  position?: Maybe<String>;
 }
 
 export interface FrameWhereInput {
@@ -1229,494 +1937,13 @@ export interface FrameWhereInput {
   NOT?: Maybe<FrameWhereInput[] | FrameWhereInput>;
 }
 
-export interface FrameUpdateWithoutParagraphsDataInput {
-  published?: Maybe<Boolean>;
-  title?: Maybe<String>;
-  styling?: Maybe<String>;
-  media?: Maybe<String>;
-  parent?: Maybe<SceneUpdateOneRequiredWithoutFramesInput>;
-  position?: Maybe<String>;
-}
-
-export interface UserUpdateManyMutationInput {
-  email?: Maybe<String>;
-  password?: Maybe<String>;
-  name?: Maybe<String>;
-}
-
-export interface FrameUpsertWithoutParagraphsInput {
-  update: FrameUpdateWithoutParagraphsDataInput;
-  create: FrameCreateWithoutParagraphsInput;
-}
-
-export interface StoryUpsertWithWhereUniqueWithoutAuthorInput {
-  where: StoryWhereUniqueInput;
-  update: StoryUpdateWithoutAuthorDataInput;
-  create: StoryCreateWithoutAuthorInput;
-}
-
-export interface ParagraphUpdateManyMutationInput {
-  published?: Maybe<Boolean>;
-  content?: Maybe<String>;
-  styling?: Maybe<String>;
-  media?: Maybe<String>;
-  position?: Maybe<String>;
-}
-
-export interface StoryUpdateManyWithoutAuthorInput {
-  create?: Maybe<
-    StoryCreateWithoutAuthorInput[] | StoryCreateWithoutAuthorInput
-  >;
-  delete?: Maybe<StoryWhereUniqueInput[] | StoryWhereUniqueInput>;
-  connect?: Maybe<StoryWhereUniqueInput[] | StoryWhereUniqueInput>;
-  set?: Maybe<StoryWhereUniqueInput[] | StoryWhereUniqueInput>;
-  disconnect?: Maybe<StoryWhereUniqueInput[] | StoryWhereUniqueInput>;
-  update?: Maybe<
-    | StoryUpdateWithWhereUniqueWithoutAuthorInput[]
-    | StoryUpdateWithWhereUniqueWithoutAuthorInput
-  >;
-  upsert?: Maybe<
-    | StoryUpsertWithWhereUniqueWithoutAuthorInput[]
-    | StoryUpsertWithWhereUniqueWithoutAuthorInput
-  >;
-  deleteMany?: Maybe<StoryScalarWhereInput[] | StoryScalarWhereInput>;
-  updateMany?: Maybe<
-    StoryUpdateManyWithWhereNestedInput[] | StoryUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface SceneCreateInput {
-  id?: Maybe<ID_Input>;
-  published?: Maybe<Boolean>;
-  title?: Maybe<String>;
-  styling?: Maybe<String>;
-  media?: Maybe<String>;
-  frames?: Maybe<FrameCreateManyWithoutParentInput>;
-  parent: StoryCreateOneWithoutScenesInput;
-  position?: Maybe<String>;
-}
-
-export interface StoryCreateManyWithoutAuthorInput {
-  create?: Maybe<
-    StoryCreateWithoutAuthorInput[] | StoryCreateWithoutAuthorInput
-  >;
-  connect?: Maybe<StoryWhereUniqueInput[] | StoryWhereUniqueInput>;
-}
-
-export interface FrameCreateManyWithoutParentInput {
-  create?: Maybe<
-    FrameCreateWithoutParentInput[] | FrameCreateWithoutParentInput
-  >;
-  connect?: Maybe<FrameWhereUniqueInput[] | FrameWhereUniqueInput>;
-}
-
-export interface SceneUpdateManyDataInput {
-  published?: Maybe<Boolean>;
-  title?: Maybe<String>;
-  styling?: Maybe<String>;
-  media?: Maybe<String>;
-  position?: Maybe<String>;
-}
-
-export interface FrameCreateWithoutParentInput {
-  id?: Maybe<ID_Input>;
-  published?: Maybe<Boolean>;
-  title: String;
-  styling?: Maybe<String>;
-  media?: Maybe<String>;
-  paragraphs?: Maybe<ParagraphCreateManyWithoutParentInput>;
-  position?: Maybe<String>;
-}
-
-export interface SceneUpsertWithWhereUniqueWithoutParentInput {
-  where: SceneWhereUniqueInput;
-  update: SceneUpdateWithoutParentDataInput;
-  create: SceneCreateWithoutParentInput;
-}
-
-export interface SceneUpdateInput {
-  published?: Maybe<Boolean>;
-  title?: Maybe<String>;
-  styling?: Maybe<String>;
-  media?: Maybe<String>;
-  frames?: Maybe<FrameUpdateManyWithoutParentInput>;
-  parent?: Maybe<StoryUpdateOneRequiredWithoutScenesInput>;
-  position?: Maybe<String>;
-}
-
-export interface ParagraphCreateManyWithoutParentInput {
-  create?: Maybe<
-    ParagraphCreateWithoutParentInput[] | ParagraphCreateWithoutParentInput
-  >;
-  connect?: Maybe<ParagraphWhereUniqueInput[] | ParagraphWhereUniqueInput>;
-}
-
-export interface FrameUpdateManyWithoutParentInput {
-  create?: Maybe<
-    FrameCreateWithoutParentInput[] | FrameCreateWithoutParentInput
-  >;
-  delete?: Maybe<FrameWhereUniqueInput[] | FrameWhereUniqueInput>;
-  connect?: Maybe<FrameWhereUniqueInput[] | FrameWhereUniqueInput>;
-  set?: Maybe<FrameWhereUniqueInput[] | FrameWhereUniqueInput>;
-  disconnect?: Maybe<FrameWhereUniqueInput[] | FrameWhereUniqueInput>;
-  update?: Maybe<
-    | FrameUpdateWithWhereUniqueWithoutParentInput[]
-    | FrameUpdateWithWhereUniqueWithoutParentInput
-  >;
-  upsert?: Maybe<
-    | FrameUpsertWithWhereUniqueWithoutParentInput[]
-    | FrameUpsertWithWhereUniqueWithoutParentInput
-  >;
-  deleteMany?: Maybe<FrameScalarWhereInput[] | FrameScalarWhereInput>;
-  updateMany?: Maybe<
-    FrameUpdateManyWithWhereNestedInput[] | FrameUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface StoryCreateOneWithoutScenesInput {
-  create?: Maybe<StoryCreateWithoutScenesInput>;
-  connect?: Maybe<StoryWhereUniqueInput>;
-}
-
-export interface FrameUpdateWithWhereUniqueWithoutParentInput {
-  where: FrameWhereUniqueInput;
-  data: FrameUpdateWithoutParentDataInput;
-}
-
-export interface FrameUpdateInput {
-  published?: Maybe<Boolean>;
-  title?: Maybe<String>;
-  styling?: Maybe<String>;
-  media?: Maybe<String>;
-  paragraphs?: Maybe<ParagraphUpdateManyWithoutParentInput>;
-  parent?: Maybe<SceneUpdateOneRequiredWithoutFramesInput>;
-  position?: Maybe<String>;
-}
-
-export interface FrameUpdateWithoutParentDataInput {
-  published?: Maybe<Boolean>;
-  title?: Maybe<String>;
-  styling?: Maybe<String>;
-  media?: Maybe<String>;
-  paragraphs?: Maybe<ParagraphUpdateManyWithoutParentInput>;
-  position?: Maybe<String>;
-}
-
-export interface ParagraphWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  published?: Maybe<Boolean>;
-  published_not?: Maybe<Boolean>;
-  content?: Maybe<String>;
-  content_not?: Maybe<String>;
-  content_in?: Maybe<String[] | String>;
-  content_not_in?: Maybe<String[] | String>;
-  content_lt?: Maybe<String>;
-  content_lte?: Maybe<String>;
-  content_gt?: Maybe<String>;
-  content_gte?: Maybe<String>;
-  content_contains?: Maybe<String>;
-  content_not_contains?: Maybe<String>;
-  content_starts_with?: Maybe<String>;
-  content_not_starts_with?: Maybe<String>;
-  content_ends_with?: Maybe<String>;
-  content_not_ends_with?: Maybe<String>;
-  styling?: Maybe<String>;
-  styling_not?: Maybe<String>;
-  styling_in?: Maybe<String[] | String>;
-  styling_not_in?: Maybe<String[] | String>;
-  styling_lt?: Maybe<String>;
-  styling_lte?: Maybe<String>;
-  styling_gt?: Maybe<String>;
-  styling_gte?: Maybe<String>;
-  styling_contains?: Maybe<String>;
-  styling_not_contains?: Maybe<String>;
-  styling_starts_with?: Maybe<String>;
-  styling_not_starts_with?: Maybe<String>;
-  styling_ends_with?: Maybe<String>;
-  styling_not_ends_with?: Maybe<String>;
-  media?: Maybe<String>;
-  media_not?: Maybe<String>;
-  media_in?: Maybe<String[] | String>;
-  media_not_in?: Maybe<String[] | String>;
-  media_lt?: Maybe<String>;
-  media_lte?: Maybe<String>;
-  media_gt?: Maybe<String>;
-  media_gte?: Maybe<String>;
-  media_contains?: Maybe<String>;
-  media_not_contains?: Maybe<String>;
-  media_starts_with?: Maybe<String>;
-  media_not_starts_with?: Maybe<String>;
-  media_ends_with?: Maybe<String>;
-  media_not_ends_with?: Maybe<String>;
-  parent?: Maybe<FrameWhereInput>;
-  position?: Maybe<String>;
-  position_not?: Maybe<String>;
-  position_in?: Maybe<String[] | String>;
-  position_not_in?: Maybe<String[] | String>;
-  position_lt?: Maybe<String>;
-  position_lte?: Maybe<String>;
-  position_gt?: Maybe<String>;
-  position_gte?: Maybe<String>;
-  position_contains?: Maybe<String>;
-  position_not_contains?: Maybe<String>;
-  position_starts_with?: Maybe<String>;
-  position_not_starts_with?: Maybe<String>;
-  position_ends_with?: Maybe<String>;
-  position_not_ends_with?: Maybe<String>;
-  AND?: Maybe<ParagraphWhereInput[] | ParagraphWhereInput>;
-  OR?: Maybe<ParagraphWhereInput[] | ParagraphWhereInput>;
-  NOT?: Maybe<ParagraphWhereInput[] | ParagraphWhereInput>;
-}
-
-export interface FrameUpsertWithWhereUniqueWithoutParentInput {
-  where: FrameWhereUniqueInput;
-  update: FrameUpdateWithoutParentDataInput;
-  create: FrameCreateWithoutParentInput;
-}
-
-export interface StoryUpdateWithoutAuthorDataInput {
-  published?: Maybe<Boolean>;
-  title?: Maybe<String>;
-  styling?: Maybe<String>;
-  media?: Maybe<String>;
-  scenes?: Maybe<SceneUpdateManyWithoutParentInput>;
-  position?: Maybe<String>;
-}
-
-export interface FrameScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  published?: Maybe<Boolean>;
-  published_not?: Maybe<Boolean>;
-  title?: Maybe<String>;
-  title_not?: Maybe<String>;
-  title_in?: Maybe<String[] | String>;
-  title_not_in?: Maybe<String[] | String>;
-  title_lt?: Maybe<String>;
-  title_lte?: Maybe<String>;
-  title_gt?: Maybe<String>;
-  title_gte?: Maybe<String>;
-  title_contains?: Maybe<String>;
-  title_not_contains?: Maybe<String>;
-  title_starts_with?: Maybe<String>;
-  title_not_starts_with?: Maybe<String>;
-  title_ends_with?: Maybe<String>;
-  title_not_ends_with?: Maybe<String>;
-  styling?: Maybe<String>;
-  styling_not?: Maybe<String>;
-  styling_in?: Maybe<String[] | String>;
-  styling_not_in?: Maybe<String[] | String>;
-  styling_lt?: Maybe<String>;
-  styling_lte?: Maybe<String>;
-  styling_gt?: Maybe<String>;
-  styling_gte?: Maybe<String>;
-  styling_contains?: Maybe<String>;
-  styling_not_contains?: Maybe<String>;
-  styling_starts_with?: Maybe<String>;
-  styling_not_starts_with?: Maybe<String>;
-  styling_ends_with?: Maybe<String>;
-  styling_not_ends_with?: Maybe<String>;
-  media?: Maybe<String>;
-  media_not?: Maybe<String>;
-  media_in?: Maybe<String[] | String>;
-  media_not_in?: Maybe<String[] | String>;
-  media_lt?: Maybe<String>;
-  media_lte?: Maybe<String>;
-  media_gt?: Maybe<String>;
-  media_gte?: Maybe<String>;
-  media_contains?: Maybe<String>;
-  media_not_contains?: Maybe<String>;
-  media_starts_with?: Maybe<String>;
-  media_not_starts_with?: Maybe<String>;
-  media_ends_with?: Maybe<String>;
-  media_not_ends_with?: Maybe<String>;
-  position?: Maybe<String>;
-  position_not?: Maybe<String>;
-  position_in?: Maybe<String[] | String>;
-  position_not_in?: Maybe<String[] | String>;
-  position_lt?: Maybe<String>;
-  position_lte?: Maybe<String>;
-  position_gt?: Maybe<String>;
-  position_gte?: Maybe<String>;
-  position_contains?: Maybe<String>;
-  position_not_contains?: Maybe<String>;
-  position_starts_with?: Maybe<String>;
-  position_not_starts_with?: Maybe<String>;
-  position_ends_with?: Maybe<String>;
-  position_not_ends_with?: Maybe<String>;
-  AND?: Maybe<FrameScalarWhereInput[] | FrameScalarWhereInput>;
-  OR?: Maybe<FrameScalarWhereInput[] | FrameScalarWhereInput>;
-  NOT?: Maybe<FrameScalarWhereInput[] | FrameScalarWhereInput>;
-}
-
-export interface UserCreateInput {
-  id?: Maybe<ID_Input>;
-  email: String;
-  password: String;
-  name: String;
-  stories?: Maybe<StoryCreateManyWithoutAuthorInput>;
-}
-
-export interface FrameUpdateManyWithWhereNestedInput {
-  where: FrameScalarWhereInput;
-  data: FrameUpdateManyDataInput;
-}
-
-export interface UserCreateOneWithoutStoriesInput {
-  create?: Maybe<UserCreateWithoutStoriesInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface FrameUpdateManyDataInput {
-  published?: Maybe<Boolean>;
-  title?: Maybe<String>;
-  styling?: Maybe<String>;
-  media?: Maybe<String>;
-  position?: Maybe<String>;
-}
-
-export interface StoryUpdateManyWithWhereNestedInput {
-  where: StoryScalarWhereInput;
-  data: StoryUpdateManyDataInput;
-}
-
-export interface SceneCreateWithoutParentInput {
-  id?: Maybe<ID_Input>;
-  published?: Maybe<Boolean>;
-  title?: Maybe<String>;
-  styling?: Maybe<String>;
-  media?: Maybe<String>;
-  frames?: Maybe<FrameCreateManyWithoutParentInput>;
-  position?: Maybe<String>;
-}
-
-export interface SceneCreateManyWithoutParentInput {
-  create?: Maybe<
-    SceneCreateWithoutParentInput[] | SceneCreateWithoutParentInput
-  >;
-  connect?: Maybe<SceneWhereUniqueInput[] | SceneWhereUniqueInput>;
-}
-
-export interface StoryCreateInput {
-  id?: Maybe<ID_Input>;
-  published?: Maybe<Boolean>;
-  title?: Maybe<String>;
-  styling?: Maybe<String>;
-  media?: Maybe<String>;
-  scenes?: Maybe<SceneCreateManyWithoutParentInput>;
-  author: UserCreateOneWithoutStoriesInput;
-  position?: Maybe<String>;
-}
-
-export interface SceneUpdateManyMutationInput {
-  published?: Maybe<Boolean>;
-  title?: Maybe<String>;
-  styling?: Maybe<String>;
-  media?: Maybe<String>;
-  position?: Maybe<String>;
-}
-
-export interface UserUpdateInput {
-  email?: Maybe<String>;
-  password?: Maybe<String>;
-  name?: Maybe<String>;
-  stories?: Maybe<StoryUpdateManyWithoutAuthorInput>;
-}
-
-export interface StorySubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<StoryWhereInput>;
-  AND?: Maybe<StorySubscriptionWhereInput[] | StorySubscriptionWhereInput>;
-  OR?: Maybe<StorySubscriptionWhereInput[] | StorySubscriptionWhereInput>;
-  NOT?: Maybe<StorySubscriptionWhereInput[] | StorySubscriptionWhereInput>;
-}
-
-export interface SceneCreateOneWithoutFramesInput {
-  create?: Maybe<SceneCreateWithoutFramesInput>;
-  connect?: Maybe<SceneWhereUniqueInput>;
-}
-
-export interface SceneUpdateManyWithWhereNestedInput {
-  where: SceneScalarWhereInput;
-  data: SceneUpdateManyDataInput;
+export interface NoteCreateManyWithoutAuthorInput {
+  create?: Maybe<NoteCreateWithoutAuthorInput[] | NoteCreateWithoutAuthorInput>;
+  connect?: Maybe<NoteWhereUniqueInput[] | NoteWhereUniqueInput>;
 }
 
 export interface NodeNode {
   id: ID_Output;
-}
-
-export interface UserPreviousValues {
-  id: ID_Output;
-  email: String;
-  password: String;
-  name: String;
-}
-
-export interface UserPreviousValuesPromise
-  extends Promise<UserPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  email: () => Promise<String>;
-  password: () => Promise<String>;
-  name: () => Promise<String>;
-}
-
-export interface UserPreviousValuesSubscription
-  extends Promise<AsyncIterator<UserPreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  email: () => Promise<AsyncIterator<String>>;
-  password: () => Promise<AsyncIterator<String>>;
-  name: () => Promise<AsyncIterator<String>>;
-}
-
-export interface FrameConnection {
-  pageInfo: PageInfo;
-  edges: FrameEdge[];
-}
-
-export interface FrameConnectionPromise
-  extends Promise<FrameConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<FrameEdge>>() => T;
-  aggregate: <T = AggregateFramePromise>() => T;
-}
-
-export interface FrameConnectionSubscription
-  extends Promise<AsyncIterator<FrameConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<FrameEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateFrameSubscription>() => T;
 }
 
 export interface BatchPayload {
@@ -1758,6 +1985,48 @@ export interface PageInfoSubscription
   endCursor: () => Promise<AsyncIterator<String>>;
 }
 
+export interface UserPreviousValues {
+  id: ID_Output;
+  email: String;
+  password: String;
+  name: String;
+}
+
+export interface UserPreviousValuesPromise
+  extends Promise<UserPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  email: () => Promise<String>;
+  password: () => Promise<String>;
+  name: () => Promise<String>;
+}
+
+export interface UserPreviousValuesSubscription
+  extends Promise<AsyncIterator<UserPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  email: () => Promise<AsyncIterator<String>>;
+  password: () => Promise<AsyncIterator<String>>;
+  name: () => Promise<AsyncIterator<String>>;
+}
+
+export interface FrameEdge {
+  node: Frame;
+  cursor: String;
+}
+
+export interface FrameEdgePromise extends Promise<FrameEdge>, Fragmentable {
+  node: <T = FramePromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface FrameEdgeSubscription
+  extends Promise<AsyncIterator<FrameEdge>>,
+    Fragmentable {
+  node: <T = FrameSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
 export interface StorySubscriptionPayload {
   mutation: MutationType;
   node: Story;
@@ -1783,35 +2052,68 @@ export interface StorySubscriptionPayloadSubscription
   previousValues: <T = StoryPreviousValuesSubscription>() => T;
 }
 
-export interface StoryPreviousValues {
+export interface Paragraph {
   id: ID_Output;
   published: Boolean;
-  title?: String;
-  styling: String;
-  media: String;
+  content: String;
+  styling?: String;
+  media?: String;
   position?: String;
 }
 
-export interface StoryPreviousValuesPromise
-  extends Promise<StoryPreviousValues>,
-    Fragmentable {
+export interface ParagraphPromise extends Promise<Paragraph>, Fragmentable {
   id: () => Promise<ID_Output>;
   published: () => Promise<Boolean>;
-  title: () => Promise<String>;
+  content: () => Promise<String>;
   styling: () => Promise<String>;
   media: () => Promise<String>;
+  parent: <T = FramePromise>() => T;
   position: () => Promise<String>;
 }
 
-export interface StoryPreviousValuesSubscription
-  extends Promise<AsyncIterator<StoryPreviousValues>>,
+export interface ParagraphSubscription
+  extends Promise<AsyncIterator<Paragraph>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   published: () => Promise<AsyncIterator<Boolean>>;
-  title: () => Promise<AsyncIterator<String>>;
+  content: () => Promise<AsyncIterator<String>>;
   styling: () => Promise<AsyncIterator<String>>;
   media: () => Promise<AsyncIterator<String>>;
+  parent: <T = FrameSubscription>() => T;
   position: () => Promise<AsyncIterator<String>>;
+}
+
+export interface ParagraphNullablePromise
+  extends Promise<Paragraph | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  published: () => Promise<Boolean>;
+  content: () => Promise<String>;
+  styling: () => Promise<String>;
+  media: () => Promise<String>;
+  parent: <T = FramePromise>() => T;
+  position: () => Promise<String>;
+}
+
+export interface FrameConnection {
+  pageInfo: PageInfo;
+  edges: FrameEdge[];
+}
+
+export interface FrameConnectionPromise
+  extends Promise<FrameConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<FrameEdge>>() => T;
+  aggregate: <T = AggregateFramePromise>() => T;
+}
+
+export interface FrameConnectionSubscription
+  extends Promise<AsyncIterator<FrameConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<FrameEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateFrameSubscription>() => T;
 }
 
 export interface AggregateUser {
@@ -1830,122 +2132,72 @@ export interface AggregateUserSubscription
   count: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface UserEdge {
-  node: User;
-  cursor: String;
+export interface UserConnection {
+  pageInfo: PageInfo;
+  edges: UserEdge[];
 }
 
-export interface UserEdgePromise extends Promise<UserEdge>, Fragmentable {
-  node: <T = UserPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface UserEdgeSubscription
-  extends Promise<AsyncIterator<UserEdge>>,
+export interface UserConnectionPromise
+  extends Promise<UserConnection>,
     Fragmentable {
-  node: <T = UserSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<UserEdge>>() => T;
+  aggregate: <T = AggregateUserPromise>() => T;
 }
 
-export interface UserSubscriptionPayload {
-  mutation: MutationType;
-  node: User;
-  updatedFields: String[];
-  previousValues: UserPreviousValues;
-}
-
-export interface UserSubscriptionPayloadPromise
-  extends Promise<UserSubscriptionPayload>,
+export interface UserConnectionSubscription
+  extends Promise<AsyncIterator<UserConnection>>,
     Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = UserPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = UserPreviousValuesPromise>() => T;
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateUserSubscription>() => T;
 }
 
-export interface UserSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<UserSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = UserSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = UserPreviousValuesSubscription>() => T;
-}
-
-export interface User {
+export interface Note {
   id: ID_Output;
-  email: String;
-  password: String;
-  name: String;
+  content: String;
+  position?: String;
 }
 
-export interface UserPromise extends Promise<User>, Fragmentable {
+export interface NotePromise extends Promise<Note>, Fragmentable {
   id: () => Promise<ID_Output>;
-  email: () => Promise<String>;
-  password: () => Promise<String>;
-  name: () => Promise<String>;
-  stories: <T = FragmentableArray<Story>>(args?: {
-    where?: StoryWhereInput;
-    orderBy?: StoryOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
+  content: () => Promise<String>;
+  author: <T = UserPromise>() => T;
+  position: () => Promise<String>;
 }
 
-export interface UserSubscription
-  extends Promise<AsyncIterator<User>>,
+export interface NoteSubscription
+  extends Promise<AsyncIterator<Note>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  email: () => Promise<AsyncIterator<String>>;
-  password: () => Promise<AsyncIterator<String>>;
-  name: () => Promise<AsyncIterator<String>>;
-  stories: <T = Promise<AsyncIterator<StorySubscription>>>(args?: {
-    where?: StoryWhereInput;
-    orderBy?: StoryOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
+  content: () => Promise<AsyncIterator<String>>;
+  author: <T = UserSubscription>() => T;
+  position: () => Promise<AsyncIterator<String>>;
 }
 
-export interface UserNullablePromise
-  extends Promise<User | null>,
+export interface NoteNullablePromise
+  extends Promise<Note | null>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  email: () => Promise<String>;
-  password: () => Promise<String>;
-  name: () => Promise<String>;
-  stories: <T = FragmentableArray<Story>>(args?: {
-    where?: StoryWhereInput;
-    orderBy?: StoryOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
+  content: () => Promise<String>;
+  author: <T = UserPromise>() => T;
+  position: () => Promise<String>;
 }
 
-export interface StoryEdge {
-  node: Story;
-  cursor: String;
+export interface AggregateStory {
+  count: Int;
 }
 
-export interface StoryEdgePromise extends Promise<StoryEdge>, Fragmentable {
-  node: <T = StoryPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface StoryEdgeSubscription
-  extends Promise<AsyncIterator<StoryEdge>>,
+export interface AggregateStoryPromise
+  extends Promise<AggregateStory>,
     Fragmentable {
-  node: <T = StorySubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
+  count: () => Promise<Int>;
+}
+
+export interface AggregateStorySubscription
+  extends Promise<AsyncIterator<AggregateStory>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface Frame {
@@ -2018,20 +2270,25 @@ export interface FrameNullablePromise
   position: () => Promise<String>;
 }
 
-export interface AggregateScene {
-  count: Int;
+export interface StoryConnection {
+  pageInfo: PageInfo;
+  edges: StoryEdge[];
 }
 
-export interface AggregateScenePromise
-  extends Promise<AggregateScene>,
+export interface StoryConnectionPromise
+  extends Promise<StoryConnection>,
     Fragmentable {
-  count: () => Promise<Int>;
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<StoryEdge>>() => T;
+  aggregate: <T = AggregateStoryPromise>() => T;
 }
 
-export interface AggregateSceneSubscription
-  extends Promise<AsyncIterator<AggregateScene>>,
+export interface StoryConnectionSubscription
+  extends Promise<AsyncIterator<StoryConnection>>,
     Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<StoryEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateStorySubscription>() => T;
 }
 
 export interface FrameSubscriptionPayload {
@@ -2059,25 +2316,21 @@ export interface FrameSubscriptionPayloadSubscription
   previousValues: <T = FramePreviousValuesSubscription>() => T;
 }
 
-export interface SceneConnection {
-  pageInfo: PageInfo;
-  edges: SceneEdge[];
+export interface SceneEdge {
+  node: Scene;
+  cursor: String;
 }
 
-export interface SceneConnectionPromise
-  extends Promise<SceneConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<SceneEdge>>() => T;
-  aggregate: <T = AggregateScenePromise>() => T;
+export interface SceneEdgePromise extends Promise<SceneEdge>, Fragmentable {
+  node: <T = ScenePromise>() => T;
+  cursor: () => Promise<String>;
 }
 
-export interface SceneConnectionSubscription
-  extends Promise<AsyncIterator<SceneConnection>>,
+export interface SceneEdgeSubscription
+  extends Promise<AsyncIterator<SceneEdge>>,
     Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<SceneEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateSceneSubscription>() => T;
+  node: <T = SceneSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
 }
 
 export interface FramePreviousValues {
@@ -2111,26 +2364,23 @@ export interface FramePreviousValuesSubscription
   position: () => Promise<AsyncIterator<String>>;
 }
 
-export interface ParagraphEdge {
-  node: Paragraph;
-  cursor: String;
+export interface AggregateParagraph {
+  count: Int;
 }
 
-export interface ParagraphEdgePromise
-  extends Promise<ParagraphEdge>,
+export interface AggregateParagraphPromise
+  extends Promise<AggregateParagraph>,
     Fragmentable {
-  node: <T = ParagraphPromise>() => T;
-  cursor: () => Promise<String>;
+  count: () => Promise<Int>;
 }
 
-export interface ParagraphEdgeSubscription
-  extends Promise<AsyncIterator<ParagraphEdge>>,
+export interface AggregateParagraphSubscription
+  extends Promise<AsyncIterator<AggregateParagraph>>,
     Fragmentable {
-  node: <T = ParagraphSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
+  count: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface Story {
+export interface StoryPreviousValues {
   id: ID_Output;
   published: Boolean;
   title?: String;
@@ -2139,65 +2389,111 @@ export interface Story {
   position?: String;
 }
 
-export interface StoryPromise extends Promise<Story>, Fragmentable {
+export interface StoryPreviousValuesPromise
+  extends Promise<StoryPreviousValues>,
+    Fragmentable {
   id: () => Promise<ID_Output>;
   published: () => Promise<Boolean>;
   title: () => Promise<String>;
   styling: () => Promise<String>;
   media: () => Promise<String>;
-  scenes: <T = FragmentableArray<Scene>>(args?: {
-    where?: SceneWhereInput;
-    orderBy?: SceneOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  author: <T = UserPromise>() => T;
   position: () => Promise<String>;
 }
 
-export interface StorySubscription
-  extends Promise<AsyncIterator<Story>>,
+export interface StoryPreviousValuesSubscription
+  extends Promise<AsyncIterator<StoryPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   published: () => Promise<AsyncIterator<Boolean>>;
   title: () => Promise<AsyncIterator<String>>;
   styling: () => Promise<AsyncIterator<String>>;
   media: () => Promise<AsyncIterator<String>>;
-  scenes: <T = Promise<AsyncIterator<SceneSubscription>>>(args?: {
-    where?: SceneWhereInput;
-    orderBy?: SceneOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  author: <T = UserSubscription>() => T;
   position: () => Promise<AsyncIterator<String>>;
 }
 
-export interface StoryNullablePromise
-  extends Promise<Story | null>,
+export interface ParagraphConnection {
+  pageInfo: PageInfo;
+  edges: ParagraphEdge[];
+}
+
+export interface ParagraphConnectionPromise
+  extends Promise<ParagraphConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<ParagraphEdge>>() => T;
+  aggregate: <T = AggregateParagraphPromise>() => T;
+}
+
+export interface ParagraphConnectionSubscription
+  extends Promise<AsyncIterator<ParagraphConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<ParagraphEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateParagraphSubscription>() => T;
+}
+
+export interface NoteSubscriptionPayload {
+  mutation: MutationType;
+  node: Note;
+  updatedFields: String[];
+  previousValues: NotePreviousValues;
+}
+
+export interface NoteSubscriptionPayloadPromise
+  extends Promise<NoteSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = NotePromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = NotePreviousValuesPromise>() => T;
+}
+
+export interface NoteSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<NoteSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = NoteSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = NotePreviousValuesSubscription>() => T;
+}
+
+export interface NoteEdge {
+  node: Note;
+  cursor: String;
+}
+
+export interface NoteEdgePromise extends Promise<NoteEdge>, Fragmentable {
+  node: <T = NotePromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface NoteEdgeSubscription
+  extends Promise<AsyncIterator<NoteEdge>>,
+    Fragmentable {
+  node: <T = NoteSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface NotePreviousValues {
+  id: ID_Output;
+  content: String;
+  position?: String;
+}
+
+export interface NotePreviousValuesPromise
+  extends Promise<NotePreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  published: () => Promise<Boolean>;
-  title: () => Promise<String>;
-  styling: () => Promise<String>;
-  media: () => Promise<String>;
-  scenes: <T = FragmentableArray<Scene>>(args?: {
-    where?: SceneWhereInput;
-    orderBy?: SceneOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  author: <T = UserPromise>() => T;
+  content: () => Promise<String>;
   position: () => Promise<String>;
+}
+
+export interface NotePreviousValuesSubscription
+  extends Promise<AsyncIterator<NotePreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  content: () => Promise<AsyncIterator<String>>;
+  position: () => Promise<AsyncIterator<String>>;
 }
 
 export interface AggregateFrame {
@@ -2214,6 +2510,117 @@ export interface AggregateFrameSubscription
   extends Promise<AsyncIterator<AggregateFrame>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface User {
+  id: ID_Output;
+  email: String;
+  password: String;
+  name: String;
+}
+
+export interface UserPromise extends Promise<User>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  email: () => Promise<String>;
+  password: () => Promise<String>;
+  name: () => Promise<String>;
+  stories: <T = FragmentableArray<Story>>(args?: {
+    where?: StoryWhereInput;
+    orderBy?: StoryOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  notes: <T = FragmentableArray<Note>>(args?: {
+    where?: NoteWhereInput;
+    orderBy?: NoteOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface UserSubscription
+  extends Promise<AsyncIterator<User>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  email: () => Promise<AsyncIterator<String>>;
+  password: () => Promise<AsyncIterator<String>>;
+  name: () => Promise<AsyncIterator<String>>;
+  stories: <T = Promise<AsyncIterator<StorySubscription>>>(args?: {
+    where?: StoryWhereInput;
+    orderBy?: StoryOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  notes: <T = Promise<AsyncIterator<NoteSubscription>>>(args?: {
+    where?: NoteWhereInput;
+    orderBy?: NoteOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface UserNullablePromise
+  extends Promise<User | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  email: () => Promise<String>;
+  password: () => Promise<String>;
+  name: () => Promise<String>;
+  stories: <T = FragmentableArray<Story>>(args?: {
+    where?: StoryWhereInput;
+    orderBy?: StoryOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  notes: <T = FragmentableArray<Note>>(args?: {
+    where?: NoteWhereInput;
+    orderBy?: NoteOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface UserSubscriptionPayload {
+  mutation: MutationType;
+  node: User;
+  updatedFields: String[];
+  previousValues: UserPreviousValues;
+}
+
+export interface UserSubscriptionPayloadPromise
+  extends Promise<UserSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = UserPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = UserPreviousValuesPromise>() => T;
+}
+
+export interface UserSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<UserSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = UserSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = UserPreviousValuesSubscription>() => T;
 }
 
 export interface ParagraphSubscriptionPayload {
@@ -2241,25 +2648,20 @@ export interface ParagraphSubscriptionPayloadSubscription
   previousValues: <T = ParagraphPreviousValuesSubscription>() => T;
 }
 
-export interface UserConnection {
-  pageInfo: PageInfo;
-  edges: UserEdge[];
+export interface AggregateScene {
+  count: Int;
 }
 
-export interface UserConnectionPromise
-  extends Promise<UserConnection>,
+export interface AggregateScenePromise
+  extends Promise<AggregateScene>,
     Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<UserEdge>>() => T;
-  aggregate: <T = AggregateUserPromise>() => T;
+  count: () => Promise<Int>;
 }
 
-export interface UserConnectionSubscription
-  extends Promise<AsyncIterator<UserConnection>>,
+export interface AggregateSceneSubscription
+  extends Promise<AsyncIterator<AggregateScene>>,
     Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateUserSubscription>() => T;
+  count: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface ParagraphPreviousValues {
@@ -2293,140 +2695,44 @@ export interface ParagraphPreviousValuesSubscription
   position: () => Promise<AsyncIterator<String>>;
 }
 
-export interface StoryConnection {
-  pageInfo: PageInfo;
-  edges: StoryEdge[];
+export interface ParagraphEdge {
+  node: Paragraph;
+  cursor: String;
 }
 
-export interface StoryConnectionPromise
-  extends Promise<StoryConnection>,
+export interface ParagraphEdgePromise
+  extends Promise<ParagraphEdge>,
+    Fragmentable {
+  node: <T = ParagraphPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface ParagraphEdgeSubscription
+  extends Promise<AsyncIterator<ParagraphEdge>>,
+    Fragmentable {
+  node: <T = ParagraphSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface NoteConnection {
+  pageInfo: PageInfo;
+  edges: NoteEdge[];
+}
+
+export interface NoteConnectionPromise
+  extends Promise<NoteConnection>,
     Fragmentable {
   pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<StoryEdge>>() => T;
-  aggregate: <T = AggregateStoryPromise>() => T;
+  edges: <T = FragmentableArray<NoteEdge>>() => T;
+  aggregate: <T = AggregateNotePromise>() => T;
 }
 
-export interface StoryConnectionSubscription
-  extends Promise<AsyncIterator<StoryConnection>>,
+export interface NoteConnectionSubscription
+  extends Promise<AsyncIterator<NoteConnection>>,
     Fragmentable {
   pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<StoryEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateStorySubscription>() => T;
-}
-
-export interface AggregateParagraph {
-  count: Int;
-}
-
-export interface AggregateParagraphPromise
-  extends Promise<AggregateParagraph>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateParagraphSubscription
-  extends Promise<AsyncIterator<AggregateParagraph>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface Paragraph {
-  id: ID_Output;
-  published: Boolean;
-  content: String;
-  styling?: String;
-  media?: String;
-  position?: String;
-}
-
-export interface ParagraphPromise extends Promise<Paragraph>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  published: () => Promise<Boolean>;
-  content: () => Promise<String>;
-  styling: () => Promise<String>;
-  media: () => Promise<String>;
-  parent: <T = FramePromise>() => T;
-  position: () => Promise<String>;
-}
-
-export interface ParagraphSubscription
-  extends Promise<AsyncIterator<Paragraph>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  published: () => Promise<AsyncIterator<Boolean>>;
-  content: () => Promise<AsyncIterator<String>>;
-  styling: () => Promise<AsyncIterator<String>>;
-  media: () => Promise<AsyncIterator<String>>;
-  parent: <T = FrameSubscription>() => T;
-  position: () => Promise<AsyncIterator<String>>;
-}
-
-export interface ParagraphNullablePromise
-  extends Promise<Paragraph | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  published: () => Promise<Boolean>;
-  content: () => Promise<String>;
-  styling: () => Promise<String>;
-  media: () => Promise<String>;
-  parent: <T = FramePromise>() => T;
-  position: () => Promise<String>;
-}
-
-export interface ScenePreviousValues {
-  id: ID_Output;
-  published: Boolean;
-  title?: String;
-  styling: String;
-  media: String;
-  position?: String;
-}
-
-export interface ScenePreviousValuesPromise
-  extends Promise<ScenePreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  published: () => Promise<Boolean>;
-  title: () => Promise<String>;
-  styling: () => Promise<String>;
-  media: () => Promise<String>;
-  position: () => Promise<String>;
-}
-
-export interface ScenePreviousValuesSubscription
-  extends Promise<AsyncIterator<ScenePreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  published: () => Promise<AsyncIterator<Boolean>>;
-  title: () => Promise<AsyncIterator<String>>;
-  styling: () => Promise<AsyncIterator<String>>;
-  media: () => Promise<AsyncIterator<String>>;
-  position: () => Promise<AsyncIterator<String>>;
-}
-
-export interface SceneSubscriptionPayload {
-  mutation: MutationType;
-  node: Scene;
-  updatedFields: String[];
-  previousValues: ScenePreviousValues;
-}
-
-export interface SceneSubscriptionPayloadPromise
-  extends Promise<SceneSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = ScenePromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = ScenePreviousValuesPromise>() => T;
-}
-
-export interface SceneSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<SceneSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = SceneSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = ScenePreviousValuesSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<NoteEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateNoteSubscription>() => T;
 }
 
 export interface Scene {
@@ -2499,83 +2805,210 @@ export interface SceneNullablePromise
   position: () => Promise<String>;
 }
 
-export interface ParagraphConnection {
-  pageInfo: PageInfo;
-  edges: ParagraphEdge[];
+export interface ScenePreviousValues {
+  id: ID_Output;
+  published: Boolean;
+  title?: String;
+  styling: String;
+  media: String;
+  position?: String;
 }
 
-export interface ParagraphConnectionPromise
-  extends Promise<ParagraphConnection>,
+export interface ScenePreviousValuesPromise
+  extends Promise<ScenePreviousValues>,
     Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<ParagraphEdge>>() => T;
-  aggregate: <T = AggregateParagraphPromise>() => T;
+  id: () => Promise<ID_Output>;
+  published: () => Promise<Boolean>;
+  title: () => Promise<String>;
+  styling: () => Promise<String>;
+  media: () => Promise<String>;
+  position: () => Promise<String>;
 }
 
-export interface ParagraphConnectionSubscription
-  extends Promise<AsyncIterator<ParagraphConnection>>,
+export interface ScenePreviousValuesSubscription
+  extends Promise<AsyncIterator<ScenePreviousValues>>,
     Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<ParagraphEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateParagraphSubscription>() => T;
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  published: () => Promise<AsyncIterator<Boolean>>;
+  title: () => Promise<AsyncIterator<String>>;
+  styling: () => Promise<AsyncIterator<String>>;
+  media: () => Promise<AsyncIterator<String>>;
+  position: () => Promise<AsyncIterator<String>>;
 }
 
-export interface SceneEdge {
+export interface SceneSubscriptionPayload {
+  mutation: MutationType;
   node: Scene;
+  updatedFields: String[];
+  previousValues: ScenePreviousValues;
+}
+
+export interface SceneSubscriptionPayloadPromise
+  extends Promise<SceneSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = ScenePromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = ScenePreviousValuesPromise>() => T;
+}
+
+export interface SceneSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<SceneSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = SceneSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = ScenePreviousValuesSubscription>() => T;
+}
+
+export interface Story {
+  id: ID_Output;
+  published: Boolean;
+  title?: String;
+  styling: String;
+  media: String;
+  position?: String;
+}
+
+export interface StoryPromise extends Promise<Story>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  published: () => Promise<Boolean>;
+  title: () => Promise<String>;
+  styling: () => Promise<String>;
+  media: () => Promise<String>;
+  scenes: <T = FragmentableArray<Scene>>(args?: {
+    where?: SceneWhereInput;
+    orderBy?: SceneOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  author: <T = UserPromise>() => T;
+  position: () => Promise<String>;
+}
+
+export interface StorySubscription
+  extends Promise<AsyncIterator<Story>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  published: () => Promise<AsyncIterator<Boolean>>;
+  title: () => Promise<AsyncIterator<String>>;
+  styling: () => Promise<AsyncIterator<String>>;
+  media: () => Promise<AsyncIterator<String>>;
+  scenes: <T = Promise<AsyncIterator<SceneSubscription>>>(args?: {
+    where?: SceneWhereInput;
+    orderBy?: SceneOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  author: <T = UserSubscription>() => T;
+  position: () => Promise<AsyncIterator<String>>;
+}
+
+export interface StoryNullablePromise
+  extends Promise<Story | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  published: () => Promise<Boolean>;
+  title: () => Promise<String>;
+  styling: () => Promise<String>;
+  media: () => Promise<String>;
+  scenes: <T = FragmentableArray<Scene>>(args?: {
+    where?: SceneWhereInput;
+    orderBy?: SceneOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  author: <T = UserPromise>() => T;
+  position: () => Promise<String>;
+}
+
+export interface UserEdge {
+  node: User;
   cursor: String;
 }
 
-export interface SceneEdgePromise extends Promise<SceneEdge>, Fragmentable {
-  node: <T = ScenePromise>() => T;
+export interface UserEdgePromise extends Promise<UserEdge>, Fragmentable {
+  node: <T = UserPromise>() => T;
   cursor: () => Promise<String>;
 }
 
-export interface SceneEdgeSubscription
-  extends Promise<AsyncIterator<SceneEdge>>,
+export interface UserEdgeSubscription
+  extends Promise<AsyncIterator<UserEdge>>,
     Fragmentable {
-  node: <T = SceneSubscription>() => T;
+  node: <T = UserSubscription>() => T;
   cursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface AggregateStory {
+export interface AggregateNote {
   count: Int;
 }
 
-export interface AggregateStoryPromise
-  extends Promise<AggregateStory>,
+export interface AggregateNotePromise
+  extends Promise<AggregateNote>,
     Fragmentable {
   count: () => Promise<Int>;
 }
 
-export interface AggregateStorySubscription
-  extends Promise<AsyncIterator<AggregateStory>>,
+export interface AggregateNoteSubscription
+  extends Promise<AsyncIterator<AggregateNote>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface FrameEdge {
-  node: Frame;
+export interface SceneConnection {
+  pageInfo: PageInfo;
+  edges: SceneEdge[];
+}
+
+export interface SceneConnectionPromise
+  extends Promise<SceneConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<SceneEdge>>() => T;
+  aggregate: <T = AggregateScenePromise>() => T;
+}
+
+export interface SceneConnectionSubscription
+  extends Promise<AsyncIterator<SceneConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<SceneEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateSceneSubscription>() => T;
+}
+
+export interface StoryEdge {
+  node: Story;
   cursor: String;
 }
 
-export interface FrameEdgePromise extends Promise<FrameEdge>, Fragmentable {
-  node: <T = FramePromise>() => T;
+export interface StoryEdgePromise extends Promise<StoryEdge>, Fragmentable {
+  node: <T = StoryPromise>() => T;
   cursor: () => Promise<String>;
 }
 
-export interface FrameEdgeSubscription
-  extends Promise<AsyncIterator<FrameEdge>>,
+export interface StoryEdgeSubscription
+  extends Promise<AsyncIterator<StoryEdge>>,
     Fragmentable {
-  node: <T = FrameSubscription>() => T;
+  node: <T = StorySubscription>() => T;
   cursor: () => Promise<AsyncIterator<String>>;
 }
 
-/*
-The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
-*/
-export type String = string;
-
 export type Long = string;
+
+/*
+The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
+*/
+export type ID_Input = string | number;
+export type ID_Output = string;
 
 /*
 The `Boolean` scalar type represents `true` or `false`.
@@ -2588,10 +3021,9 @@ The `Int` scalar type represents non-fractional signed whole numeric values. Int
 export type Int = number;
 
 /*
-The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
+The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
 */
-export type ID_Input = string | number;
-export type ID_Output = string;
+export type String = string;
 
 /**
  * Model Metadata
@@ -2616,6 +3048,10 @@ export const models: Model[] = [
   },
   {
     name: "Story",
+    embedded: false
+  },
+  {
+    name: "Note",
     embedded: false
   }
 ];

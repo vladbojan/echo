@@ -7,6 +7,7 @@ import CreateNewStory from '../components/CreateNewStory'
 import DetailPage from '../components/DetailPage'
 import StoryEditPage from '../components/StoryEditPage'
 import MyStoriesNavigation from './MyStoriesNavigation'
+import NoteContainer from './NoteContainer'
 
 import {
   Route,
@@ -18,6 +19,7 @@ export default function HomeContainer(props) {
   
   return (
     <div className={classes.home}>
+      <NoteContainer/>
       <Switch>
         <Route exact path="/" component={FeedPage} />
         <Route path="/user/:email" component={FeedPage} />

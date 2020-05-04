@@ -7,6 +7,10 @@ module.exports = {
   count: Int!
 }
 
+type AggregateNote {
+  count: Int!
+}
+
 type AggregateParagraph {
   count: Int!
 }
@@ -389,6 +393,12 @@ type Mutation {
   upsertFrame(where: FrameWhereUniqueInput!, create: FrameCreateInput!, update: FrameUpdateInput!): Frame!
   deleteFrame(where: FrameWhereUniqueInput!): Frame
   deleteManyFrames(where: FrameWhereInput): BatchPayload!
+  createNote(data: NoteCreateInput!): Note!
+  updateNote(data: NoteUpdateInput!, where: NoteWhereUniqueInput!): Note
+  updateManyNotes(data: NoteUpdateManyMutationInput!, where: NoteWhereInput): BatchPayload!
+  upsertNote(where: NoteWhereUniqueInput!, create: NoteCreateInput!, update: NoteUpdateInput!): Note!
+  deleteNote(where: NoteWhereUniqueInput!): Note
+  deleteManyNotes(where: NoteWhereInput): BatchPayload!
   createParagraph(data: ParagraphCreateInput!): Paragraph!
   updateParagraph(data: ParagraphUpdateInput!, where: ParagraphWhereUniqueInput!): Paragraph
   updateManyParagraphs(data: ParagraphUpdateManyMutationInput!, where: ParagraphWhereInput): BatchPayload!
@@ -423,6 +433,225 @@ enum MutationType {
 
 interface Node {
   id: ID!
+}
+
+type Note {
+  id: ID!
+  content: String!
+  author: User!
+  position: String
+}
+
+type NoteConnection {
+  pageInfo: PageInfo!
+  edges: [NoteEdge]!
+  aggregate: AggregateNote!
+}
+
+input NoteCreateInput {
+  id: ID
+  content: String!
+  author: UserCreateOneWithoutNotesInput!
+  position: String
+}
+
+input NoteCreateManyWithoutAuthorInput {
+  create: [NoteCreateWithoutAuthorInput!]
+  connect: [NoteWhereUniqueInput!]
+}
+
+input NoteCreateWithoutAuthorInput {
+  id: ID
+  content: String!
+  position: String
+}
+
+type NoteEdge {
+  node: Note!
+  cursor: String!
+}
+
+enum NoteOrderByInput {
+  id_ASC
+  id_DESC
+  content_ASC
+  content_DESC
+  position_ASC
+  position_DESC
+}
+
+type NotePreviousValues {
+  id: ID!
+  content: String!
+  position: String
+}
+
+input NoteScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  content: String
+  content_not: String
+  content_in: [String!]
+  content_not_in: [String!]
+  content_lt: String
+  content_lte: String
+  content_gt: String
+  content_gte: String
+  content_contains: String
+  content_not_contains: String
+  content_starts_with: String
+  content_not_starts_with: String
+  content_ends_with: String
+  content_not_ends_with: String
+  position: String
+  position_not: String
+  position_in: [String!]
+  position_not_in: [String!]
+  position_lt: String
+  position_lte: String
+  position_gt: String
+  position_gte: String
+  position_contains: String
+  position_not_contains: String
+  position_starts_with: String
+  position_not_starts_with: String
+  position_ends_with: String
+  position_not_ends_with: String
+  AND: [NoteScalarWhereInput!]
+  OR: [NoteScalarWhereInput!]
+  NOT: [NoteScalarWhereInput!]
+}
+
+type NoteSubscriptionPayload {
+  mutation: MutationType!
+  node: Note
+  updatedFields: [String!]
+  previousValues: NotePreviousValues
+}
+
+input NoteSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: NoteWhereInput
+  AND: [NoteSubscriptionWhereInput!]
+  OR: [NoteSubscriptionWhereInput!]
+  NOT: [NoteSubscriptionWhereInput!]
+}
+
+input NoteUpdateInput {
+  content: String
+  author: UserUpdateOneRequiredWithoutNotesInput
+  position: String
+}
+
+input NoteUpdateManyDataInput {
+  content: String
+  position: String
+}
+
+input NoteUpdateManyMutationInput {
+  content: String
+  position: String
+}
+
+input NoteUpdateManyWithoutAuthorInput {
+  create: [NoteCreateWithoutAuthorInput!]
+  delete: [NoteWhereUniqueInput!]
+  connect: [NoteWhereUniqueInput!]
+  set: [NoteWhereUniqueInput!]
+  disconnect: [NoteWhereUniqueInput!]
+  update: [NoteUpdateWithWhereUniqueWithoutAuthorInput!]
+  upsert: [NoteUpsertWithWhereUniqueWithoutAuthorInput!]
+  deleteMany: [NoteScalarWhereInput!]
+  updateMany: [NoteUpdateManyWithWhereNestedInput!]
+}
+
+input NoteUpdateManyWithWhereNestedInput {
+  where: NoteScalarWhereInput!
+  data: NoteUpdateManyDataInput!
+}
+
+input NoteUpdateWithoutAuthorDataInput {
+  content: String
+  position: String
+}
+
+input NoteUpdateWithWhereUniqueWithoutAuthorInput {
+  where: NoteWhereUniqueInput!
+  data: NoteUpdateWithoutAuthorDataInput!
+}
+
+input NoteUpsertWithWhereUniqueWithoutAuthorInput {
+  where: NoteWhereUniqueInput!
+  update: NoteUpdateWithoutAuthorDataInput!
+  create: NoteCreateWithoutAuthorInput!
+}
+
+input NoteWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  content: String
+  content_not: String
+  content_in: [String!]
+  content_not_in: [String!]
+  content_lt: String
+  content_lte: String
+  content_gt: String
+  content_gte: String
+  content_contains: String
+  content_not_contains: String
+  content_starts_with: String
+  content_not_starts_with: String
+  content_ends_with: String
+  content_not_ends_with: String
+  author: UserWhereInput
+  position: String
+  position_not: String
+  position_in: [String!]
+  position_not_in: [String!]
+  position_lt: String
+  position_lte: String
+  position_gt: String
+  position_gte: String
+  position_contains: String
+  position_not_contains: String
+  position_starts_with: String
+  position_not_starts_with: String
+  position_ends_with: String
+  position_not_ends_with: String
+  AND: [NoteWhereInput!]
+  OR: [NoteWhereInput!]
+  NOT: [NoteWhereInput!]
+}
+
+input NoteWhereUniqueInput {
+  id: ID
 }
 
 type PageInfo {
@@ -745,6 +974,9 @@ type Query {
   frame(where: FrameWhereUniqueInput!): Frame
   frames(where: FrameWhereInput, orderBy: FrameOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Frame]!
   framesConnection(where: FrameWhereInput, orderBy: FrameOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): FrameConnection!
+  note(where: NoteWhereUniqueInput!): Note
+  notes(where: NoteWhereInput, orderBy: NoteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Note]!
+  notesConnection(where: NoteWhereInput, orderBy: NoteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): NoteConnection!
   paragraph(where: ParagraphWhereUniqueInput!): Paragraph
   paragraphs(where: ParagraphWhereInput, orderBy: ParagraphOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Paragraph]!
   paragraphsConnection(where: ParagraphWhereInput, orderBy: ParagraphOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ParagraphConnection!
@@ -1468,6 +1700,7 @@ input StoryWhereUniqueInput {
 
 type Subscription {
   frame(where: FrameSubscriptionWhereInput): FrameSubscriptionPayload
+  note(where: NoteSubscriptionWhereInput): NoteSubscriptionPayload
   paragraph(where: ParagraphSubscriptionWhereInput): ParagraphSubscriptionPayload
   scene(where: SceneSubscriptionWhereInput): SceneSubscriptionPayload
   story(where: StorySubscriptionWhereInput): StorySubscriptionPayload
@@ -1480,6 +1713,7 @@ type User {
   password: String!
   name: String!
   stories(where: StoryWhereInput, orderBy: StoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Story!]
+  notes(where: NoteWhereInput, orderBy: NoteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Note!]
 }
 
 type UserConnection {
@@ -1494,6 +1728,12 @@ input UserCreateInput {
   password: String!
   name: String!
   stories: StoryCreateManyWithoutAuthorInput
+  notes: NoteCreateManyWithoutAuthorInput
+}
+
+input UserCreateOneWithoutNotesInput {
+  create: UserCreateWithoutNotesInput
+  connect: UserWhereUniqueInput
 }
 
 input UserCreateOneWithoutStoriesInput {
@@ -1501,11 +1741,20 @@ input UserCreateOneWithoutStoriesInput {
   connect: UserWhereUniqueInput
 }
 
+input UserCreateWithoutNotesInput {
+  id: ID
+  email: String!
+  password: String!
+  name: String!
+  stories: StoryCreateManyWithoutAuthorInput
+}
+
 input UserCreateWithoutStoriesInput {
   id: ID
   email: String!
   password: String!
   name: String!
+  notes: NoteCreateManyWithoutAuthorInput
 }
 
 type UserEdge {
@@ -1554,12 +1803,20 @@ input UserUpdateInput {
   password: String
   name: String
   stories: StoryUpdateManyWithoutAuthorInput
+  notes: NoteUpdateManyWithoutAuthorInput
 }
 
 input UserUpdateManyMutationInput {
   email: String
   password: String
   name: String
+}
+
+input UserUpdateOneRequiredWithoutNotesInput {
+  create: UserCreateWithoutNotesInput
+  update: UserUpdateWithoutNotesDataInput
+  upsert: UserUpsertWithoutNotesInput
+  connect: UserWhereUniqueInput
 }
 
 input UserUpdateOneRequiredWithoutStoriesInput {
@@ -1569,10 +1826,23 @@ input UserUpdateOneRequiredWithoutStoriesInput {
   connect: UserWhereUniqueInput
 }
 
+input UserUpdateWithoutNotesDataInput {
+  email: String
+  password: String
+  name: String
+  stories: StoryUpdateManyWithoutAuthorInput
+}
+
 input UserUpdateWithoutStoriesDataInput {
   email: String
   password: String
   name: String
+  notes: NoteUpdateManyWithoutAuthorInput
+}
+
+input UserUpsertWithoutNotesInput {
+  update: UserUpdateWithoutNotesDataInput!
+  create: UserCreateWithoutNotesInput!
 }
 
 input UserUpsertWithoutStoriesInput {
@@ -1640,6 +1910,9 @@ input UserWhereInput {
   stories_every: StoryWhereInput
   stories_some: StoryWhereInput
   stories_none: StoryWhereInput
+  notes_every: NoteWhereInput
+  notes_some: NoteWhereInput
+  notes_none: NoteWhereInput
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]
