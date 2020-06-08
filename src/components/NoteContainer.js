@@ -19,7 +19,8 @@ export default function NoteContainer() {
   const [searchField, setSearchField] = React.useState('')
 
   const handleChange = () => {
-    setChecked((prev) => !prev);
+    setChecked((prev) => !prev)
+    setSearchField('')
   }
 
 

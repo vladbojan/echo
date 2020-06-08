@@ -187,7 +187,7 @@ export const useStyles = makeStyles(theme => ({
     display: 'flex',
     overflowY: 'auto',
     overflowX: 'auto',
-    maxHeight: '50em',
+    maxHeight: '30em',
   },
   headerSearch: {
     flexGrow:1,
