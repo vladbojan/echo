@@ -40,6 +40,32 @@ const Query = {
   note(parent, { id }, context) {
     return context.prisma.note({ id })
   },
+  searchNote(parent, { searchString }, context) {
+    const email = getUserEmail(context)
+    const where = {
+      author: {
+        email,
+      },
+      content_contains:  searchString,
+    }
+    return context.prisma.notes({ where })
+  },
+  searchParagraph(parent, { searchString }, context) {
+    const email = getUserEmail(context)
+    const where = {
+      content_contains:  searchString,
+      parent:{
+        parent:{
+          parent:{
+            author: {
+              email,
+            },
+          },
+        },
+      },
+    }
+    return context.prisma.paragraphs({ where })
+  },
   me(parent, args, context) {
     const email = getUserEmail(context)
     return context.prisma.user({ email })

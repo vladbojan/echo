@@ -4,20 +4,35 @@ import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
+import TextField from '@material-ui/core/TextField'
 
 import Login from './Login'
 import StoryNavigation from './StoryNavigation'
 import StoryEditNavigation from './StoryEditNavigation'
+import ParagraphSearch from './ParagraphSearch'
 
 export default function Navigation(props) {
 const classes = useStyles();
+const [searchField, setSearchField] = React.useState('')
 
 return (
-  <AppBar position="fixed">
+<div>
+<AppBar position="fixed">
   <Toolbar  className={classes.appBar}>
       <Typography variant="h6" className={classes.appBarTitle}>
         ECHO
       </Typography>
+      <TextField
+        value={searchField}
+        onChange={e => setSearchField(e.target.value)}
+        InputProps={{
+          className: classes.searchBar
+        }}
+        margin="normal"
+        placeholder="Cauta in povesti"
+        style={{ display: 'block' }}
+      />
+
       <Button color="inherit"
         href="/"
         title="Feed"
@@ -44,6 +59,8 @@ return (
       </Button>
     <Login/>
   </Toolbar>
-</AppBar>  
+</AppBar> 
+{(searchField!=='')&&(searchField.length>3)&& <ParagraphSearch  checked={true} searchString={searchField}/>}
+</div> 
 )
 }

@@ -19,6 +19,8 @@ type Query {
   notes: [Note!]
   note(id: ID!): Note
   user(email: String!): User
+  searchNote(searchString: String!): [Note!]
+  searchParagraph(searchString: String!): [Paragraph!]
 }
 
 input ParagraphInput {

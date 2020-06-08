@@ -180,6 +180,21 @@ export const useStyles = makeStyles(theme => ({
     minWidth: '35em',
     maxWidth: '35em',
   },
+  searchBar: {
+    color: '#ffffff!important',
+  },
+  searchContainer: {
+    display: 'flex',
+    overflowY: 'auto',
+    overflowX: 'auto',
+    maxHeight: '50em',
+  },
+  headerSearch: {
+    flexGrow:1,
+    color: '#ffffff',
+    paddingTop: 100,
+    minWidth: '50em',
+  },
 }));
 
 export const panelSummaryStyle={
