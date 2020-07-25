@@ -23,6 +23,9 @@ export const useStyles = makeStyles(theme => ({
     color: '#4c586f!important',
     backgroundColor: '#d7edff!important',
   },
+  iconButtonNote: {
+    color: '#4c586f!important',
+  },
   iconButtonParagraph: {
     extend: 'margin',
     color: '#4c586f!important',
@@ -44,6 +47,11 @@ export const useStyles = makeStyles(theme => ({
   formButton: {
     maxWidth: 100,
     maxHeight: 100,
+  },
+  formButtonNote: {
+    maxWidth: 100,
+    maxHeight: 100,
+    display: 'inline',
   },
   home: {
     paddingTop: 100,

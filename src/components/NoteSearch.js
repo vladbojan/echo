@@ -25,7 +25,7 @@ export default function NoteSearch(props) {
         <div className={classes.notesContainer}>
           {data.searchNote &&
           data.searchNote.map(note =>
-          <NoteEdit position={note.position} key={'searchedNote'+note.id} content={note.content} checked={props.checked} refresh={refetch}/>
+          <NoteEdit position={note.position} key={'searchedNote'+note.id} id={note.id} content={note.content} checked={props.checked} refresh={refetch}/>
           )
           } 
         </div> 

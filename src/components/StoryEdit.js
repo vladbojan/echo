@@ -15,7 +15,7 @@ import { panelStyle } from '../constants/styles'
 import AddScene from './AddScene'
 import DeleteScene from './DeleteScene'
 import SceneEdit from './SceneEdit'
-import EditSceneTitle from './EditSceneTitle'
+import SceneTitleEdit from './SceneTitleEdit'
 import SceneDnD from './SceneDnD'
 import SceneDrag from './SceneDrag'
 
@@ -42,15 +42,17 @@ function  StoryEdit(props)  {
                   scene={scene}
                   />
               </div>
-              <EditSceneTitle 
+              {expanded===index &&
+              <SceneTitleEdit 
                 id={scene.id} 
                 title={scene.title}
                 styling={scene.styling}
                 media={scene.media}
                 position={scene.position}
                 refresh={props.refresh}
-                showPanel={expanded===index}
+                showPanel={false}
               />
+              }
               <DeleteScene 
                 id={scene.id} 
                 refresh={props.refresh}

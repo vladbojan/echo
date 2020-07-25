@@ -12,9 +12,9 @@ import {FRAME_QUERY} from './CreatePage'
 import { Mutation } from 'react-apollo'
 import  { gql } from 'apollo-boost'
 
-const EDIT_STORY_MUTATION = gql`
-  mutation EditStoryMutation($id: ID!, $title: String!, $styling: String!, $media: String!, $position: String!) {
-    updateStory(id: $id, title: $title, styling: $styling, media: $media, position: $position) {
+const EDIT_FRAME_MUTATION = gql`
+  mutation EditFrameMutation($id: ID!, $title: String!, $styling: String!, $media: String!, $position: String!) {
+    updateFrame(id: $id, title: $title, styling: $styling, media: $media, position: $position) {
       id
       title
       styling
@@ -24,13 +24,13 @@ const EDIT_STORY_MUTATION = gql`
   }
 `
 
-export default function EditStoryTitle(props) {
+export default function FrameTitleEdit(props) {
   const classes = useStyles();
 
   const [showPanel, setShowPanel] = React.useState(props.showPanel);
   const [title, setTitle] = React.useState(props.title);
-  const [styling, setStyling] = React.useState(props.styling);
-  const [media, setMedia] = React.useState(props.media);
+  const [styling, setStyling] = React.useState(props.styling?props.styling:'');
+  const [media, setMedia] = React.useState(props.media?props.media:'');
   const [position, setPosition] = React.useState(props.position);
   const [format, setFormat] = React.useState(false);
 
@@ -39,12 +39,12 @@ export default function EditStoryTitle(props) {
   };
 
   return (
-    <div className={showPanel && props.showPanel?classes.editPanel:''}>
+    <div className={showPanel?classes.editPanel:''}>
     <IconButton aria-label="sterge" size="large" className={classes.iconButton} onClick={handleClick(showPanel)}>
       <EditIcon />
     </IconButton>
     <Mutation
-      mutation={EDIT_STORY_MUTATION}
+      mutation={EDIT_FRAME_MUTATION}
       update={(cache, { data }) => {
         const { drafts } = cache.readQuery({ query: FRAME_QUERY })
         cache.writeQuery({
@@ -56,7 +56,7 @@ export default function EditStoryTitle(props) {
     {(updateDraft, { data, loading, error }) => {
       return (
         <div>
-        {showPanel && props.showPanel &&
+        {showPanel &&
           <form
             onSubmit={async e => {
               e.preventDefault()

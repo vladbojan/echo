@@ -8,6 +8,7 @@ import Button from '@material-ui/core/Button'
 
 import TextEditor from './TextEditor'
 import {NOTES_QUERY} from './NoteContainer'
+import NoteDelete from './NoteDelete'
 
 import { useStyles } from '../constants/styles'
 
@@ -57,6 +58,10 @@ export default function NoteEdit(props) {
           <Button size="small" className={classes.actionButton} disabled={!content} type="submit">
             Salveaza
           </Button>
+          <NoteDelete 
+            id={props.id} 
+            refresh={props.refresh}
+          />
         </Collapse>
         </form>
           </div>

@@ -24,7 +24,7 @@ const EDIT_SCENE_MUTATION = gql`
   }
 `
 
-export default function EditSceneTitle(props) {
+export default function SceneTitleEdit(props) {
   const classes = useStyles();
 
   const [showPanel, setShowPanel] = React.useState(props.showPanel);
@@ -39,7 +39,7 @@ export default function EditSceneTitle(props) {
   };
 
   return (
-    <div className={showPanel && props.showPanel?classes.editPanel:''}>
+    <div className={showPanel?classes.editPanel:''}>
     <IconButton aria-label="sterge" size="large" className={classes.iconButton} onClick={handleClick(showPanel)}>
       <EditIcon />
     </IconButton>
@@ -56,7 +56,7 @@ export default function EditSceneTitle(props) {
     {(updateDraft, { data, loading, error }) => {
       return (
         <div>
-        {showPanel && props.showPanel &&
+        {showPanel &&
           <form
             onSubmit={async e => {
               e.preventDefault()

@@ -24,7 +24,7 @@ export default function ParagraphSearch(props) {
       return (
         <div className={classes.searchContainer}>
           {data.searchParagraph &&
-           data.searchParagraph.map(paragraph => paragraph.parent).map(frame=>
+           [ ...new Set(data.searchParagraph.map(paragraph => paragraph.parent))].map(frame=>
             <div className={classes.headerSearch}>
             <Frame
               frame={frame}

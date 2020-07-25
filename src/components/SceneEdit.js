@@ -16,7 +16,7 @@ import { panelStyle } from '../constants/styles'
 
 import AddFrame from './AddFrame'
 import DeleteFrame from './DeleteFrame'
-import EditFrameTitle from './EditFrameTitle'
+import FrameTitleEdit from './FrameTitleEdit'
 import FrameEdit from './FrameEdit'
 import FrameDnD from './FrameDnD'
 import FrameDrag from './FrameDrag'
@@ -44,15 +44,17 @@ function  SceneEdit(props)  {
                   frame={frame}
                   />
                 </div>
-              <EditFrameTitle 
+              {expanded === index&&
+              <FrameTitleEdit 
                 id={frame.id} 
                 title={frame.title}
                 styling={frame.styling}
                 media={frame.media}
                 position={frame.position}
                 refresh={props.refresh}
-                showPanel={expanded===index}
+                showPanel={false}
               />
+              }
               <DeleteFrame 
                 id={frame.id} 
                 refresh={props.refresh}

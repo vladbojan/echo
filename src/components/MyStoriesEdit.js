@@ -12,7 +12,7 @@ import { panelDetailStyle } from '../constants/styles'
 import { panelStyle } from '../constants/styles'
 
 import StoryEdit from './StoryEdit'
-import EditStoryTitle from './EditStoryTitle'
+import StoryTitleEdit from './StoryTitleEdit'
 import DeleteStory from './DeleteStory'
 
 const { getPosition } = require('./utils')
@@ -35,15 +35,17 @@ function  MyStoriesEdit(props)  {
               <div className={classes.header} onClick={e => expanded===index? setExpanded(false):setExpanded(index)}>
                 <Typography className={classes.title}>{story.title}</Typography>
               </div>
-              <EditStoryTitle 
+              {expanded===index&&
+              <StoryTitleEdit
                 id={story.id} 
                 title={story.title}
                 styling={story.styling}
                 media={story.media}
                 position={story.position}
                 refresh={props.refresh}
-                showPanel={expanded===index}
+                showPanel={false}
               />
+              }
               <DeleteStory 
                 id={story.id} 
                 refresh={props.refresh}
