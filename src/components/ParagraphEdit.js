@@ -16,17 +16,23 @@ import DeleteParagraph from './DeleteParagraph'
 import { useStyles } from '../constants/styles'
 import { ItemTypes } from '../constants/ItemTypes'
 import TextEditor from './TextEditor'
+import Reference from './Reference'
+import FrameChoose from './FrameChoose'
 
 
 export default function ParagraphEdit(props)  {
-  const classes = useStyles();
-  const [id, setId] = React.useState(props.id);
-  const [content, setContent] = React.useState(props.content);
-  const [styling, setStyling] = React.useState(props.styling);
-  const [media, setMedia] = React.useState(props.media);
-  const [position, setPosition] = React.useState(props.position);
-  const [theme, setTheme] = React.useState('bubble');
-  const [readOnly, setReadOnly] = React.useState(true);
+  const classes = useStyles()
+  const [id, setId] = React.useState(props.id)
+  const [content, setContent] = React.useState(props.paragraph.content)
+  const [styling, setStyling] = React.useState(props.paragraph.styling)
+  const [media, setMedia] = React.useState(props.paragraph.media)
+  const [position, setPosition] = React.useState(props.position)
+  const [theme, setTheme] = React.useState('bubble')
+  const [readOnly, setReadOnly] = React.useState(true)
+
+  const handleFrameId = (newValue) => {
+    setStyling(newValue)
+  }
 
   const handleSetContent = (value) =>{
     setContent(value)
@@ -73,32 +79,38 @@ export default function ParagraphEdit(props)  {
                   setTheme('bubble')
                   setReadOnly(true)
                 }}
-              >
+              >          
+                <TextEditor content={content}  class={readOnly?'':classes.paragraphEdit} setContent={handleSetContent} theme={theme} readOnly={readOnly}/>
                 <TextField
                   label="Styling"
                   value={styling}
                   onChange={e => setStyling(e.target.value)}
                   margin="normal"
-                  placeholder="Defineste tipul si culoarea fontului folosit"
+                  placeholder="Identificatorul referintei"
                   fullWidth
                   InputLabelProps={{
                     shrink: true,
                   }}
-                  style={{ display: 'none' }}
+                  class={classes.hide}
                 />
                 <TextField
                   label="Media"
                   value={media}
                   onChange={e => setMedia(e.target.value)}
                   margin="normal"
-                  placeholder="Defineste un element media asociat paragrafului"
+                  placeholder="Adauga numele referintei"
                   fullWidth
                   InputLabelProps={{
                     shrink: true,
                   }}
-                  style={{ display: 'none' }}
-                />           
-                <TextEditor content={content}  class={readOnly?'':classes.paragraphEdit} setContent={handleSetContent} theme={theme} readOnly={readOnly}/>
+                  class={readOnly?classes.hide:classes.paragraphEdit}
+                /> 
+                <FrameChoose handle={handleFrameId} frameId={styling} class={readOnly?classes.hide:classes.paragraphEdit}/>
+                <Reference 
+                  id={styling} 
+                  name={media} 
+                  refresh={props.refresh}
+                />
                 <Button size="small" className={theme==='snow'?classes.actionButton:classes.hidden} disabled={!content} type="submit">
                   Salveaza
                 </Button>

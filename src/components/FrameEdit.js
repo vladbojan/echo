@@ -44,9 +44,7 @@ function  FrameEdit(props)  {
             <ParagraphEdit
                 key= {paragraph.id}
                 id= {paragraph.id}
-                content= {paragraph.content}
-                styling= {paragraph.styling}
-                media= {paragraph.media}
+                paragraph= {paragraph}
                 show= {paragraph.id}
                 position = {paragraph.position}
                 refresh={props.refresh}
