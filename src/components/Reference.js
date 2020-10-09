@@ -5,7 +5,7 @@ import { Query } from 'react-apollo'
 import {FRAME_QUERY} from './CreatePage'
 
 import { useStyles } from '../constants/styles'
-import FrameEdit from './FrameEdit'
+import Frame from './Frame'
 
 import Button from '@material-ui/core/Button'
 import Dialog from '@material-ui/core/Dialog'
@@ -58,19 +58,19 @@ export default function Reference(props) {
       >
         <DialogTitle id="scroll-dialog-title">{props.name}</DialogTitle>
         <DialogContent dividers={scroll === 'paper'}>
-            <FrameEdit
-                frame={frame}
-                refresh={props.refresh}
-                isDraft={!frame.published}
-                size={1}
-                noMedia={false}
-              />
+            <Frame
+              frame={frame}
+              refresh={props.refresh}
+              isDraft={!frame.published}
+              size={1}
+              noMedia={false}
+            />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
             Inchide
           </Button>
-          <Button href={"/edit/"+props.id} color="primary">
+          <Button href={"/create/"+props.id} target="_blank" color="primary">
             Vezi povestea
           </Button>
         </DialogActions>
