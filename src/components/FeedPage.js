@@ -72,6 +72,8 @@ export const FEED_QUERY = gql`
             title
             paragraphs{
               content
+              styling
+              media
             }
           }
         }

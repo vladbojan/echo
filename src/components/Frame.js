@@ -8,6 +8,7 @@ import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import { useStyles } from '../constants/styles'
 import DeleteFrame from './DeleteFrame'
+import Reference from './Reference'
 
 import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.bubble.css' 
@@ -42,11 +43,18 @@ function  Frame(props)  {
         </CardMedia>
         <CardContent className={props.edit?(show===props.frame.id)?classes.cardEdit:classes.hide:classes.card}>
         {props.frame.paragraphs.map(paragraph=>
+          <div>
           <ReactQuill
               value={paragraph.content}
               readOnly={true}
               theme={"bubble"}
           />
+          <Reference 
+            id={paragraph.styling} 
+            name={paragraph.media} 
+            refresh={props.refresh}
+          />
+          </div>
         )}
       </CardContent>
       <CardActions>

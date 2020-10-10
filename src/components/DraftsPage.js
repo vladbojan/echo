@@ -73,6 +73,8 @@ export const DRAFTS_QUERY = gql`
             paragraphs{
               id
               content
+              styling
+              media
             }
           }
         }
