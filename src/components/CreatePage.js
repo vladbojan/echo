@@ -115,6 +115,8 @@ export const FRAME_QUERY = gql`
             frames{
               id
               title
+              styling
+              media
               position
               paragraphs{
                 id
@@ -142,6 +144,8 @@ export const FRAME_QUERY = gql`
                 frames{
                   id
                   title
+                  styling
+                  media
                   position
                   paragraphs{
                     id

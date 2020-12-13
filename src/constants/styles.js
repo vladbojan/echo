@@ -105,6 +105,9 @@ export const useStyles = makeStyles(theme => ({
     maxWidth: '99%',
     marginBottom: 50,
   },
+  frameReference: {
+    marginBottom: 20,
+  },
   editPanel: {
     minWidth: '50%!important',
   },

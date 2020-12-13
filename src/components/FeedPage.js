@@ -70,6 +70,9 @@ export const FEED_QUERY = gql`
           frames{
             id
             title
+            styling
+            media
+            position
             paragraphs{
               content
               styling

@@ -22,8 +22,15 @@ export default function FrameDrag(props)  {
   })
 
   return (
+    <div>
+    {props.expanded && 
+    <Typography className={classes.title}>{props.frame.title}</Typography>
+    }
+    {props.expanded===false && 
     <div ref={drag}>
     <Typography className={classes.title}>{props.frame.title}</Typography>
+    </div>
+    }
     </div>
     )
 }

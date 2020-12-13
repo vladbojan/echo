@@ -109,6 +109,8 @@ query DraftsQuery {
         frames{
           id
           title
+          styling
+          media
           position
           paragraphs{
             id

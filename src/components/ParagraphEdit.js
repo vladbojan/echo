@@ -27,8 +27,8 @@ export default function ParagraphEdit(props)  {
   const [styling, setStyling] = React.useState(props.paragraph.styling)
   const [media, setMedia] = React.useState(props.paragraph.media)
   const [position, setPosition] = React.useState(props.position)
-  const [theme, setTheme] = React.useState('bubble')
-  const [readOnly, setReadOnly] = React.useState(true)
+  const [theme, setTheme] = React.useState(props.theme)
+  const [readOnly, setReadOnly] = React.useState(props.readOnly)
 
   const handleFrameId = (newValue) => {
     setStyling(newValue)
@@ -54,8 +54,6 @@ export default function ParagraphEdit(props)  {
   })
 
   return (
-    <div ref={drag}>
-    <CardActions>
         <Mutation
         mutation={EDIT_DRAFT_MUTATION}
         update={(cache, { data }) => {
@@ -118,16 +116,7 @@ export default function ParagraphEdit(props)  {
               </form>
           )
         }}
-      </Mutation>
-      <IconButton className={classes.iconButtonParagraph} size="small" aria-label="edit" onClick={e => handleSetEdit()}>
-        <EditIcon />
-      </IconButton>
-      <DeleteParagraph 
-        id={props.id} 
-        refresh={props.refresh}
-      />
-    </CardActions> 
-    </div>
+      </Mutation> 
     )
 }
 

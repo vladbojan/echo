@@ -12,9 +12,10 @@ import Typography from '@material-ui/core/Typography'
 import CardActions from '@material-ui/core/CardActions'
 import Button from '@material-ui/core/Button'
 
-import ParagraphEdit from './ParagraphEdit'
+import ParagraphDrag from './ParagraphDrag'
 import ParagraphAdd from './ParagraphAdd'
 import ParagraphDnD from './ParagraphDnD'
+import FrameReference from './FrameReference'
 import { useStyles } from '../constants/styles'
 
 const { getPosition } = require('./utils')
@@ -38,10 +39,13 @@ function  FrameEdit(props)  {
           </div>
         </CardMedia> }
         <CardContent className={classes.cardContent}>
+        {props.frame.styling && 
+          <FrameReference id={props.frame.styling}/>
+        }
         <DndProvider backend={Backend}>
         {props.frame.paragraphs.map((paragraph, index, allParagraphs)=>
           <div>
-            <ParagraphEdit
+            <ParagraphDrag
                 key= {paragraph.id}
                 id= {paragraph.id}
                 paragraph= {paragraph}

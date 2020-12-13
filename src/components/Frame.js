@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography'
 import { useStyles } from '../constants/styles'
 import DeleteFrame from './DeleteFrame'
 import Reference from './Reference'
+import FrameReference from './FrameReference'
 
 import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.bubble.css' 
@@ -42,6 +43,22 @@ function  Frame(props)  {
         </div>
         </CardMedia>
         <CardContent className={props.edit?(show===props.frame.id)?classes.cardEdit:classes.hide:classes.card}>
+{/*           <InstagramEmbed
+            url='https://www.instagram.com/p/CIFpKHEn7q0/?utm_source=ig_web_copy_link'
+            clientAccessToken='420594535662942|5aa2ba0c9bcb43aa0d8b8ba8ecd2c225'
+            maxWidth={320}
+            hideCaption={true}
+            containerTagName='div'
+            protocol=''
+            injectScript={true}
+            onLoading={() => {}}
+            onSuccess={() => {}}
+            onAfterRender={() => {}}
+            onFailure={() => {}}
+          /> */}
+        {props.frame.styling && 
+          <FrameReference id={props.frame.styling}/>
+        }
         {props.frame.paragraphs.map(paragraph=>
           <div>
           <ReactQuill

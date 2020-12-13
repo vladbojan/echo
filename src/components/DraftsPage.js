@@ -70,6 +70,9 @@ export const DRAFTS_QUERY = gql`
           frames{
             id
             title
+            styling
+            media
+            position
             paragraphs{
               id
               content

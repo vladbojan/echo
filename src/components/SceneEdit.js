@@ -42,6 +42,7 @@ function  SceneEdit(props)  {
                 <div className={classes.header} onClick={e => expanded===index? setExpanded(false):setExpanded(index)}>
                   <FrameDrag
                   frame={frame}
+                  expanded={expanded===index}
                   />
                 </div>
               {expanded === index&&

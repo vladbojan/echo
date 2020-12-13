@@ -7,7 +7,7 @@ import TextField from '@material-ui/core/TextField'
 import CardActions from '@material-ui/core/CardActions'
 
 import { useStyles } from '../constants/styles'
-
+import FrameChoose from './FrameChoose'
 import {FRAME_QUERY} from './CreatePage'
 import { Mutation } from 'react-apollo'
 import  { gql } from 'apollo-boost'
@@ -37,6 +37,10 @@ export default function FrameTitleEdit(props) {
   const handleClick  = param => e => {
     (param === true) ? setShowPanel(false) : setShowPanel(true)
   };
+
+  const handleFrameId = (newValue) => {
+    setStyling(newValue)
+  }
 
   return (
     <div className={showPanel?classes.editPanel:''}>
@@ -77,18 +81,6 @@ export default function FrameTitleEdit(props) {
               </Button>
             </CardActions>  
             <TextField
-              label="Styling"
-              value={styling}
-              onChange={e => setStyling(e.target.value)}
-              margin="normal"
-              placeholder="Defineste tipul si culoarea fontului folosit"
-              fullWidth
-              InputLabelProps={{
-                shrink: true,
-              }}
-              style={format?{ display: 'block' }:{ display: 'none' }}
-            />
-            <TextField
               label="Media"
               value={media}
               onChange={e => setMedia(e.target.value )}
@@ -99,7 +91,8 @@ export default function FrameTitleEdit(props) {
                 shrink: true,
               }}
               style={format?{ display: 'block' }:{ display: 'none' }}
-            />                  
+            />   
+            <FrameChoose handle={handleFrameId} frameId={styling} class={format?classes.frameReference:classes.hide}/>               
             <TextareaAutosize
               className="db w-100 ba bw1 b--black-20 pa2 br2 mb2"
               onChange={e => setTitle(e.target.value)}
