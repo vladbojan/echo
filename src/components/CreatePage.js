@@ -52,7 +52,7 @@ function CreatePage(props) {
           </Grid>
           <Grid item xs={12} sm={sizePanel}>
             <FrameEdit
-              frame={frame}
+              id={props.match.params.id}
               refresh={() => refetch()}
               isDraft={!frame.published}
               size={sizePanel}
@@ -73,13 +73,6 @@ export const FRAME_QUERY = gql`
       styling 
       media
       position
-      paragraphs{
-        id
-        content
-        styling
-        media
-        position
-      }
       parent{
         id
         title
@@ -92,14 +85,7 @@ export const FRAME_QUERY = gql`
           styling
           media
           position
-          paragraphs{
-            id
-            content
-            styling
-            media
-            position
           }
-        }
         parent{
           id
           title
@@ -118,13 +104,6 @@ export const FRAME_QUERY = gql`
               styling
               media
               position
-              paragraphs{
-                id
-                content
-                styling
-                media
-                position
-              }
             }
           }
           author{
@@ -147,13 +126,6 @@ export const FRAME_QUERY = gql`
                   styling
                   media
                   position
-                  paragraphs{
-                    id
-                    content
-                    styling
-                    media
-                    position
-                  }
                 }
               }
             }

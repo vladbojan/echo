@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Query } from 'react-apollo'
 
 import { DndProvider } from 'react-dnd'
 import Backend from 'react-dnd-html5-backend'
@@ -15,8 +16,10 @@ import Button from '@material-ui/core/Button'
 import ParagraphDrag from './ParagraphDrag'
 import ParagraphAdd from './ParagraphAdd'
 import ParagraphDnD from './ParagraphDnD'
-import FrameReference from './FrameReference'
+import FrameReferenceEdit from './FrameReferenceEdit'
 import { useStyles } from '../constants/styles'
+
+import {SIMPLE_FRAME_QUERY} from './FrameReference'
 
 const { getPosition } = require('./utils')
 
@@ -29,21 +32,39 @@ function  FrameEdit(props)  {
   }
 
   return (
+    <Query query={SIMPLE_FRAME_QUERY} variables={{ id: props.id }}>
+      {({ data, loading, error, refetch }) => {
+        if (loading) {
+          return (
+            <div/>
+          )
+        }
+  
+        if (error) {
+          return (
+            <div/>
+          )
+        }
+
+        return (
+          <div>
+          {data && data.frame &&
+
       <Card className={classes.cardRoot}>
         { !props.noMedia && 
         <CardMedia className={classes.media}>
           <div className={classes.header}>
             <Typography gutterBottom variant="h5" component="h2" className={classes.titleFrame}>
-              {props.frame.title}
+              {data.frame.title}
             </Typography>
           </div>
         </CardMedia> }
         <CardContent className={classes.cardContent}>
-        {props.frame.styling && 
-          <FrameReference id={props.frame.styling}/>
+        {data.frame.styling && 
+          <FrameReferenceEdit id={data.frame.styling} refresh={props.refresh}/>
         }
         <DndProvider backend={Backend}>
-        {props.frame.paragraphs.map((paragraph, index, allParagraphs)=>
+        {data.frame.paragraphs.map((paragraph, index, allParagraphs)=>
           <div>
             <ParagraphDrag
                 key= {paragraph.id}
@@ -71,10 +92,10 @@ function  FrameEdit(props)  {
         )}
         </DndProvider>
         <ParagraphAdd
-          frame={props.frame}
+          frame={data.frame}
           refresh={props.refresh}
           isDraft={props.isDraft}
-          position={getPosition(props.frame.paragraphs[props.frame.paragraphs.length-1]?props.frame.paragraphs[props.frame.paragraphs.length-1].position:"0")}
+          position={getPosition(data.frame.paragraphs[data.frame.paragraphs.length-1]?data.frame.paragraphs[data.frame.paragraphs.length-1].position:"0")}
           
         />
       </CardContent>
@@ -82,13 +103,18 @@ function  FrameEdit(props)  {
         <Button size="small" visibility="hidden" className={classes.actionButton}>
           Share
         </Button>
-        <Button size="small" className={classes.actionButton} href={"/create/"+props.frame.id}>
+        <Button size="small" className={classes.actionButton} href={"/create/"+data.frame.id}>
           Editeaza
         </Button>      
       </CardActions>
     </Card>
+    }
+    </div>
     )
-  }
+  }}
+  </Query>
+)
+}
 
 
 FrameEdit.propTypes = {

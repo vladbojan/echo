@@ -62,13 +62,15 @@ function  SceneEdit(props)  {
               />
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
+            {expanded === index&&
               <FrameEdit
-                frame={frame}
+                id={frame.id}
                 refresh={props.refresh}
                 isDraft={!frame.published}
                 size={1}
                 noMedia={true}
               />
+            }
             </ExpansionPanelDetails>
           </ExpansionPanel>
         </div>
