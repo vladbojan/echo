@@ -23,10 +23,7 @@ function  Story(props)  {
             <Typography gutterBottom variant="h4" component="h2" className={classes.titleLarge}>
             {scene.title}
             {props.edit&&
-            <div className={classes.flex}>
-              <Button size="small" color="primary" onClick={handleShow(scene.id)}>
-              {(scene.id === show) ? "Ascunde":"Arata"}
-              </Button>  
+            <div className={classes.flex}> 
               <DeleteScene 
                 id={scene.id} 
                 refresh={props.refresh}
@@ -36,9 +33,9 @@ function  Story(props)  {
             </Typography>
             {scene.frames.map(frame=>
               <Frame
-                frame={frame}
+                id={frame.id}
                 refresh={props.refresh}
-                isDraft={!frame.published}
+                isDraft={false}
                 edit={props.edit}
                 show={show}
                 parentId={scene.id}

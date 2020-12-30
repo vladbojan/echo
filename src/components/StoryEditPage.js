@@ -62,13 +62,6 @@ query StoryQuery($id: ID!) {
         styling
         media
         position
-        paragraphs{
-          id
-          content
-          styling
-          media
-          position
-        }
       }
     }
   }

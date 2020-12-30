@@ -10,10 +10,9 @@ import Loader from './Loader'
 
 export default function DraftsPage(props) {
 const classes = useStyles();
-const [showStory, setShowStory] = React.useState(props.match.params.id);
   
 return (
-  <Query query={DRAFTS_QUERY}>
+  <Query query={DRAFTS_QUERY} variables={{ id: props.match.params.id }}>
   {({ data, loading, error, refetch }) => {
     if (loading) {
       return (
@@ -29,22 +28,13 @@ return (
 
     return (
       <div className={classes.homeEdit}>
-        {data.me &&
-          data.me.stories.map(story =>
-          (showStory===story.id)?
+        {data && data.story &&
           <Story
-            story={story}
+            story={data.story}
             refresh={() => refetch()}
-            isDraft={!story.published}
-            show={showStory}
-          />:(data.me.stories[0].id===story.id)&&(showStory===0)&&
-          <Story
-            story={story}
-            refresh={() => refetch()}
-            isDraft={!story.published}
-            show={story.id}
+            isDraft={!data.story.published}
+            show={data.story.id}
           />
-        )
         } 
       </div>
     )
@@ -54,32 +44,21 @@ return (
 }
 
 export const DRAFTS_QUERY = gql`
-  query DraftsQuery {
-    me {
+  query DraftsQuery($id: ID!) {
+    story(id: $id) {
       id
-      email
-      name
-      stories{
+      title
+      styling
+      media
+      scenes{
         id
         title
-        styling
-        media
-        scenes{
+        frames{
           id
           title
-          frames{
-            id
-            title
-            styling
-            media
-            position
-            paragraphs{
-              id
-              content
-              styling
-              media
-            }
-          }
+          styling
+          media
+          position
         }
       }
     }

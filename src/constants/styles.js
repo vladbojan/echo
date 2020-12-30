@@ -72,6 +72,16 @@ export const useStyles = makeStyles(theme => ({
     flexGrow:1,
     color: '#ffffff',
   },
+  titlePage: {
+    paddingTop: '1.2em',
+    color: '#35434e',
+  },
+  listStories: {
+    width: '100%',
+    paddingLeft: 100,
+    paddingRight: 100,
+    color: '#35434e',
+  },
   title: {
     paddingLeft: '1em',
     fontSize: '1.1rem',

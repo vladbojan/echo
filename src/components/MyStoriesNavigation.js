@@ -112,13 +112,6 @@ query DraftsQuery {
           styling
           media
           position
-          paragraphs{
-            id
-            content
-            styling
-            media
-            position
-          }
         }
       }
     }

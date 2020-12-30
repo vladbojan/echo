@@ -1,5 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Query } from 'react-apollo'
+
 import Card from '@material-ui/core/Card'
 import CardActions from '@material-ui/core/CardActions'
 import CardContent from '@material-ui/core/CardContent'
@@ -10,6 +12,7 @@ import { useStyles } from '../constants/styles'
 import DeleteFrame from './DeleteFrame'
 import Reference from './Reference'
 import FrameReference from './FrameReference'
+import {SIMPLE_FRAME_QUERY} from './FrameReference'
 
 import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.bubble.css' 
@@ -21,28 +24,45 @@ function  Frame(props)  {
     (param === show) ? setShow(0) : setShow(param);
   };
   return (
+    <Query query={SIMPLE_FRAME_QUERY} variables={{ id: props.id }}>
+    {({ data, loading, error, refetch }) => {
+      if (loading) {
+        return (
+          <div/>
+        )
+      }
+
+      if (error) {
+        return (
+          <div/>
+        )
+      }
+
+      return (
+        <div>
+        {data && data.frame &&
       <Card className={props.edit?classes.cardEdit:classes.cardContainer}>
         <CardMedia
           className={classes.media}
         >
         <div className={classes.header}>
           <Typography gutterBottom variant="h5" component="h2" className={classes.titleFrame}>
-            {props.frame.title}
+            {data.frame.title}
           </Typography>
           {props.edit&&
           <div className={classes.flex}>
             <DeleteFrame 
-              id={props.frame.id} 
+              id={data.frame.id} 
               refresh={props.refresh}
             />
-            <Button size="small" onClick={handleShow(props.frame.id)}>
-            {(props.frame.id === show) ? "Ascunde":"Arata"}
+            <Button size="small" onClick={handleShow(data.frame.id)}>
+            {(data.frame.id === show) ? "Ascunde":"Arata"}
             </Button>  
           </div>
         }
         </div>
         </CardMedia>
-        <CardContent className={props.edit?(show===props.frame.id)?classes.cardEdit:classes.hide:classes.card}>
+        <CardContent className={props.edit?(show===data.frame.id)?classes.cardEdit:classes.hide:classes.card}>
 {/*           <InstagramEmbed
             url='https://www.instagram.com/p/CIFpKHEn7q0/?utm_source=ig_web_copy_link'
             clientAccessToken='420594535662942|5aa2ba0c9bcb43aa0d8b8ba8ecd2c225'
@@ -56,10 +76,10 @@ function  Frame(props)  {
             onAfterRender={() => {}}
             onFailure={() => {}}
           /> */}
-        {props.frame.styling && 
-          <FrameReference id={props.frame.styling}/>
+        {data.frame.styling && 
+          <FrameReference id={data.frame.styling}/>
         }
-        {props.frame.paragraphs.map(paragraph=>
+        {data.frame.paragraphs.map(paragraph=>
           <div>
           <ReactQuill
               value={paragraph.content}
@@ -78,11 +98,16 @@ function  Frame(props)  {
         <Button size="small" visibility="hidden" className={classes.actionButton}>
           Share
         </Button>
-        <Button size="small" className={classes.actionButton} href={"/create/"+props.frame.id}>
+        <Button size="small" className={classes.actionButton} href={"/create/"+data.frame.id}>
           Editeaza
         </Button>      
       </CardActions>
     </Card>
+      }
+      </div>
+      )
+    }}
+    </Query>
     )
   }
 
