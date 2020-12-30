@@ -4,9 +4,9 @@ import { Query } from 'react-apollo'
 import  { gql } from 'apollo-boost'
 
 import Typography from '@material-ui/core/Typography'
-import MuiExpansionPanel from '@material-ui/core/ExpansionPanel'
-import MuiExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
-import MuiExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
+import MuiAccordion from '@material-ui/core/Accordion'
+import MuiAccordionSummary from '@material-ui/core/AccordionSummary'
+import MuiAccordionDetails from '@material-ui/core/AccordionDetails'
 import { withStyles } from '@material-ui/core/styles'
 
 import MyStoriesEdit from './MyStoriesEdit'
@@ -21,9 +21,9 @@ import { panelSummaryStyle } from '../constants/styles'
 import { panelDetailStyle } from '../constants/styles'
 import { panelStyle } from '../constants/styles'
 
-const ExpansionPanel = withStyles(panelStyle)(MuiExpansionPanel);
-const ExpansionPanelSummary = withStyles(panelSummaryStyle)(MuiExpansionPanelSummary);
-const ExpansionPanelDetails = withStyles(panelDetailStyle)(MuiExpansionPanelDetails);
+const Accordion = withStyles(panelStyle)(MuiAccordion);
+const AccordionSummary = withStyles(panelSummaryStyle)(MuiAccordionSummary);
+const AccordionDetails = withStyles(panelDetailStyle)(MuiAccordionDetails);
 
 export default function MyStoriesNavigation(props) {
   const classes  = useStyles();
@@ -48,9 +48,9 @@ export default function MyStoriesNavigation(props) {
         <div className={classes.homeEdit}>
         {data.me &&
           data.me.stories.map((story, index)=>
-          <div className={(expanded===index)?classes.expansionPanelMaximized:classes.expansionPanelMinimized}>
-              <ExpansionPanel square expanded={expanded === index}>
-                <ExpansionPanelSummary>
+          <div className={(expanded===index)?classes.accordionMaximized:classes.accordionMinimized}>
+              <Accordion square expanded={expanded === index}>
+                <AccordionSummary>
                   <div className={classes.header} onClick={e => expanded===index? setExpanded(false):setExpanded(index)}>
                     <Typography className={classes.title}>{story.title}</Typography>
                   </div>
@@ -69,16 +69,16 @@ export default function MyStoriesNavigation(props) {
                     id={story.id} 
                     refresh={() => refetch()}
                   />
-                </ExpansionPanelSummary>
-                <ExpansionPanelDetails>
+                </AccordionSummary>
+                <AccordionDetails>
                   <StoryEdit
                     story={story}
                     show={story.id}
                     refresh={() => refetch()}
                     edit={true}
                   />
-                </ExpansionPanelDetails>
-              </ExpansionPanel>
+                </AccordionDetails>
+              </Accordion>
             </div>
           )}       
         </div>

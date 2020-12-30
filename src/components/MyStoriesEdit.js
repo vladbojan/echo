@@ -1,9 +1,9 @@
 import React from 'react'
 
 import Typography from '@material-ui/core/Typography'
-import MuiExpansionPanel from '@material-ui/core/ExpansionPanel'
-import MuiExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
-import MuiExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
+import MuiAccordion from '@material-ui/core/Accordion'
+import MuiAccordionSummary from '@material-ui/core/AccordionSummary'
+import MuiAccordionDetails from '@material-ui/core/AccordionDetails'
 import { withStyles } from '@material-ui/core/styles'
 
 import { useStyles } from '../constants/styles'
@@ -17,9 +17,9 @@ import DeleteStory from './DeleteStory'
 
 const { getPosition } = require('./utils')
 
-const ExpansionPanel = withStyles(panelStyle)(MuiExpansionPanel);
-const ExpansionPanelSummary = withStyles(panelSummaryStyle)(MuiExpansionPanelSummary);
-const ExpansionPanelDetails = withStyles(panelDetailStyle)(MuiExpansionPanelDetails);
+const Accordion = withStyles(panelStyle)(MuiAccordion);
+const AccordionSummary = withStyles(panelSummaryStyle)(MuiAccordionSummary);
+const AccordionDetails = withStyles(panelDetailStyle)(MuiAccordionDetails);
 
 function  MyStoriesEdit(props)  {
   const classes  = useStyles();
@@ -29,9 +29,9 @@ function  MyStoriesEdit(props)  {
     return (
       <div>
       {props.stories.map((story, index)=>
-       <div className={(expanded===index)?classes.expansionPanelMaximized:classes.expansionPanelMinimized}>
-          <ExpansionPanel square expanded={expanded === index}>
-            <ExpansionPanelSummary>
+       <div className={(expanded===index)?classes.accordionMaximized:classes.accordionMinimized}>
+          <Accordion square expanded={expanded === index}>
+            <AccordionSummary>
               <div className={classes.header} onClick={e => expanded===index? setExpanded(false):setExpanded(index)}>
                 <Typography className={classes.title}>{story.title}</Typography>
               </div>
@@ -50,16 +50,16 @@ function  MyStoriesEdit(props)  {
                 id={story.id} 
                 refresh={props.refresh}
               />
-            </ExpansionPanelSummary>
-            <ExpansionPanelDetails>
+            </AccordionSummary>
+            <AccordionDetails>
               <StoryEdit
                 story={story}
                 show={story.id}
                 refresh={props.refresh}
                 edit={true}
               />
-            </ExpansionPanelDetails>
-          </ExpansionPanel>
+            </AccordionDetails>
+          </Accordion>
         </div>
           )}      
       </div>

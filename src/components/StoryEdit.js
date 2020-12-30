@@ -3,9 +3,9 @@ import React from 'react'
 import { DndProvider } from 'react-dnd'
 import Backend from 'react-dnd-html5-backend'
 
-import MuiExpansionPanel from '@material-ui/core/ExpansionPanel'
-import MuiExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
-import MuiExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
+import MuiAccordion from '@material-ui/core/Accordion'
+import MuiAccordionSummary from '@material-ui/core/AccordionSummary'
+import MuiAccordionDetails from '@material-ui/core/AccordionDetails'
 import { withStyles } from '@material-ui/core/styles'
 
 import { useStyles } from '../constants/styles'
@@ -21,9 +21,9 @@ import SceneDrag from './SceneDrag'
 
 const { getPosition } = require('./utils')
 
-const ExpansionPanel = withStyles(panelStyle)(MuiExpansionPanel);
-const ExpansionPanelSummary = withStyles(panelSummaryStyle)(MuiExpansionPanelSummary);
-const ExpansionPanelDetails = withStyles(panelDetailStyle)(MuiExpansionPanelDetails);
+const Accordion = withStyles(panelStyle)(MuiAccordion);
+const AccordionSummary = withStyles(panelSummaryStyle)(MuiAccordionSummary);
+const AccordionDetails = withStyles(panelDetailStyle)(MuiAccordionDetails);
 
 function  StoryEdit(props)  {
   const classes  = useStyles();
@@ -34,9 +34,9 @@ function  StoryEdit(props)  {
       {props.story.scenes.map((scene, index, allScenes)=>
       <div>
         <DndProvider backend={Backend}>
-        <div className={(expanded===index)?classes.expansionPanelMaximized:classes.expansionPanelMinimized}>
-          <ExpansionPanel square expanded={expanded === index}>
-            <ExpansionPanelSummary>
+        <div className={(expanded===index)?classes.accordionMaximized:classes.accordionMinimized}>
+          <Accordion square expanded={expanded === index}>
+            <AccordionSummary>
               <div className={classes.header} onClick={e => expanded===index? setExpanded(false):setExpanded(index)}>
                 <SceneDrag
                   scene={scene}
@@ -57,15 +57,15 @@ function  StoryEdit(props)  {
                 id={scene.id} 
                 refresh={props.refresh}
               />
-            </ExpansionPanelSummary>
-            <ExpansionPanelDetails>
+            </AccordionSummary>
+            <AccordionDetails>
               <SceneEdit
                 scene={scene}
                 show={scene.id}
                 refresh={props.refresh}
               />
-            </ExpansionPanelDetails>
-          </ExpansionPanel>
+            </AccordionDetails>
+          </Accordion>
         </div>
         <div className={(expanded===index)?classes.addPanelExpanded:classes.addPanel}>
           {allScenes[index+1] &&

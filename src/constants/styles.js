@@ -30,11 +30,11 @@ export const useStyles = makeStyles(theme => ({
     extend: 'margin',
     color: '#4c586f!important',
   },
-  expansionPanelMinimized: {
+  accordionMinimized: {
     maxHeight: '6em',
     marginTop: '1em',
   },
-  expansionPanelMaximized: {
+  accordionMaximized: {
     backgroundColor:'#E2E7EA!important',
     marginTop: '2em',
   },

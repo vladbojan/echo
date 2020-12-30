@@ -1,9 +1,8 @@
 import React from 'react'
 
-import Typography from '@material-ui/core/Typography'
-import MuiExpansionPanel from '@material-ui/core/ExpansionPanel'
-import MuiExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
-import MuiExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
+import MuiAccordion from '@material-ui/core/Accordion'
+import MuiAccordionSummary from '@material-ui/core/AccordionSummary'
+import MuiAccordionDetails from '@material-ui/core/AccordionDetails'
 import { withStyles } from '@material-ui/core/styles'
 
 import { DndProvider } from 'react-dnd'
@@ -23,9 +22,9 @@ import FrameDrag from './FrameDrag'
 
 const { getPosition } = require('./utils')
 
-const ExpansionPanel = withStyles(panelStyle)(MuiExpansionPanel);
-const ExpansionPanelSummary = withStyles(panelSummaryStyle)(MuiExpansionPanelSummary);
-const ExpansionPanelDetails = withStyles(panelDetailStyle)(MuiExpansionPanelDetails);
+const Accordion = withStyles(panelStyle)(MuiAccordion);
+const AccordionSummary = withStyles(panelSummaryStyle)(MuiAccordionSummary);
+const AccordionDetails = withStyles(panelDetailStyle)(MuiAccordionDetails);
 
 function  SceneEdit(props)  {
   const classes  = useStyles();
@@ -36,9 +35,9 @@ function  SceneEdit(props)  {
       {props.scene.frames.map((frame, index, allFrames) =>
       <div>
         <DndProvider backend={Backend}>
-        <div className={(expanded===index)?classes.expansionPanelMaximized:classes.expansionPanelMinimized}>
-          <ExpansionPanel square expanded={expanded === index}>
-            <ExpansionPanelSummary>
+        <div className={(expanded===index)?classes.accordionMaximized:classes.accordionMinimized}>
+          <Accordion square expanded={expanded === index}>
+            <AccordionSummary>
                 <div className={classes.header} onClick={e => expanded===index? setExpanded(false):setExpanded(index)}>
                   <FrameDrag
                   frame={frame}
@@ -60,8 +59,8 @@ function  SceneEdit(props)  {
                 id={frame.id} 
                 refresh={props.refresh}
               />
-            </ExpansionPanelSummary>
-            <ExpansionPanelDetails>
+            </AccordionSummary>
+            <AccordionDetails>
             {expanded === index&&
               <FrameEdit
                 id={frame.id}
@@ -71,8 +70,8 @@ function  SceneEdit(props)  {
                 noMedia={true}
               />
             }
-            </ExpansionPanelDetails>
-          </ExpansionPanel>
+            </AccordionDetails>
+          </Accordion>
         </div>
         <div className={(expanded===index)?classes.addPanelExpanded:classes.addPanel}>
           {allFrames[index+1] &&
