@@ -297,6 +297,20 @@ const post = {
       name: email,
     })
   },
+
+  async updateUser(parent, { id, name }, context) {
+    const postExists = await context.prisma.$exists.user({
+      id,
+    })
+    if (!postExists) {
+      throw new Error(`Post not found`)
+    }
+
+    return context.prisma.updateUser({
+      where: { id },
+      data: {  name: name },
+    })
+  },
 }
 
 module.exports = { post }

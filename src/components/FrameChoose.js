@@ -33,6 +33,11 @@ export default function FrameChoose(props) {
     props.handle(frameId)
     setOpen(false)
   }
+
+  const handleRemove = () => {
+    props.handle('')
+    setOpen(false)
+  }
   
   return (
     <div>
@@ -99,6 +104,9 @@ export default function FrameChoose(props) {
         <DialogActions>
           <Button onClick={handleSave} color="primary">
             Alege cadrul
+          </Button>
+          <Button onClick={handleRemove} color="primary">
+            Indeparteaza
           </Button>
           <Button onClick={handleClose} color="primary">
             Inchide

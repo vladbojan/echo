@@ -27,9 +27,9 @@ export default function ParagraphSearch(props) {
            [ ...new Set(data.searchParagraph.map(paragraph => paragraph.parent))].map(frame=>
             <div className={classes.headerSearch}>
             <Frame
-              frame={frame}
+              id={frame.id}
               refresh={refetch}
-              isDraft={!frame.published}
+              isDraft={true}
               size={1}
               noMedia={true}
             />
@@ -53,13 +53,6 @@ query SearchParagraphQuery($searchString: String!) {
       styling 
       media
       position
-      paragraphs{
-        id
-        content
-        styling
-        media
-        position
-      }
     }
   }
 }

@@ -32,7 +32,6 @@ export default function FrameTitleEdit(props) {
   const [styling, setStyling] = React.useState(props.styling?props.styling:'');
   const [media, setMedia] = React.useState(props.media?props.media:'');
   const [position, setPosition] = React.useState(props.position);
-  const [format, setFormat] = React.useState(false);
 
   const handleClick  = param => e => {
     (param === true) ? setShowPanel(false) : setShowPanel(true)
@@ -76,9 +75,6 @@ export default function FrameTitleEdit(props) {
               <Button size="small" disabled={!title} type="submit">
                 Salveaza
               </Button>
-              <Button size="small" onClick={e => format? setFormat(false):setFormat(true)}>
-                Formatare
-              </Button>
             </CardActions>  
             <TextField
               label="Media"
@@ -90,9 +86,9 @@ export default function FrameTitleEdit(props) {
               InputLabelProps={{
                 shrink: true,
               }}
-              style={format?{ display: 'block' }:{ display: 'none' }}
+              style={{ display: 'block' }}
             />   
-            <FrameChoose handle={handleFrameId} frameId={styling} class={format?classes.frameReference:classes.hide}/>               
+            <FrameChoose handle={handleFrameId} frameId={styling} class={classes.frameReference}/>               
             <TextareaAutosize
               className="db w-100 ba bw1 b--black-20 pa2 br2 mb2"
               onChange={e => setTitle(e.target.value)}

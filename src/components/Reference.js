@@ -29,9 +29,10 @@ export default function Reference(props) {
   
   return (
     <div>
-
+    {props.id &&
     <Button onClick={handleClickOpen('paper')}>{props.name}</Button>
-    {open &&
+    }
+    {open && props.id &&
     <Query
     query={FRAME_QUERY} variables={{id: props.id}}>
     {({ data, loading, error, refetch }) => {
@@ -59,7 +60,7 @@ export default function Reference(props) {
         <DialogTitle id="scroll-dialog-title">{props.name}</DialogTitle>
         <DialogContent dividers={scroll === 'paper'}>
             <Frame
-              frame={frame}
+              id={frame.id}
               refresh={props.refresh}
               isDraft={!frame.published}
               size={1}

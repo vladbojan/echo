@@ -61,6 +61,7 @@ type Mutation {
   deleteNote(id: ID!): Note
 
   createUser(email: String!): User
+  updateUser(id: ID!, name: String!): User
 }
 
 type Paragraph {

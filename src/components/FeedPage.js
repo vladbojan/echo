@@ -12,6 +12,7 @@ import ErrorPage from './ErrorPage'
 import Loader from './Loader'
 import CreateUser from './CreateUser'
 import CreateStory from './CreateStory'
+import DescriptionEdit from './DescriptionEdit'
 
 export default function FeedPage(props) {
 const classes = useStyles();
@@ -37,7 +38,9 @@ const handleChoose = param => e => {
 
           return (
             <div className={classes.homeEdit}>
-              <Typography gutterBottom variant="h4" component="h2" className={classes.titlePage}>Povestile mele sunt:(Acest text va trebui inlocuit cu un text de prezentare)</Typography>
+              {data.me && 
+              <DescriptionEdit id={data.me.id} content={data.me.name} refresh={refetch}/>
+              }
               <List component="nav" className={classes.listStories} aria-label="mailbox folders">
               {data.me &&
                 data.me.stories.map(story =>
