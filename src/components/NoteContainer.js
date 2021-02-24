@@ -53,8 +53,13 @@ export default function NoteContainer() {
 
         return (
           <div className={classes.notesContainer}>
+            {data && data.notes &&
             <NoteAdd position={getPosition(data.notes[data.notes.length-1]?data.notes[data.notes.length-1].position:"0")} checked={checked} refresh={refetch}/>
-            {data.notes &&
+            }
+            {!data.notes &&
+            <NoteAdd position={getPosition("0")} checked={checked} refresh={refetch}/>
+            }
+            {data && data.notes &&
             data.notes.map(note =>
             <NoteEdit key= {note.id} position={note.position} id={note.id} content={note.content} checked={checked} refresh={refetch}/>
             )
