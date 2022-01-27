@@ -1,5 +1,5 @@
 type User {
-  id: ID! @id
+  id: ID! @unique
   email: String! @unique
   password: String!
   name: String!
@@ -8,7 +8,7 @@ type User {
 }
 
 type Paragraph {
-  id: ID! @id
+  id: ID! @unique
   published: Boolean! @default(value: false)
   content: String!
   styling: String
@@ -18,7 +18,7 @@ type Paragraph {
 }
 
 type Frame {
-  id: ID! @id
+  id: ID! @unique
   published: Boolean! @default(value: false)
   title: String!
   styling: String
@@ -29,7 +29,7 @@ type Frame {
 }
 
 type Scene {
-  id: ID! @id
+  id: ID! @unique
   published: Boolean! @default(value: false)
   title: String
   styling: String! @default(value: "false")
@@ -40,7 +40,7 @@ type Scene {
 }
 
 type Story {
-  id: ID! @id
+  id: ID! @unique
   published: Boolean! @default(value: false)
   title: String
   styling: String! @default(value: "false")
@@ -51,7 +51,7 @@ type Story {
 }
 
 type Note {
-  id: ID! @id
+  id: ID! @unique
   content: String!
   author: User! @relation(name: "NoteToUser")
   position: String

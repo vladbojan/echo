@@ -18,7 +18,7 @@ import './index.css'
 import {AUTH_TOKEN} from './constants/authToken'
 
 
-const httpLink = new HttpLink({ uri: 'https://uj9g8nufug.execute-api.us-east-2.amazonaws.com/staging/' })
+const httpLink = new HttpLink({ uri: 'https://echo-ladder.eu/' })
 
 const middlewareLink = new ApolloLink((operation, forward) => {
   // get the authentication token from local storage if it exists
@@ -36,7 +36,7 @@ const middlewareLink = new ApolloLink((operation, forward) => {
 const httpLinkAuth = middlewareLink.concat(httpLink)
 
 const wsLink = new WebSocketLink({
-  uri: `wss://uj9g8nufug.execute-api.us-east-2.amazonaws.com/staging/`,
+  uri: `wss://echo-ladder.eu/`,
   options: {
     reconnect: true,
     connectionParams: {

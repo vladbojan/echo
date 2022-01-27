@@ -67,7 +67,6 @@ return (
                 InputLabelProps={{
                   shrink: true,
                 }}
-                style={{ display: 'none' }}
               />
               <TextField
                 label="Media"
@@ -79,8 +78,18 @@ return (
                 InputLabelProps={{
                   shrink: true,
                 }}
-                style={{ display: 'none' }}
-              />                  
+              />    
+{/*               <TextField
+                label="Continut"
+                value={content}
+                onChange={e => setContent(e.target.value)}
+                margin="normal"
+                placeholder=""
+                fullWidth
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />    */}             
               <TextEditor content={content}  class={classes.paragraphEdit} setContent={handleSetContent} theme={theme} key={fooKey}/>
               <CardActions>
                 <Button size="small" className={classes.actionButton} disabled={!content} type="submit">

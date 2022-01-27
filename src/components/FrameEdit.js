@@ -72,20 +72,20 @@ function  FrameEdit(props)  {
                 paragraph= {paragraph}
                 show= {paragraph.id}
                 position = {paragraph.position}
-                refresh={props.refresh}
+                refresh={refetch}
               />
               {allParagraphs[index+1] &&
               <ParagraphDnD
                 id= {paragraph.id}
                 position={paragraph.position+"-"+allParagraphs[index+1].position}
-                refresh={props.refresh}
+                refresh={refetch}
               />
               }
               {!allParagraphs[index+1] &&
               <ParagraphDnD
                 id= {paragraph.id}
                 position={getPosition(allParagraphs[index]?allParagraphs[index].position:"0")}
-                refresh={props.refresh}
+                refresh={refetch}
               />
               }
           </div>
@@ -93,7 +93,7 @@ function  FrameEdit(props)  {
         </DndProvider>
         <ParagraphAdd
           frame={data.frame}
-          refresh={props.refresh}
+          refresh={refetch}
           isDraft={props.isDraft}
           position={getPosition(data.frame.paragraphs[data.frame.paragraphs.length-1]?data.frame.paragraphs[data.frame.paragraphs.length-1].position:"0")}
           

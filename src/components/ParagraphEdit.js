@@ -103,6 +103,17 @@ export default function ParagraphEdit(props)  {
                   }}
                   class={readOnly?classes.hide:classes.paragraphEdit}
                 /> 
+{/*                 <TextField
+                label="Continut"
+                value={content}
+                onChange={e => setContent(e.target.value)}
+                margin="normal"
+                placeholder=""
+                fullWidth
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />   */}
                 <FrameChoose handle={handleFrameId} frameId={styling} class={readOnly?classes.hide:classes.paragraphEdit}/>
                 <Reference 
                   id={styling} 

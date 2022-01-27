@@ -1,0 +1,35 @@
+version: '3'
+services:
+  prisma:
+    image: prismagraphql/prisma:1.24
+    restart: always
+    ports:
+      - '4466:4466'
+    environment:
+      PRISMA_CONFIG: |
+        port: 4466
+        databases:
+          default:
+            connector: postgres
+            host: postgres
+            port: 5432
+            user: prisma
+            password: prisma
+  postgres:
+    image: postgres:10.3
+    restart: always
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_USER: prisma
+      POSTGRES_PASSWORD: prisma
+      POSTGRES_DB: postgres
+    volumes:
+      - postgres:/var/lib/postgresql/data
+  echo_server:
+    image: echo-server:0.0.1
+    restart: always
+    ports:
+      - '4001:4000'
+volumes:
+  postgres: ~
